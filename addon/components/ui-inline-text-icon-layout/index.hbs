@@ -4,10 +4,10 @@
 
 {{~#if this.renderIcon~}}
   <span class="{{this.textClassName}}">
-    {{~#if (has-block)}}{{yield}}{{else}}{{this.args.text}}{{/if~}}
+    {{~#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if~}}
   </span>
   {{~else~}}
-  {{#if (has-block)}}{{yield}}{{else}}{{this.args.text}}{{/if}}
+  {{#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if}}
 {{~/if~}}
 
 {{~#if this.renderIconRight~}}

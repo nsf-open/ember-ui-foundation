@@ -20,7 +20,12 @@ module.exports = {
   env: {
     browser: true,
   },
-  rules: {},
+  rules: {
+    // Turn off Glimmer component linting to support < Ember 3.15
+    'ember/no-classic-components': 'off',
+    'ember/require-tagless-components': 'off',
+    'ember/no-computed-properties-in-native-classes': 'off',
+  },
   overrides: [
     // node files
     {

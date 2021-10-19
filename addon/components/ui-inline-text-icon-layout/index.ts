@@ -1,17 +1,8 @@
-import Component from '@glimmer/component';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { tagName } from '@ember-decorators/component';
 import { isPresent } from '@ember/utils';
 import { Directions, DirectionsX } from '../../constants';
-
-interface Args {
-  text?: string;
-  icon?: string;
-  iconPlacement?: DirectionsX;
-  responsive?: boolean;
-  fw?: boolean;
-  spin?: boolean;
-  pending?: boolean;
-  tooltip?: string;
-}
 
 /**
  * Provides standardized layout for icon + text components, e.g., buttons, anchors, and
@@ -19,11 +10,13 @@ interface Args {
  *
  * @class UiInlineTextIconLayout
  */
-export default class UiInlineTextIconLayout extends Component<Args> {
+@tagName('')
+export default class UiInlineTextIconLayout extends Component {
   /**
    * @argument text
    * @type {string}
    */
+  text?: string;
 
   /**
    * The icon name. Providing the `fa-` prefix is allowed, but not required.
@@ -31,6 +24,7 @@ export default class UiInlineTextIconLayout extends Component<Args> {
    * @argument icon
    * @type {string}
    */
+  icon?: string;
 
   /**
    * The placement of the icon, either "left" or "right", relative to the text.
@@ -38,6 +32,7 @@ export default class UiInlineTextIconLayout extends Component<Args> {
    * @argument iconPlacement
    * @type {"left" | "right"}
    */
+  iconPlacement: DirectionsX = Directions.Left;
 
   /**
    * If true, text will be made screen-reader only at the small breakpoint. This will only apply if
@@ -46,6 +41,7 @@ export default class UiInlineTextIconLayout extends Component<Args> {
    * @argument responsive
    * @type {boolean}
    */
+  responsive = false;
 
   /**
    * Whether or not to apply the fixed width modifier to the icon.
@@ -53,6 +49,7 @@ export default class UiInlineTextIconLayout extends Component<Args> {
    * @argument fw
    * @type {boolean}
    */
+  fw = false;
 
   /**
    * Alias for `UiIcon.spin`.
@@ -60,6 +57,7 @@ export default class UiInlineTextIconLayout extends Component<Args> {
    * @argument spin
    * @type {boolean}
    */
+  spin = false;
 
   /**
    * For convenience, when set to true the icon will take on the MyNSF standard "loading/pending"
@@ -68,6 +66,7 @@ export default class UiInlineTextIconLayout extends Component<Args> {
    * @argument pending
    * @type {boolean}
    */
+  pending = false;
 
   /**
    * Tooltip text content. If provided, the standard tooltip icon will be applied.
@@ -75,44 +74,45 @@ export default class UiInlineTextIconLayout extends Component<Args> {
    * @argument tooltip
    * @type {string}
    */
+  tooltip?: string;
 
+  @computed('iconPlacement', 'tooltip')
   get actualIconPlacement() {
-    return isPresent(this.args.tooltip)
-      ? Directions.Right
-      : this.args.iconPlacement ?? Directions.Left;
+    return isPresent(this.tooltip) ? Directions.Right : this.iconPlacement;
   }
 
+  @computed('icon', 'pending', 'tooltip')
   get iconClassName() {
-    if (isPresent(this.args.tooltip)) {
+    if (isPresent(this.tooltip)) {
       return 'question-circle';
     }
 
-    return this.args.pending ? 'spinner' : this.args.icon;
+    return this.pending ? 'spinner' : this.icon;
   }
 
+  @computed('iconClassName')
   get renderIcon() {
     return typeof this.iconClassName === 'string';
   }
 
+  @computed('renderIcon', 'actualIconPlacement')
   get renderIconLeft() {
     return this.renderIcon && this.actualIconPlacement === Directions.Left;
   }
 
+  @computed('renderIcon', 'actualIconPlacement')
   get renderIconRight() {
     return this.renderIcon && this.actualIconPlacement === Directions.Right;
   }
 
+  @computed('responsive', 'renderIcon', 'tooltip', 'renderIconLeft', 'renderIconRight')
   get textClassName() {
     const names = [];
 
     // Only collapse down to an icon if said icon is actually available and it isn't
     // the generic tooltip icon, which wouldn't give any visual cues to what the
     // button does.
-    if (
-      this.args.responsive &&
-      this.renderIcon &&
-      !isPresent(this.args.tooltip)
-    ) {
+    if (this.responsive && this.renderIcon && !isPresent(this.tooltip)) {
       names.push('hidden-sm-down');
     }
 

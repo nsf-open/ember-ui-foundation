@@ -1,13 +1,7 @@
-import Component from '@glimmer/component';
-import { assert } from '@ember/debug';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { tagName } from '@ember-decorators/component';
 import { buildFaClassNameString } from '../../utils';
-
-interface Args {
-  name: string;
-  fw?: boolean;
-  spin?: boolean;
-  pending?: boolean;
-}
 
 /**
  * A FontAwesome icon.
@@ -19,13 +13,16 @@ interface Args {
  *
  * @class UiIcon
  */
-export default class UiIcon extends Component<Args> {
+@tagName('')
+export default class UiIcon extends Component {
   /**
    * The icon name. Providing the `fa-` prefix is allowed, but not required.
    *
    * @argument name
    * @type {string}
+   * @required
    */
+  name!: string;
 
   /**
    * Whether or not to apply the fixed width modifier to the icon.
@@ -33,6 +30,7 @@ export default class UiIcon extends Component<Args> {
    * @argument fw
    * @type {boolean}
    */
+  fw = false;
 
   /**
    * Whether or not to apply a rotation animation to the icon.
@@ -40,6 +38,7 @@ export default class UiIcon extends Component<Args> {
    * @argument spin
    * @type {boolean}
    */
+  spin = false;
 
   /**
    * For convenience, when set to true the icon will take on the MyNSF standard
@@ -48,20 +47,17 @@ export default class UiIcon extends Component<Args> {
    * @argument pending
    * @type {boolean}
    */
+  pending = false;
 
-  constructor(owner: unknown, args: Args) {
-    super(owner, args);
-    assert('An icon name must be provided', typeof args.name === 'string');
-  }
+  @computed('name', 'fw', 'spin', 'pending')
+  get iconClassName() {
+    const values = [this.pending ? 'spinner' : this.name];
 
-  protected get iconClassName() {
-    const values = [this.args.pending ? 'spinner' : this.args.name];
-
-    if (this.args.fw) {
+    if (this.fw) {
       values.push('fa-fw');
     }
 
-    if (this.args.spin || this.args.pending) {
+    if (this.spin || this.pending) {
       values.push('fa-spin');
     }
 
