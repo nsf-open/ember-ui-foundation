@@ -1,8 +1,10 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { tagName } from '@ember-decorators/component';
+import { layout, tagName } from '@ember-decorators/component';
 import { isPresent } from '@ember/utils';
 import { Directions, DirectionsX } from '../../constants';
+// @ts-expect-error - template is available at runtime
+import template from './template';
 
 /**
  * Provides standardized layout for icon + text components, e.g., buttons, anchors, and
@@ -11,6 +13,7 @@ import { Directions, DirectionsX } from '../../constants';
  * @class UiInlineTextIconLayout
  */
 @tagName('')
+@layout(template)
 export default class UiInlineTextIconLayout extends Component {
   /**
    * @argument text

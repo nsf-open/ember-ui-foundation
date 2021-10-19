@@ -1,7 +1,9 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { tagName } from '@ember-decorators/component';
+import { layout, tagName } from '@ember-decorators/component';
 import { buildFaClassNameString } from '../../utils';
+// @ts-expect-error - template is available at runtime
+import template from './template';
 
 /**
  * A FontAwesome icon.
@@ -14,6 +16,7 @@ import { buildFaClassNameString } from '../../utils';
  * @class UiIcon
  */
 @tagName('')
+@layout(template)
 export default class UiIcon extends Component {
   /**
    * The icon name. Providing the `fa-` prefix is allowed, but not required.

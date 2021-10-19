@@ -1,1 +1,1 @@
-export { default } from '@nsf/ui-foundation/components/ui-icon';
+export { default } from '@nsf/ui-foundation/components/ui-icon/component';
