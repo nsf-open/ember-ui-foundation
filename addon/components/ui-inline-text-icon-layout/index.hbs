@@ -1,0 +1,15 @@
+{{~#if this.renderIconLeft~}}
+  <UiIcon @name="{{this.iconClassName}}" @fw={{this.fw}} @spin={{this.spin}} @pending={{this.pending}} />
+{{~/if~}}
+
+{{~#if this.renderIcon~}}
+  <span class="{{this.textClassName}}">
+    {{~#if (has-block)}}{{yield}}{{else}}{{this.args.text}}{{/if~}}
+  </span>
+  {{~else~}}
+  {{#if (has-block)}}{{yield}}{{else}}{{this.args.text}}{{/if}}
+{{~/if~}}
+
+{{~#if this.renderIconRight~}}
+  <UiIcon @name="{{this.iconClassName}}" @fw={{this.fw}} @spin={{this.spin}} @pending={{this.pending}} />
+{{~/if~}}

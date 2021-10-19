@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-
 module('Integration | Component | ui-icon', function (hooks) {
   setupRenderingTest(hooks);
 
