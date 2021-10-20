@@ -1,0 +1,9 @@
+{{yield (hash
+  Option = (component 'ui-tabs/option'
+    selectedValue   = this.currentSelection
+    headingLevel    = this.headingLevel
+    handleTabSelect = (action this.handleTabSelect)
+  )
+)}}
+
+{{log this.currentSelection}}

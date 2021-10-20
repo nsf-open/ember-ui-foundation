@@ -1,0 +1,14 @@
+<a
+	href="#"
+	role="tab"
+	class="btn-tab {{if this.isActiveTab "active"}}"
+	onclick={{action this.handleAnchorClick}}
+>
+	{{~#if (and this.headingLevel this.isActiveTab)~}}
+		<span role="heading" aria-level="{{this.headingLevel}}">
+      {{#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if}}
+    </span>
+	{{~else~}}
+    {{#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if}}
+	{{~/if~}}
+</a>
