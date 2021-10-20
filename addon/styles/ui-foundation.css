@@ -1,0 +1,24 @@
+.ui-collapse.collapse {
+  display: none;
+}
+
+.ui-collapse.collapse.show {
+  display: block;
+}
+
+.ui-collapse.collapsing {
+  position: relative;
+  overflow: hidden;
+  transition-duration: .35s;
+  transition-timing-function: ease;
+}
+
+.ui-collapse.height.collapsing {
+  height: 0;
+  transition: height;
+}
+
+.ui-collapse.width.collapsing {
+  width: 0;
+  transition: width;
+}

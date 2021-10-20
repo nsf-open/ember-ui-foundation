@@ -12,3 +12,8 @@ export enum Directions {
 }
 
 export type DirectionsX = Directions.Left | Directions.Right;
+
+export enum Dimensions {
+  Height = 'height',
+  Width = 'width',
+}
