@@ -1,3 +1,5 @@
+[![Coverage](https://sonarqube.nsf.gov/api/project_badges/measure?project=nsf-ui-foundation&metric=coverage)](https://sonarqube.nsf.gov/dashboard?id=nsf-ui-foundation)
+
 @nsf/ui-foundation
 ==============================================================================
 
