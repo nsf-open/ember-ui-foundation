@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import classic from 'ember-classic-decorator';
 import { set } from '@ember/object';
 import { layout, tagName, classNames, attribute } from '@ember-decorators/component';
 // @ts-expect-error - template is available at runtime
@@ -22,7 +21,6 @@ import template from './template';
  *
  * @class UiTabs
  */
-@classic
 @tagName('ul')
 @classNames('nav', 'nav-tabs')
 @layout(template)
@@ -76,6 +74,7 @@ export default class UiTabs extends Component {
 
   previousSelection?: unknown;
 
+  // eslint-disable-next-line ember/classic-decorator-hooks
   init() {
     super.init();
 

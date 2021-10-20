@@ -38,8 +38,6 @@ module.exports = {
         'ember/no-classic-components': 'off',
         'ember/require-tagless-components': 'off',
         'ember/no-computed-properties-in-native-classes': 'off',
-        'ember/classic-decorator-hooks': 'error',
-        'ember/classic-decorator-no-classic-methods': 'error',
       },
     },
     // node files

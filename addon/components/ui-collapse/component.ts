@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import classic from 'ember-classic-decorator';
 import { computed, set } from '@ember/object';
 import { addObserver } from '@ember/object/observers';
 import { not, and } from '@ember/object/computed';
@@ -18,7 +17,6 @@ import template from './template';
  *
  * @class UiCollapse
  */
-@classic
 @classNames('ui-collapse')
 @layout(template)
 export default class UiCollapse extends Component {
@@ -193,12 +191,6 @@ export default class UiCollapse extends Component {
 
     set(this, 'transitioningSize', this.collapsedSize);
 
-    // next(this, () => {
-    //   if (!this.isDestroyed) {
-    //     set(this, 'transitioningSize', this.collapsedSize);
-    //   }
-    // });
-
     await waitForTransitionEnd(this.element, this.transitionDuration);
 
     if (this.isDestroyed) {
@@ -236,6 +228,7 @@ export default class UiCollapse extends Component {
     }
   }
 
+  // eslint-disable-next-line ember/classic-decorator-hooks
   init() {
     super.init();
 
