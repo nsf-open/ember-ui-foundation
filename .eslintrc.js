@@ -2,7 +2,7 @@
 
 module.exports = {
   root: true,
-  parser: '@typescript-eslint/parser',
+  parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
@@ -11,12 +11,7 @@ module.exports = {
     },
   },
   plugins: ['ember'],
-  extends: [
-    'eslint:recommended',
-    'plugin:ember/recommended',
-    'plugin:prettier/recommended',
-    'plugin:@typescript-eslint/recommended',
-  ],
+  extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended'],
   env: {
     browser: true,
   },
@@ -27,6 +22,24 @@ module.exports = {
     'ember/no-computed-properties-in-native-classes': 'off',
   },
   overrides: [
+    // Typescript
+    {
+      files: ['./**/*.ts'],
+      parser: '@typescript-eslint/parser',
+      plugins: ['ember'],
+      extends: [
+        'eslint:recommended',
+        'plugin:ember/recommended',
+        'plugin:prettier/recommended',
+        'plugin:@typescript-eslint/recommended',
+      ],
+      rules: {
+        // Turn off Glimmer component linting to support < Ember 3.15
+        'ember/no-classic-components': 'off',
+        'ember/require-tagless-components': 'off',
+        'ember/no-computed-properties-in-native-classes': 'off',
+      },
+    },
     // node files
     {
       files: [
@@ -40,6 +53,7 @@ module.exports = {
         './config/**/*.js',
         './tests/dummy/config/**/*.js',
       ],
+      parser: 'babel-eslint',
       parserOptions: {
         sourceType: 'script',
       },
