@@ -20,10 +20,7 @@ function ensureStylePrefixArray(values: unknown[]) {
  *
  * @function buildFaClassNameString
  */
-export default function buildFaClassNameString(
-  value: string | string[],
-  ...rest: string[]
-): string {
+export function buildFaClassNameString(value: string | string[], ...rest: string[]): string {
   const iconClassNames = Array.isArray(value) ? value : [value].concat(rest);
   return `fa ${ensureStylePrefixArray(iconClassNames).join(' ')}`;
 }

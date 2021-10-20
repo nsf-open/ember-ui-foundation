@@ -17,7 +17,7 @@ const bypass = !!window.__WAIT_FOR_TRANSITION_END__;
  *
  * @returns {Promise<void>}
  */
-export default function waitForTransitionEnd(node: Element, timeout = 0): Promise<void> {
+export function waitForTransitionEnd(node: Element, timeout = 0): Promise<void> {
   if (!node) {
     return reject();
   }
