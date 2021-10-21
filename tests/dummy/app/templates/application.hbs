@@ -1,4 +1,25 @@
 <h2 id="title">Welcome to Ember</h2>
 {{outlet}}
 
-<UiIcon @name="superpowers" />
+<style>
+
+</style>
+
+<div style="padding:300px;"></div>
+
+<div style="padding: 10px; border: solid 1px; display: inline-block;" id="popper-target">
+  <UiIcon @name="superpowers" />
+</div>
+
+<div id="foo">
+  <div id="bar">
+    <div id="baz">
+      <UiPopper @popperTarget="#popper-target" @placement="right">
+        <div style="padding:20px; border: solid 1px;">Hello World</div>
+      </UiPopper>
+    </div>
+  </div>
+</div>
+
+
+<div style="padding:300px;"></div>
