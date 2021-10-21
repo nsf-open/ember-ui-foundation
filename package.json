@@ -5,7 +5,7 @@
   "keywords": [
     "ember-addon"
   ],
-  "repository": "",
+  "repository": "https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse",
   "license": "MIT",
   "author": "",
   "directories": {
@@ -110,5 +110,9 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://dis-nexus.nsf.gov:8443/nexus/repository/npm-internal"
   }
 }
