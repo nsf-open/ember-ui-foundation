@@ -3,13 +3,13 @@
 @nsf/ui-foundation
 ==============================================================================
 
-[Short description of the addon.]
+The starting point for Ember Application UI libraries at NSF.
 
 
 Compatibility
 ------------------------------------------------------------------------------
 
-* Ember.js v3.20 or above
+* Ember.js v3.8 or above
 * Ember CLI v3.20 or above
 * Node.js v12 or above
 
@@ -25,7 +25,6 @@ ember install @nsf/ui-foundation
 Usage
 ------------------------------------------------------------------------------
 
-[Longer description of how to use the addon in apps.]
 
 
 Contributing
