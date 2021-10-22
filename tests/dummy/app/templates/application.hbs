@@ -1,25 +1,14 @@
-<h2 id="title">Welcome to Ember</h2>
-{{outlet}}
+<div class="container">
 
-<style>
+  <hr />
 
-</style>
+  <button class="btn btn-primary" onclick={{action this.toggleJumbotron}}>Toggle the jumbotron</button>
 
-<div style="padding:300px;"></div>
+  <hr />
 
-<div style="padding: 10px; border: solid 1px; display: inline-block;" id="popper-target">
-  <UiIcon @name="superpowers" />
-</div>
-
-<div id="foo">
-  <div id="bar">
-    <div id="baz">
-      <UiPopper @popperTarget="#popper-target" @placement="right">
-        <div style="padding:20px; border: solid 1px;">Hello World</div>
-      </UiPopper>
+  <UiCollapse @collapsed={{this.shrinkJumbotron}}>
+    <div class="jumbotron">
+      <h1>Hello World</h1>
     </div>
-  </div>
+  </UiCollapse>
 </div>
-
-
-<div style="padding:300px;"></div>

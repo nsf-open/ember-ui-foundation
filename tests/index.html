@@ -14,6 +14,17 @@
     <link rel="stylesheet" href="{{rootURL}}assets/dummy.css">
     <link rel="stylesheet" href="{{rootURL}}assets/test-support.css">
 
+    <!-- Minimal styles needed for some controls -->
+    <style>
+      .ui-collapse.collapse {
+        display: none;
+      }
+
+      .ui-collapse.collapse.show {
+        display: block;
+      }
+    </style>
+
     {{content-for "head-footer"}}
     {{content-for "test-head-footer"}}
   </head>
