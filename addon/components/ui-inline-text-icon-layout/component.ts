@@ -3,7 +3,6 @@ import { computed } from '@ember/object';
 import { layout, tagName } from '@ember-decorators/component';
 import { isPresent } from '@ember/utils';
 import { Directions, DirectionsX } from '../../constants';
-// @ts-expect-error - template is available at runtime
 import template from './template';
 
 /**

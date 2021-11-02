@@ -9,7 +9,6 @@ import { Promise } from 'rsvp';
 import { layout, attribute, className, classNames } from '@ember-decorators/component';
 import { waitForTransitionEnd } from '../../utils';
 import { Dimensions } from '../../constants';
-// @ts-expect-error - template is available at runtime
 import template from './template';
 
 /**

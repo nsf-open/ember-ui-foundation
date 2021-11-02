@@ -2,7 +2,6 @@ import Component from '@ember/component';
 import { layout, tagName, attribute, className } from '@ember-decorators/component';
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
-// @ts-expect-error - template is available at runtime
 import template from './template';
 
 /**

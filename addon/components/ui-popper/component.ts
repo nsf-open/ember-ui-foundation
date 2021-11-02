@@ -10,7 +10,6 @@ import { layout, tagName } from '@ember-decorators/component';
 import { createPopper } from '@popperjs/core/lib/popper-lite';
 import flip from '@popperjs/core/lib/modifiers/flip';
 import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
-// @ts-expect-error - template is available at runtime
 import template from './template';
 
 /**

@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { set } from '@ember/object';
 import { layout, tagName, classNames, attribute } from '@ember-decorators/component';
-// @ts-expect-error - template is available at runtime
 import template from './template';
 
 /**

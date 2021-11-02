@@ -2,7 +2,6 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { layout, tagName } from '@ember-decorators/component';
 import { buildFaClassNameString } from '../../utils';
-// @ts-expect-error - template is available at runtime
 import template from './template';
 
 /**
