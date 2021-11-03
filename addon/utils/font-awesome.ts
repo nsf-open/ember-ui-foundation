@@ -1,6 +1,12 @@
 // Prefix "fa-" to any string that doesn't already start with it.
 function ensureStylePrefix(value: string) {
-  return value.trim().substring(0, 3) === 'fa-' ? value : `fa-${value}`;
+  const trimmed = value.trim();
+
+  if (!trimmed.length) {
+    return '';
+  }
+
+  return trimmed.substring(0, 3) === 'fa-' ? value : `fa-${value}`;
 }
 
 // Prune an array to only contain strings, and make sure that each beings with "fa-".
@@ -8,7 +14,7 @@ function ensureStylePrefixArray(values: unknown[]) {
   return values
     .map(function (item) {
       return typeof item === 'string'
-        ? item.split(' ').map(ensureStylePrefix).join(' ')
+        ? item.split(' ').map(ensureStylePrefix).filter(Boolean).join(' ')
         : undefined;
     })
     .filter(Boolean) as string[];
