@@ -30,10 +30,11 @@ module('Integration | Component | ui-async-block', function (hooks) {
   test('it handles a resolved promised', async function (assert) {
     const promise = this.set('promise', resolvingPromise());
 
+    // language=handlebars
     await render(hbs`
-      {{#ui-async-block promise=this.promise}}
+      <UiAsyncBlock @promise={{this.promise}}>
         <p data-test-content>Hello World</p>
-      {{/ui-async-block}}
+      </UiAsyncBlock>
     `);
 
     assert.dom('[data-test-id="load-indicator"]').isVisible();
@@ -139,7 +140,7 @@ module('Integration | Component | ui-async-block', function (hooks) {
     assert.dom('[data-test-id="error-block"]').hasText('Could not retrieve Witty Catchphrases');
   });
 
-  test('it shows completely custom messages when provided', async function (assert) {
+  test('it shows fully custom message strings when provided', async function (assert) {
     let promise = this.set('promise', resolvingPromise());
 
     await render(hbs`
@@ -169,7 +170,6 @@ module('Integration | Component | ui-async-block', function (hooks) {
       {{#ui-async-block "Witty Catchphrases"
         promise          = this.promise
         pendingMessage   = "Foo"
-        noResultsMessage = "Bar"
         rejectedMessage  = "Baz"
       }}
         <p data-test-content>Hello World</p>
@@ -181,5 +181,68 @@ module('Integration | Component | ui-async-block', function (hooks) {
     });
 
     assert.dom('[data-test-id="error-block"]').hasText('Baz');
+  });
+
+  test('it shows fully custom messages via function when provided', async function (assert) {
+    let promise = this.set('promise', resolvingPromise());
+
+    this.set('pendingMessageFunction', function (name: string) {
+      return `Pending a response for ${name}`;
+    });
+
+    this.set('rejectedMessageFunction', function (name: string) {
+      return `The request for ${name} failed`;
+    });
+
+    this.set('noResultsMessageFunction', function (name: string) {
+      return `No results returned for ${name}`;
+    });
+
+    // language=handlebars
+    await render(hbs`
+      <UiAsyncBlock
+        @name="Witty Catchphrases"
+        @promise={{this.promise}}
+        @noResults={{true}}
+        @pendingMessage={{this.pendingMessageFunction}}
+        @noResultsMessage={{this.noResultsMessageFunction}}
+        @rejectedMessage={{this.rejectedMessageFunction}}
+      >
+        <p data-test-content>Hello World</p>
+      </ UiAsyncBlock>
+    `);
+
+    assert
+      .dom('[data-test-id="load-indicator"]')
+      .hasText('Pending a response for Witty Catchphrases');
+
+    await promise;
+    await settled();
+
+    assert
+      .dom('[data-test-id="no-results-block"]')
+      .hasText('No results returned for Witty Catchphrases');
+
+    await clearRender();
+
+    promise = this.set('promise', rejectingPromise());
+
+    // language=handlebars
+    await render(hbs`
+      <UiAsyncBlock
+        @name="Witty Catchphrases"
+        @promise={{this.promise}}
+        @pendingMessage={{this.pendingMessageFunction}}
+        @rejectedMessage={{this.rejectedMessageFunction}}
+      >
+        <p data-test-content>Hello World</p>
+      </ UiAsyncBlock>
+    `);
+
+    await silenceExceptions(async () => {
+      await promise;
+    });
+
+    assert.dom('[data-test-id="error-block"]').hasText('The request for Witty Catchphrases failed');
   });
 });
