@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('@mynsf-ui/elements | ui-load-indicator', function (hooks) {
+module('Integration | Component | ui-load-indicator', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders a spinner', async function (assert: Assert) {
