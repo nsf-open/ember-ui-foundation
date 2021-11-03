@@ -1,0 +1,9 @@
+{{#if this.componentToRender~}}
+  {{component this.componentToRender
+              parentName = this.name
+              parentTask = this.managePromise
+              message    = this.customMessage
+  }}
+{{~else~}}
+  {{~yield this.managePromise.last.value~}}
+{{~/if}}
