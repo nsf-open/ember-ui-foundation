@@ -42,4 +42,44 @@ module('Unit | Util | outside-click-handler', function (hooks) {
 
     assert.verifySteps(['outer', 'outer']);
   });
+
+  test('it accepts multiple elements that must all be outside of the click hierarchy', async function (assert) {
+    await render(hbs`
+      <div id="outer">
+        <div id="target1">
+          <div id="inner1"></div>
+        </div>
+        <div id="target2">
+          <div id="inner2"></div>
+        </div>
+      </div>
+    `);
+
+    const target1 = find('#target1') as HTMLElement;
+    const target2 = find('#target2') as HTMLElement;
+
+    const listener = createOutsideClickListener(null, [target1, target2], function (event: Event) {
+      const eventTarget = event.target as Element;
+      assert.step(eventTarget.id);
+    });
+
+    await click('#outer');
+    await click('#target1');
+    await click('#inner1');
+    await click('#target1');
+    await click('#target2');
+    await click('#inner2');
+    await click('#target2');
+    await click('#outer');
+
+    removeOutsideClickListener(listener);
+
+    await click('#outer');
+    await click('#target1');
+    await click('#target2');
+    await click('#inner1');
+    await click('#inner2');
+
+    assert.verifySteps(['outer', 'outer']);
+  });
 });

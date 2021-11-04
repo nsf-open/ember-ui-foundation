@@ -1,0 +1,18 @@
+<UiPopper
+	@id={{this.id}}
+	@ariaRole={{this.ariaRole}}
+	@placement={{this.popperPlacement}}
+	@renderInPlace={{this.renderInPlace}}
+	@popperTarget={{this.popperTarget}}
+	@modifiers={{this.popperModifiers}}
+	@popperContainer={{this.destinationElement}}
+	@class={{this.popperClasses}}
+	@enabled={{not this.isHidden}}
+	@onUpdate={{action this.updatePlacement}}
+  @testId={{this.testId}}
+>
+	{{#if this.showArrow}}<div class="{{this.arrowClassName}}" data-popper-arrow></div>{{/if}}
+	<div class="{{this.innerClassName}}" style={{this.innerElementStyles}}>
+		{{yield}}
+	</div>
+</UiPopper>

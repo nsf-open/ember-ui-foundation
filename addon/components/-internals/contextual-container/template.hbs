@@ -1,0 +1,33 @@
+{{unbound this.parentFinder}}
+
+{{!--
+  testId is not defined in component.ts because by default
+  the contextual-container is tagless and so attributes cannot be
+  bound. If an extending class provides it though we want to set
+  it on the overlay as well. Distinguishing between the two is a
+  trivial exercise.
+--}}
+
+{{#component this.overlayComponent
+  placement          = this.placement
+  autoPlacement      = this.autoPlacement
+  viewportElement    = this.viewportElement
+  viewportPadding    = this.viewportPadding
+  distance           = this.distance
+  class              = this.class
+  fade               = this.fade
+  maxWidth           = this.maxWidth
+  renderInPlace      = this.actuallyRenderInPlace
+  destinationElement = this.overlayDestinationElement
+  popperTarget       = this.triggerElement
+  id                 = this.overlayElementId
+  testId             = this.testId
+  showContent        = this._showOverlay
+  isHidden           = this._isHidden
+}}
+  {{#if hasBlock~}}
+    {{yield (hash close=(action this.close))}}
+  {{~else~}}
+    {{this.textContent}}
+  {{~/if}}
+{{/component}}

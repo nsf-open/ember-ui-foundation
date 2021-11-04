@@ -2,7 +2,12 @@
 
   <hr />
 
-  <button class="btn btn-primary" onclick={{action this.toggleJumbotron}}>Toggle the jumbotron</button>
+  <button class="btn btn-primary" onclick={{action this.toggleJumbotron}}>
+    Toggle the jumbotron
+    <UiTooltipAttachment>Toggle away!</UiTooltipAttachment>
+  </button>
+
+  <p>Here is some text with a tooltip at the end: <UiTooltip @triggerEvents="click">Foobar</UiTooltip></p>
 
   <hr />
 

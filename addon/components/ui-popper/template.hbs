@@ -6,12 +6,26 @@
       on the document body, giving it the highest default z-index value. --}}
 {{#if this.renderInPlace}}
 	{{!-- Add a wrapper around the yielded block so we have something for the Popper to target --}}
-	<div id={{this.id}} class={{this.class}} role={{this.ariaRole}} hidden={{this.disabled}} style={{this.style}}>
+	<div
+    id={{this.id}}
+    class={{this.class}}
+    role={{this.ariaRole}}
+    hidden={{this.disabled}}
+    style={{this.style}}
+    data-test-id={{this.testId}}
+  >
 		{{yield}}
 	</div>
 {{else}}
 	{{#in-element this.realPopperContainer insertBefore=null}}
-		<div id={{this.id}} class={{this.class}} role={{this.ariaRole}} hidden={{this.disabled}} style={{this.style}}>
+		<div
+      id={{this.id}}
+      class={{this.class}}
+      role={{this.ariaRole}}
+      hidden={{this.disabled}}
+      style={{this.style}}
+      data-test-id={{this.testId}}
+    >
 			{{yield}}
 		</div>
 	{{/in-element}}

@@ -1,0 +1,14 @@
+/* Absolute minimal styling that is required on top
+of stock Bootstrap in order for this library to play
+nice with other libraries/tools. */
+
+.tooltip.top,
+.tooltip.bottom,
+.tooltip.left,
+.tooltip.right,
+.tooltip.top .tooltip-arrow,
+.tooltip.bottom .tooltip-arrow,
+.tooltip.left .tooltip-arrow,
+.tooltip.right .tooltip-arrow {
+  margin: 0;
+}

@@ -106,6 +106,14 @@ export default class UiPopper extends Component {
   public onUpdate?: () => void;
 
   /**
+   * @argument testId
+   * @type {string}
+   * @default undefined
+   * @public
+   */
+  public testId?: string;
+
+  /**
    * @private
    */
   @not('enabled')
@@ -249,6 +257,7 @@ export default class UiPopper extends Component {
   didInsertElement() {
     super.didInsertElement();
     this.updatePopper();
+    this.realPopperElement?.setAttribute('data-popper-disabled', '');
   }
 
   // eslint-disable-next-line ember/no-component-lifecycle-hooks
@@ -299,7 +308,7 @@ export default class UiPopper extends Component {
     const options = {
       strategy: 'absolute' as PositioningStrategy,
       placement: this.placement,
-      modifiers: this.modifiers || [flip, preventOverflow],
+      modifiers: this.modifiers?.slice(0) || [flip, preventOverflow],
     };
 
     if (typeof this.onUpdate === 'function') {
@@ -349,9 +358,9 @@ export default class UiPopper extends Component {
     // attribute not existing being a passing assertion in tests? Current
     // theory is that PopperJS rolls through any `data-popper-*` attributes
     // when it initializes. Interesting stuff.
-    // if (element?.hasAttribute('data-popper-disabled')) {
-    //   element.removeAttribute('data-popper-disabled');
-    // }
+    if (element?.hasAttribute('data-popper-disabled')) {
+      element.removeAttribute('data-popper-disabled');
+    }
 
     // This call is to sync the current and last known values so we can be more
     // efficient in subsequent updates. The actual response doesn't matter.

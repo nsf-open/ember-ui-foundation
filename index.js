@@ -21,4 +21,10 @@ module.exports = {
 
     return this._super.shouldIncludeChildAddon.apply(this, arguments);
   },
+
+  contentFor(type, config) {
+    if (type === 'body-footer' && config.environment !== 'test') {
+      return '<div id="ui-positioning-root"></div>';
+    }
+  },
 };

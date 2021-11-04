@@ -10,7 +10,7 @@ function isVisible(element?: HTMLElement | null) {
 
 /**
  * Creates a method that will only execute when the target of a click event within the
- * document is not equal to or a child of the provided target argument. In other words,
+ * document is NOT equal to or a child of the provided target argument. In other words,
  * it is a function that lets you know when a click has occurred _somewhere that is not_
  * a specific element.
  *
@@ -18,7 +18,7 @@ function isVisible(element?: HTMLElement | null) {
  */
 export function createOutsideClickListener(
   scope: unknown,
-  target: HTMLElement,
+  target: HTMLElement | HTMLElement[],
   callback: (event: UIEvent) => void
 ): EventListener {
   assert('An HTMLElement must be provided as the target for an outside click listener.', !!target);
@@ -30,7 +30,11 @@ export function createOutsideClickListener(
   const listener = function documentClickListener(event: Event) {
     const eventTarget = event.target as Element;
 
-    if (!target.contains(eventTarget) && isVisible(target)) {
+    if (Array.isArray(target)) {
+      if (target.every((element) => !element.contains(eventTarget) && isVisible(element))) {
+        callback.call(scope, event);
+      }
+    } else if (!target.contains(eventTarget) && isVisible(target)) {
       callback.call(scope, event);
     }
   };
