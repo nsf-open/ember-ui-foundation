@@ -9,7 +9,7 @@
   @ariaHasPopup="true"
   @testId={{this.testId}}
   @ariaExpanded ="{{if this.visible "true" "false"}}"
-  @keyDown={{action this.handleTriggerKeyEvents}}
+  @onKeyDown={{action this.handleTriggerKeyEvents}}
 />
 
 {{#ui-internals/contextual-container

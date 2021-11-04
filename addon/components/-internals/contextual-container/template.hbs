@@ -1,4 +1,4 @@
-{{unbound this.parentFinder}}
+{{this.parentFinder}}
 
 {{!--
   testId is not defined in component.ts because by default
@@ -25,7 +25,7 @@
   showContent        = this._showOverlay
   isHidden           = this._isHidden
 }}
-  {{#if hasBlock~}}
+  {{#if (has-block)~}}
     {{yield (hash close=(action this.close))}}
   {{~else~}}
     {{this.textContent}}
