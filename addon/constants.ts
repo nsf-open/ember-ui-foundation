@@ -28,3 +28,12 @@ export enum SizeVariants {
   Medium = 'md',
   Large = 'lg',
 }
+
+export enum KeyNames {
+  Enter = 'Enter',
+  Escape = 'Escape',
+  ArrowUp = 'ArrowUp',
+  ArrowDown = 'ArrowDown',
+  Tab = 'Tab',
+  Shift = 'Shift',
+}

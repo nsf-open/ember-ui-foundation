@@ -119,11 +119,11 @@ export default class UiInlineTextIconLayout extends Component {
     }
 
     if (this.renderIconLeft) {
-      names.push('fine-ml-5');
+      names.push('ml-5px');
     }
 
     if (this.renderIconRight) {
-      names.push('fine-mr-5');
+      names.push('mr-5px');
     }
 
     return names.join(' ');

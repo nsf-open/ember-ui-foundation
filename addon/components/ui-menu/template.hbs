@@ -1,0 +1,35 @@
+<UiButton @text="{{this.buttonText}}"
+  @variant="{{this.variant}}"
+  @id="{{this.triggerId}}"
+  @disabled={{this.disabled}}
+  @icon="caret-down"
+  @iconPlacement="right"
+  @responsive={{false}}
+  @ariaControls="{{this.overlayId}}"
+  @ariaHasPopup="true"
+  @testId={{this.testId}}
+  @ariaExpanded ="{{if this.visible "true" "false"}}"
+  @keyDown={{action this.handleTriggerKeyEvents}}
+/>
+
+<UiInternals::ContextualContainer
+  @visible={{this.visible}}
+  @placement="bottom-start"
+  @class="{{concat 'menu-' this.variant}}"
+  @triggerEvents="click"
+  @triggerSelector="{{concat "#" this.triggerId}}"
+  @overlayId="{{this.overlayId}}"
+  @ariaAttachAs={{null}}
+  @overlayComponent="ui-menu/flyout"
+  @onShown={{action this.handleOverlayShown}}
+  @onHidden={{action this.handleOverlayHidden}}
+>
+  {{yield (hash
+    Item=(component "ui-button"
+      ariaRole        = "menuitem"
+      variant         = "default"
+      responsive      = false
+      tabIndex        = "-1"
+      _libraryOnClick = (action this.handleMenuItemClick))
+  )}}
+</UiInternals::ContextualContainer>
