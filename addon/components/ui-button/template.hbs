@@ -1,0 +1,14 @@
+<UiInlineTextIconLayout
+  @text={{this.text}}
+  @icon={{this.icon}}
+  @iconPlacement={{this.iconPlacement}}
+  @responsive={{this.responsive}}
+  @pending={{this.isPending}}
+  @fw={{true}}
+  @tooltip={{this.tooltip}}
+>
+  {{#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if}}
+  {{#if this.tooltip}}
+    <UiTooltipAttachment @enabled={{this.enabled}}>{{this.tooltip}}</UiTooltipAttachment>
+  {{/if}}
+</UiInlineTextIconLayout>
