@@ -12,3 +12,15 @@ nice with other libraries/tools. */
 .tooltip.right .tooltip-arrow {
   margin: 0;
 }
+
+.ml-1px { margin-left: 1px; }
+.ml-2px { margin-left: 2px; }
+.ml-3px { margin-left: 3px; }
+.ml-4px { margin-left: 4px; }
+.ml-5px { margin-left: 5px; }
+
+.mr-1px { margin-right: 1px; }
+.mr-2px { margin-right: 2px; }
+.mr-3px { margin-right: 3px; }
+.mr-4px { margin-right: 4px; }
+.mr-5px { margin-right: 5px; }

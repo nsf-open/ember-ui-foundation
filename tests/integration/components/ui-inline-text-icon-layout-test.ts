@@ -28,7 +28,7 @@ module('Integration | Component | ui-inline-text-icon-layout', function (hooks) 
     assert.dom('span:nth-child(1)').hasClass('fa');
     assert.dom('span:nth-child(1)').hasClass('fa-superpowers');
     assert.dom('span:nth-child(2)').hasText('Hello World');
-    assert.dom('span:nth-child(2)').hasClass('fine-ml-5');
+    assert.dom('span:nth-child(2)').hasClass('ml-5px');
 
     this.set('icon', 'mail');
 
@@ -43,7 +43,7 @@ module('Integration | Component | ui-inline-text-icon-layout', function (hooks) 
     );
 
     assert.dom('span:nth-child(1)').hasText('Hello World');
-    assert.dom('span:nth-child(1)').hasClass('fine-mr-5');
+    assert.dom('span:nth-child(1)').hasClass('mr-5px');
     assert.dom('span:nth-child(2)').hasClass('fa');
     assert.dom('span:nth-child(2)').hasClass('fa-superpowers');
 
@@ -63,13 +63,13 @@ module('Integration | Component | ui-inline-text-icon-layout', function (hooks) 
 
     // With icon but not responsive flag
     assert.dom('span:nth-child(2)').hasText('Hello World');
-    assert.dom('span:nth-child(2)').hasClass('fine-ml-5');
+    assert.dom('span:nth-child(2)').hasClass('ml-5px');
     assert.dom('span:nth-child(2)').doesNotHaveClass('hidden-sm-down');
 
     // With icon and responsive flag
     this.set('responsive', true);
 
-    assert.dom('span:nth-child(2)').hasClass('fine-ml-5');
+    assert.dom('span:nth-child(2)').hasClass('ml-5px');
     assert.dom('span:nth-child(2)').hasClass('hidden-sm-down');
 
     // Without an icon, responsiveness would just mean the text disappearing
@@ -96,7 +96,7 @@ module('Integration | Component | ui-inline-text-icon-layout', function (hooks) 
 
     assert.dom('span:nth-child(1)').hasClass('fa-superpowers');
     assert.dom('span:nth-child(2)').hasText('Foo');
-    assert.dom('span:nth-child(2)').hasClass('fine-ml-5');
+    assert.dom('span:nth-child(2)').hasClass('ml-5px');
     assert.dom('span:nth-child(2)').hasClass('hidden-sm-down');
 
     // The tooltip icon should always come after the text content
@@ -104,7 +104,7 @@ module('Integration | Component | ui-inline-text-icon-layout', function (hooks) 
 
     assert.dom('span:nth-child(2)').hasClass('fa-question-circle');
     assert.dom('span:nth-child(1)').hasText('Foo');
-    assert.dom('span:nth-child(1)').hasClass('fine-mr-5');
+    assert.dom('span:nth-child(1)').hasClass('mr-5px');
     // Don't hide tooltip icon text
     assert.dom('span:nth-child(1)').doesNotHaveClass('hidden-sm-down');
   });
