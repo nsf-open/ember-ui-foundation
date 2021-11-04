@@ -114,7 +114,7 @@ export default class UiMenu extends Component {
 
     if (this.overlayElement) {
       this.overlayKeyListener = bind(this, this.handleOverlayKeyEvents);
-      this.overlayElement.addEventListener('keydown', this.overlayKeyListener);
+      this.overlayElement.addEventListener('keyup', this.overlayKeyListener);
     }
   }
 
@@ -123,7 +123,7 @@ export default class UiMenu extends Component {
     super.willDestroyElement();
 
     if (this.overlayElement && this.overlayKeyListener) {
-      this.overlayElement.removeEventListener('keydown', this.overlayKeyListener);
+      this.overlayElement.removeEventListener('keyup', this.overlayKeyListener);
     }
   }
 
@@ -200,7 +200,7 @@ export default class UiMenu extends Component {
   }
 
   /**
-   * The keydown event listener for the trigger button. Provides keyboard navigation
+   * The keyup event listener for the trigger button. Provides keyboard navigation
    * when focused on the open/close button.
    *
    * @method handleTriggerKeyEvents
@@ -220,7 +220,7 @@ export default class UiMenu extends Component {
   }
 
   /**
-   * The keydown event listener for the menu overlay. Provides keyboard navigation
+   * The keyup event listener for the menu overlay. Provides keyboard navigation
    * through the list of menu items.
    *
    * @method handleOverlayKeyEvents

@@ -9,7 +9,7 @@
   aria-controls="{{this.overlayId}}"
   aria-haspopup="true"
   aria-expanded="{{if this.visible "true" "false"}}"
-  onkeydown={{action this.handleTriggerKeyEvents}}
+  onkeyup={{action this.handleTriggerKeyEvents}}
 />
 
 {{#ui-internals/contextual-container

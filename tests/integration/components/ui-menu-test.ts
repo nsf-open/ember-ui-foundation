@@ -60,33 +60,33 @@ module('Integration | Component | ui-menu', function (hooks) {
     await focus(trigger);
 
     // Should open an focus on first option
-    await triggerKeyEvent(trigger, 'keydown', 'ArrowDown');
+    await triggerKeyEvent(trigger, 'keyup', 'ArrowDown');
     assert.dom(overlay).isVisible();
     assert.dom('button:nth-child(1)', overlay).isFocused();
 
     // Second option is disabled, should move to third
-    await triggerKeyEvent(overlay, 'keydown', 'ArrowDown');
+    await triggerKeyEvent(overlay, 'keyup', 'ArrowDown');
     assert.dom('button:nth-child(3)', overlay).isFocused();
 
     // Should loop back to first option
-    await triggerKeyEvent(overlay, 'keydown', 'ArrowDown');
+    await triggerKeyEvent(overlay, 'keyup', 'ArrowDown');
     assert.dom('button:nth-child(1)', overlay).isFocused();
 
     // Should loop back to third option
-    await triggerKeyEvent(overlay, 'keydown', 'ArrowUp');
+    await triggerKeyEvent(overlay, 'keyup', 'ArrowUp');
     assert.dom('button:nth-child(3)', overlay).isFocused();
 
     // Second option is disabled, should move to first
-    await triggerKeyEvent(overlay, 'keydown', 'ArrowUp');
+    await triggerKeyEvent(overlay, 'keyup', 'ArrowUp');
     assert.dom('button:nth-child(1)', overlay).isFocused();
 
     // Should close and return focus to trigger
-    await triggerKeyEvent(overlay, 'keydown', 'Escape');
+    await triggerKeyEvent(overlay, 'keyup', 'Escape');
     assert.dom(overlay).isNotVisible();
     assert.dom(trigger).isFocused();
 
     // Should close after clicking an option
-    await triggerKeyEvent(trigger, 'keydown', 'ArrowDown');
+    await triggerKeyEvent(trigger, 'keyup', 'ArrowDown');
     assert.dom('button:nth-child(1)', overlay).isFocused();
 
     await click(overlay.querySelector('button:nth-child(1)') || '');
@@ -98,7 +98,7 @@ module('Integration | Component | ui-menu', function (hooks) {
     assert.dom(overlay).isVisible();
 
     await focus(trigger);
-    await triggerKeyEvent(trigger, 'keydown', 'ArrowUp');
+    await triggerKeyEvent(trigger, 'keyup', 'ArrowUp');
     assert.dom(overlay).isNotVisible();
 
     // Should close when focus is on the trigger and the escape key is typed
@@ -106,7 +106,7 @@ module('Integration | Component | ui-menu', function (hooks) {
     assert.dom(overlay).isVisible();
 
     await focus(trigger);
-    await triggerKeyEvent(trigger, 'keydown', 'Escape');
+    await triggerKeyEvent(trigger, 'keyup', 'Escape');
     assert.dom(overlay).isNotVisible();
 
     assert.verifySteps(['left']);
