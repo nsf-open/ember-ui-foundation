@@ -1,15 +1,15 @@
 <UiButton @text="{{this.buttonText}}"
   @variant="{{this.variant}}"
-  @id="{{this.triggerId}}"
-  @disabled={{this.disabled}}
   @icon="caret-down"
   @iconPlacement="right"
   @responsive={{false}}
-  @ariaControls="{{this.overlayId}}"
-  @ariaHasPopup="true"
   @testId={{this.testId}}
-  @ariaExpanded ="{{if this.visible "true" "false"}}"
-  @onKeyDown={{action this.handleTriggerKeyEvents}}
+  id="{{this.triggerId}}"
+  disabled={{this.disabled}}
+  aria-controls="{{this.overlayId}}"
+  aria-haspopup="true"
+  aria-expanded="{{if this.visible "true" "false"}}"
+  onkeydown={{action this.handleTriggerKeyEvents}}
 />
 
 {{#ui-internals/contextual-container
