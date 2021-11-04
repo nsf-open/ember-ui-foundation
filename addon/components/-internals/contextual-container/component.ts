@@ -723,9 +723,11 @@ export default class UiContextualContainer extends Component {
    * @protected
    */
   protected show() {
-    if (this.checkDestruction() || !this._isHidden || !this.enabled) {
-      return;
-    } else if (typeof this.onShow === 'function' && this.onShow(this) === false) {
+    if (
+      this.checkDestruction() ||
+      !(this._isHidden && this.enabled) ||
+      this.onShow?.(this) === false
+    ) {
       return;
     }
 
@@ -817,9 +819,7 @@ export default class UiContextualContainer extends Component {
    * @protected
    */
   protected hide(skipAnimation = false) {
-    if (this.checkDestruction()) {
-      return;
-    } else if (typeof this.onHide === 'function' && this.onHide(this) === false) {
+    if (this.checkDestruction() || this.onHide?.(this) === false) {
       return;
     }
 
