@@ -24,3 +24,6 @@ nice with other libraries/tools. */
 .mr-3px { margin-right: 3px; }
 .mr-4px { margin-right: 4px; }
 .mr-5px { margin-right: 5px; }
+
+.tooltip.menu .tooltip-inner { padding: 0; border: none; }
+.tooltip.menu .btn { text-align: left; }

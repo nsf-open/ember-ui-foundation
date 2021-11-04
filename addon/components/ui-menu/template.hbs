@@ -23,6 +23,7 @@
   @overlayComponent="ui-menu/flyout"
   @onShown={{action this.handleOverlayShown}}
   @onHidden={{action this.handleOverlayHidden}}
+  @testId={{this.testId}}
 >
   {{yield (hash
     Item=(component "ui-button"
