@@ -12,19 +12,19 @@
   @keyDown={{action this.handleTriggerKeyEvents}}
 />
 
-<UiInternals::ContextualContainer
-  @visible={{this.visible}}
-  @placement="bottom-start"
-  @class="{{concat 'menu-' this.variant}}"
-  @triggerEvents="click"
-  @triggerSelector="{{concat "#" this.triggerId}}"
-  @overlayId="{{this.overlayId}}"
-  @ariaAttachAs={{null}}
-  @overlayComponent="ui-menu/flyout"
-  @onShown={{action this.handleOverlayShown}}
-  @onHidden={{action this.handleOverlayHidden}}
-  @testId={{this.testId}}
->
+{{#ui-internals/contextual-container
+  visible=this.visible
+  placement="bottom-start"
+  class=(concat 'menu-' this.variant)
+  triggerEvents="click"
+  triggerSelector=(concat "#" this.triggerId)
+  overlayId=this.overlayId
+  ariaAttachAs=null
+  overlayComponent="ui-menu/flyout"
+  onShown=(action this.handleOverlayShown)
+  onHidden=(action this.handleOverlayHidden)
+  testId=this.testId
+}}
   {{yield (hash
     Item=(component "ui-button"
       ariaRole        = "menuitem"
@@ -33,4 +33,4 @@
       tabIndex        = "-1"
       _libraryOnClick = (action this.handleMenuItemClick))
   )}}
-</UiInternals::ContextualContainer>
+{{/ui-internals/contextual-container}}

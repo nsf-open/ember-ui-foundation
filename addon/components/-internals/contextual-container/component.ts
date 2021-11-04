@@ -554,7 +554,7 @@ export default class UiContextualContainer extends Component {
    */
   @computed()
   protected get inState() {
-    return new UiContextContainerInState();
+    return UiContextContainerInState.create();
   }
 
   /**
