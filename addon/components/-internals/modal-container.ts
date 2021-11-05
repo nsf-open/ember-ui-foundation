@@ -221,29 +221,29 @@ export default class ModalContainer extends Component {
   }
 
   setDomMarker() {
-    return new Promise((resolve) => {
+    return new Promise((resolveFn) => {
       if (this.inDom || this.destructionCheck()) {
-        resolve();
+        resolveFn();
         return;
       }
 
       set(this, 'inDom', true);
 
       next(this, () => {
-        schedule('afterRender', this, resolve);
+        schedule('afterRender', this, resolveFn);
       });
     });
   }
 
   removeDomMarker() {
-    return new Promise((resolve) => {
+    return new Promise((resolveFn) => {
       if (!this.inDom || this.destructionCheck()) {
-        resolve();
+        resolveFn();
         return;
       }
 
       set(this, 'inDom', false);
-      schedule('afterRender', this, resolve);
+      schedule('afterRender', this, resolveFn);
     });
   }
 

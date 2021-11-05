@@ -29,7 +29,7 @@ export default class UiModalDialog extends Component {
   onClose?: () => void;
 
   @attribute('data-test-id')
-  testId?: undefined;
+  testId?: string;
 
   @attribute('tabindex')
   tabIndex = '-1';
