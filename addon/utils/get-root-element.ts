@@ -11,8 +11,8 @@ export default function getRootElement(context: unknown) {
   let root: HTMLElement | null = document.getElementById(RootID) || document.body;
 
   runInDebug(() => {
-    const config = getOwner(context).resolveRegistration('config:environment');
-    const isTest = config.environment === 'test';
+    const config = getOwner(context)?.resolveRegistration('config:environment');
+    const isTest = config?.environment === 'test';
 
     if (isTest) {
       const TEST_HELPER = '@ember/test-helpers/dom/get-root-element';

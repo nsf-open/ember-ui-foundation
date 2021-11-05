@@ -1,0 +1,47 @@
+{{#if this.inDom}}
+  {{#if this._renderInPlace}}
+    {{#ui-modal/dialog
+      onClose        = (action this.close)
+      showModal      = this.showDialog
+      size           = this.size
+      paddingLeft    = this.paddingLeft
+      paddingRight   = this.paddingRight
+      centered       = this.centered
+      id             = this.dialogId
+      title          = this.title
+      closeDisabled  = this.disableCloseOptions
+      testId         = this.testId
+    }}
+      {{yield (hash
+        close         = (action this.close)
+        submit        = (perform-unlinked this.handleSubmit)
+        data          = this.data
+        closeButton   = (component "ui-button" _defaultText="Cancel" _defaultVariant="secondary"  disabled=this.disableCloseOptions  onClick=(action this.close))
+        submitButton  = (component "ui-button" _defaultText="Submit" _defaultVariant="primary" onClick=(perform-unlinked this.handleSubmit))
+      )}}
+    {{/ui-modal/dialog}}
+  {{else}}
+    {{#in-element this.destinationElement insertBefore=null}}
+      {{#ui-modal/dialog
+        onClose        = (action this.close)
+        showModal      = this.showDialog
+        size           = this.size
+        paddingLeft    = this.paddingLeft
+        paddingRight   = this.paddingRight
+        centered       = this.centered
+        id             = this.dialogId
+        title          = this.title
+        closeDisabled  = this.disableCloseOptions
+        testId         = this.testId
+      }}
+        {{yield (hash
+          close         = (action this.close)
+          submit        = (perform-unlinked this.handleSubmit)
+          data          = this.data
+          closeButton   = (component "ui-button" _defaultText="Cancel" _defaultVariant="secondary"  disabled=this.disableCloseOptions  onClick=(action this.close))
+          submitButton  = (component "ui-button" _defaultText="Submit" _defaultVariant="primary" onClick=(perform-unlinked this.handleSubmit))
+        )}}
+      {{/ui-modal/dialog}}
+    {{/in-element}}
+  {{/if}}
+{{/if}}
