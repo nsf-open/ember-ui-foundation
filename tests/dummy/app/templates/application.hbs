@@ -28,8 +28,7 @@
 
   <UiButton @variant="info" @onClick={{open-modal "test-modal"}}>Open Modal</UiButton>
 
-  {{#ui-modal title="I'm a modal window!" name="test-modal"}}
+  <UiModal @title="I'm a modal window!" @name="test-modal">
     <p>Hello World!</p>
-  {{/ui-modal}}
+  </UiModal>
 </div>
-
