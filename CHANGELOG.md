@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.1.0...v1.2.0) (2021-11-09)
+
+
+### Features
+
+* ui-panel and tests ([baf55c4](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/baf55c4e90284338654351c004af6256a9a0b906))
+
 ## [1.1.0](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.0.0...v1.1.0) (2021-11-05)
 
 
