@@ -23,6 +23,16 @@ export enum ButtonVariants {
   Link = 'link',
 }
 
+export enum PanelVariants {
+  Default = 'default',
+  Primary = 'primary',
+  Secondary = 'secondary',
+  Info = 'info',
+  Success = 'success',
+  Warning = 'warning',
+  Danger = 'danger',
+}
+
 export enum SizeVariants {
   Small = 'sm',
   Medium = 'md',
@@ -36,4 +46,11 @@ export enum KeyNames {
   ArrowDown = 'ArrowDown',
   Tab = 'Tab',
   Shift = 'Shift',
+}
+
+export enum HeadingLevels {
+  H1 = 'h1',
+  H2 = 'h2',
+  H3 = 'h3',
+  H4 = 'h4',
 }
