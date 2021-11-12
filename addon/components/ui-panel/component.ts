@@ -5,8 +5,9 @@ import { HeadingLevels, PanelVariants } from '../../constants';
 import template from './template';
 
 /**
- * Panels are stylized UI blocks with a heading and associated content. They're the backbone of
- * the MyNSF UI layout; kind-of a big deal.
+ * Panels are stylized content blocks with a heading and associated content
+ *
+ * .
  *
  * ```hbs
  * {{#ui-panel "Panel Heading"}}
@@ -30,12 +31,10 @@ import template from './template';
  * Simply leave off the heading argument.
  *
  * ```hbs
- * {{#ui-panel}}
+ * <UiPanel>
  * 	<p>Whatever panel body content is required.</p>
- * {{/ui-panel}}
+ * </UiPanel>
  * ```
- *
- * @class UiPanel
  */
 @tagName('section')
 @classNames('panel')
@@ -49,19 +48,11 @@ export default class UiPanel extends Component {
    * The title text of the panel.
    *
    * This can also be set as the first positional parameter of the component.
-   *
-   * @argument heading
-   * @type {string}
-   * @public
    */
   public heading?: string;
 
   /**
    * The heading level to use, if text is provided.
-   *
-   * @argument level
-   * @type {HeadingLevels}
-   * @public
    */
   public level = HeadingLevels.H2;
 
@@ -71,21 +62,11 @@ export default class UiPanel extends Component {
    * "panel-success" and so on).
    *
    * This can also be set as the second positional parameter of the component.
-   *
-   * @argument variant
-   * @type {PanelVariants}
-   * @default "default"
-   * @public
    */
   public variant? = PanelVariants.Default;
 
   /**
    * The value of the element's `data-test-id` attribute, if required.
-   *
-   * @argument testId
-   * @type {string}
-   * @default undefined
-   * @public
    */
   @attribute('data-test-id')
   public testId?: string;
