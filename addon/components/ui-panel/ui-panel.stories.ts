@@ -4,12 +4,6 @@ export default {
   title: 'ui-panel',
   component: 'UiPanel',
 
-  argTypes: {
-    heading: {
-      defaultValue: 'Panel Heading',
-    },
-  },
-
   parameters: {
     docs: {
       iframeHeight: 200,
@@ -36,3 +30,7 @@ export const Default = (args: unknown) => ({
     </UiPanel>`,
   context: args,
 });
+
+Default.args = {
+  heading: 'Panel Heading',
+};

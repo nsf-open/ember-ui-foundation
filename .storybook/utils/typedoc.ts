@@ -3,7 +3,10 @@ import type {
   DeclarationReflection,
   ParameterReflection,
   ProjectReflection,
+  SignatureReflection,
+  SomeType,
   Reflection,
+  Type,
 } from 'typedoc/dist/lib/serialization/schema';
 
 import { classify, dasherize } from '@ember/string';
@@ -38,6 +41,11 @@ export enum ReflectionKind {
   Reference = 0x1000000,
 }
 
+export enum TypeOfTypes {
+  Intrinsic = 'intrinsic',
+  Literal = 'literal',
+}
+
 export interface Project extends ProjectReflection {
   kind:       ReflectionKind.Project;
   kindString: never;
@@ -64,6 +72,9 @@ export interface Enumeration extends DeclarationReflection {
   kindString: 'Enumeration';
 }
 
+/**
+ * Type casting various reflections to increase specificity.
+ */
 type KindOf<K extends ReflectionKind> =
   K extends ReflectionKind.Project
     ? Project
@@ -73,9 +84,18 @@ type KindOf<K extends ReflectionKind> =
         ? Class
         : K extends ReflectionKind.Property
           ? Property
-          : K extends ReflectionKind.Enum
-            ? Enumeration
-            : Reflection;
+          : K extends ReflectionKind.Parameter
+            ? ParameterReflection
+            : K extends ReflectionKind.Enum
+              ? Enumeration
+              : K extends ReflectionKind.Function
+                ? SignatureReflection
+                : K extends ReflectionKind.Method
+                  ? SignatureReflection
+                  : K extends ReflectionKind.CallSignature
+                    ? SignatureReflection
+                    : Reflection;
+
 
 /**
  * Reflection type check.
@@ -105,6 +125,48 @@ export function findComponentModule(project: Project, name: string) {
 
   return module ?? undefined;
 }
+
+
+/**
+ * Retries all of the writable public properties of a component.
+ */
+export function getComponentPublicProperties(project: Project, nameOrClass: string | Class) {
+  const component = typeof nameOrClass === 'string'
+    ? findComponentDefinition(project, nameOrClass)
+    : nameOrClass;
+
+  if (component) {
+    return findChildrenOfKind(component, ReflectionKind.Property)
+      .filter(function(prop) {
+        return !(
+          prop.flags.isExternal
+          || prop.flags.isStatic
+          || prop.flags.isReadonly
+          || prop.flags.isPrivate
+          || prop.flags.isProtected
+        );
+      });
+  }
+
+  return undefined;
+}
+
+
+/**
+ * Returns the full description of the component, concatenating the short and full comment
+ * text as available.
+ */
+export function getComponentDescription(project: Project, name: string) {
+  const component = findComponentDefinition(project, name);
+
+  if (component) {
+    const { shortText, text } = component.comment ?? {};
+    return `${shortText}\n\n${text}`.trim();
+  }
+
+  return undefined;
+}
+
 
 /**
  * Given a container, return all its children of the requested Kind.
@@ -169,4 +231,101 @@ export function findComponentDefinition(project: Project, name: string) {
   return module
     ? findChildByName(module, 'default', ReflectionKind.Class)
     : undefined;
+}
+
+/**
+ * Stringify a declaration of some sort.
+ */
+export function toDeclarationString(
+  declaration: SignatureReflection | DeclarationReflection,
+  project: Project,
+  showName = true
+) {
+  const name     = declaration.name;
+  const optional = declaration.flags.isOptional ? '?' : '';
+
+  let type = toTypeString(declaration.type, project);
+
+  // Function signature
+  if ('parameters' in declaration) {
+    const params = declaration.parameters.map(
+      item => toDeclarationString(item, project)
+    ).join(', ');
+
+    type = `(${params}) => ${type}`;
+  }
+
+  return showName
+    ? `${name}${optional}: ${type}`
+    : type;
+}
+
+/**
+ * Convert a type definition into a string.
+ */
+export function toTypeString(type: SomeType | Type, project: Project) {
+  // Literals - strings, numbers, and booleans
+  if ('value' in type) {
+    return typeof type.value === 'string' ? `"${type.value}"` : String(type.value);
+  }
+
+  let str = '';
+
+  // This would be where we look up something like a Class reference, but default exports don't come with the local
+  // name of the object... it's always "default", and while that's technically accurate it's not particularly
+  // useful to humans. Hrumph.
+
+  // if ('id' in type) {
+  //   const ref = findChildById(project, type.id);
+  //   if (ref) {}
+  // }
+
+  // Inferred, Intrinsic, Predicate, Reference, and Unknown types all have a name
+  if ('name' in type) {
+    str = type.name;
+  }
+
+  // The <string> bit in something like Promise<string>
+  if ('typeArguments' in type) {
+    const typeArgs = type.typeArguments.map(
+      item => toTypeString(item, project)
+    );
+
+    str = `${str}<${typeArgs.join(', ')}>`;
+  }
+
+  // Unions and Intersections
+  if ('types' in type) {
+    const separator = type.type === 'union'
+      ? ' | '
+      : ' & ';
+
+    const typeString = type.types.map(item => {
+      const result = toTypeString(item, project);
+
+      if (
+        (type.type === 'union' && item.type === 'intersection') ||
+        (item.type === 'union' && type.type === 'intersection')
+      ) {
+        return `(${result})`;
+      }
+
+      return result;
+    }).join(separator);
+
+    str = `${str}${typeString}`;
+  }
+
+  // A reflection
+  if ('declaration' in type) {
+
+    if ('children' in type.declaration) {
+      str = `{ ${ type.declaration.children.map(item => toDeclarationString(item, project)).join(', ') } }`;
+    }
+    else if ('signatures' in type.declaration) {
+      str = type.declaration.signatures.map(sig => toDeclarationString(sig, project, false)).join(' | ');
+    }
+  }
+
+  return str;
 }

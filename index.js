@@ -51,6 +51,10 @@ module.exports = {
       app.bootstrap({
         entryPoints: ['./addon'],
         entryPointStrategy: 'expand',
+        excludeExternals: true,
+        excludePrivate: true,
+        excludeProtected: true,
+        disableSources: true,
         logger: this.ui.writeInfoLine.bind(this.ui),
       });
 

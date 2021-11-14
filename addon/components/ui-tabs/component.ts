@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { set } from '@ember/object';
 import { layout, tagName, classNames, attribute } from '@ember-decorators/component';
+import { HeadingLevels } from '@nsf/ui-foundation/constants';
 import template from './template';
 
 /**
@@ -19,58 +20,36 @@ import template from './template';
  * ```
  *
  * @class UiTabs
+ *
+ * @yields {UiTabsOption} Tabs.Option Here is some extra long text that is intentionally being wrapped to
+ * the next line in order to see what happens to it. Does it remain with the yields tag above?
+ * Let's find out!
  */
 @tagName('ul')
 @classNames('nav', 'nav-tabs')
 @layout(template)
 export default class UiTabs extends Component {
-  /**
-   * @argument ariaRole
-   * @type string
-   * @default "tablist"
-   */
   @attribute('aria-role')
   public ariaRole = 'tablist';
 
-  /**
-   * @argument onChange
-   * @type (newTabValue: any) => void
-   */
   public onChange?: (newTabValue: unknown) => void;
 
-  /**
-   * @argument selected
-   * @type any
-   */
   public selected?: unknown;
 
-  /**
-   * The value of the `data-test-id` attribute.
-   *
-   * @argument testId
-   * @type string
-   * @default "tab-control"
-   */
+  /** The value of the `data-test-id` attribute. */
   @attribute('data-test-id')
   public testId = 'tab-control';
 
-  /**
-   * The value of the `aria-label` attribute.
-   *
-   * @argument ariaLabel
-   * @type string
-   */
+  /** The value of the `aria-label` attribute. */
   @attribute('aria-label')
   public ariaLabel?: string;
 
-  /**
-   * @argument headingLevel
-   * @type "1" | "2" | "3" | "4" | "5" | "6"
-   */
-  public headingLevel?: '1' | '2' | '3' | '4' | '5' | '6';
+  public headingLevel?: HeadingLevels;
 
+  /** @private */
   currentSelection?: unknown;
 
+  /** @private */
   previousSelection?: unknown;
 
   // eslint-disable-next-line ember/classic-decorator-hooks
@@ -79,9 +58,6 @@ export default class UiTabs extends Component {
 
     set(this, 'currentSelection', this.selected);
     set(this, 'previousSelection', this.selected);
-
-    // eslint-disable-next-line ember/no-observers
-    // addObserver(this, 'selected', this, this.watchSelectedValue);
   }
 
   // eslint-disable-next-line ember/no-component-lifecycle-hooks
@@ -99,7 +75,7 @@ export default class UiTabs extends Component {
     }
   }
 
-  handleTabSelect(selectedTabValue: unknown) {
+  protected handleTabSelect(selectedTabValue: unknown) {
     set(this, 'previousSelection', this.currentSelection);
     set(this, 'currentSelection', selectedTabValue);
     set(this, 'selected', selectedTabValue);
@@ -107,7 +83,7 @@ export default class UiTabs extends Component {
     this.maybeTriggerOnChange();
   }
 
-  maybeTriggerOnChange() {
+  protected maybeTriggerOnChange() {
     if (this.currentSelection !== this.previousSelection) {
       this.onChange?.(this.currentSelection);
     }
