@@ -28,7 +28,7 @@
     "prepack": "ember ts:precompile",
     "postpack": "ember ts:clean",
     "release": "standard-version",
-    "storybook:build": "ember build && build-storybook -s dist",
+    "storybook:build": "STORYBOOK=true ember build && build-storybook -s dist",
     "storybook:start": "start-storybook -p 6006 -s dist --ci"
   },
   "dependencies": {
