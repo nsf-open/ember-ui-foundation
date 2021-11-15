@@ -18,14 +18,6 @@ module.exports = {
     this.import('node_modules/font-awesome/fonts/fontawesome-webfont.woff2', { destDir: 'fonts' });
   },
 
-  shouldIncludeChildAddon(addon) {
-    if (addon.name === 'ember-engines-router-service') {
-      return !!this.project.findAddonByName('ember-engines');
-    }
-
-    return this._super.shouldIncludeChildAddon.apply(this, arguments);
-  },
-
   contentFor(type, config) {
     if (type === 'body-footer' && config.environment !== 'test') {
       return '<div id="ui-positioning-root"></div>';
