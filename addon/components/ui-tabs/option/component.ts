@@ -5,13 +5,9 @@ import { reads } from '@ember/object/computed';
 import template from './template';
 
 /**
- * A single tab option.
+ * A single tab option. See UiTabs for implementation details.
  *
- * ```handlebars
- * {{tabs.option "Tab A" "valueA" disabled=false}}
- * ```
- *
- * @class UiTabsTab
+ * @class UiTabsOption
  */
 @tagName('li')
 @layout(template)
@@ -21,10 +17,6 @@ export default class UiTabsOption extends Component {
   /**
    * The text to be displayed in the tab. This can also be set as the
    * first positional parameter of the component.
-   *
-   * @argument text
-   * @type string
-   * @required
    */
   public text!: string;
 
@@ -34,33 +26,30 @@ export default class UiTabsOption extends Component {
    * can also be set as the second positional parameter of the component.
    *
    * If not provided, the tab text will be used.
-   *
-   * @argument value
-   * @type any
    */
   @reads('text')
   declare value: unknown;
 
-  /**
-   * Whether the tab can be interacted with.
-   *
-   * @argument disabled
-   * @type boolean
-   * @default false
-   */
+  /** If disabled, the tab cannot be interacted with. */
   @className
   public disabled = false;
 
-  public headingLevel = null;
+  /**
+   * Value of the `data-test-id` attribute of the tab, if needed.
+   */
+  @attribute('data-test-id')
+  public testId = 'tabs-option';
 
   @attribute('aria-role')
   public ariaRole = 'presentation';
 
-  @attribute('data-test-id')
-  public testId = 'tabs-option';
+  /** @private */
+  headingLevel = null;
 
+  /** @private */
   selectedValue: unknown;
 
+  /** @private */
   handleTabSelect?: (value: unknown) => void;
 
   @computed('value', 'selectedValue')

@@ -151,14 +151,26 @@ function buildComponentYieldsEntry(project: Project, tag: { tag: string, text: s
     type = text.substring(1, i);
   }
 
-  name = text.substring(i + 1, text.indexOf(' ', i + 2)).trim();
+  // If a type was described, bump the pointer over the closing "}"
+  i = (i > 0) ? (i + 1) : i;
 
-  i = i + 2 + name.length;
+  // There is either a name, or name + description remaining. Find the
+  // next whitespace - that'll be the end of the name, or go to the
+  // end of the string
+  let endOfName = text.indexOf(' ', i + 1);
+  endOfName = endOfName > -1 ? endOfName : text.length;
 
-  desc = text.substring(i).trim();
+  name = text.substring(i, endOfName).trim();
 
-  if (desc.startsWith('-')) {
-    desc = desc.replace('-', '').trim();
+  // If there is any string left to go it's all description
+  i = i + 1 + name.length;
+
+  if (i < text.length) {
+    desc = text.substring(i).trim();
+
+    if (desc.startsWith('-')) {
+      desc = desc.replace('-', '').trim();
+    }
   }
 
   return {

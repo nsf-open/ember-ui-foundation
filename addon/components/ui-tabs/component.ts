@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { set } from '@ember/object';
+import { set, computed } from '@ember/object';
 import { layout, tagName, classNames, attribute } from '@ember-decorators/component';
 import { HeadingLevels } from '@nsf/ui-foundation/constants';
 import template from './template';
@@ -13,17 +13,15 @@ import template from './template';
  * be provided as an argument to `onChange`.
  *
  * ```handlebars
- * {{#ui-tabs onChange=(action this.handleTabChange) as |tabs|}}
- *   {{tabs.Option "Tab A" "Value A"}}
- *   {{tabs.Option "Tab B" "Value B"}}
- * {{/ui-tabs}}
+ * <UiTabs @onChange={{action this.handleTabChange}} as |Tabs|>
+ *   <Tabs.Option @text="Tab A" @value="Value A" />
+ *   <Tabs.Option @text="Tab B" @value="Value B" />
+ * </UiTabs>
  * ```
  *
  * @class UiTabs
  *
- * @yields {UiTabsOption} Tabs.Option Here is some extra long text that is intentionally being wrapped to
- * the next line in order to see what happens to it. Does it remain with the yields tag above?
- * Let's find out!
+ * @yields {UiTabsOption} Tabs.Option
  */
 @tagName('ul')
 @classNames('nav', 'nav-tabs')
@@ -51,6 +49,15 @@ export default class UiTabs extends Component {
 
   /** @private */
   previousSelection?: unknown;
+
+  /** @private */
+  @computed('headingLevel')
+  get level() {
+    // The HeadingLevels enum describes heading levels as "h1", "h2", etc,
+    // but for tabs we're going to be passing the value to the `aria-level`
+    // attribute which only expect a string integer.
+    return this.headingLevel ? this.headingLevel.toLowerCase().replace('h', '') : undefined;
+  }
 
   // eslint-disable-next-line ember/classic-decorator-hooks
   init() {
