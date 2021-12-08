@@ -1,0 +1,56 @@
+{{ui-stepflow/progress-bar manager=this.manager}}
+
+<UiPanel
+  @heading="{{this.heading}}"
+  @variant="{{this.variant}}"
+  @testId={{this.testId}}
+>
+  {{component this.manager.currentStep.component
+    currentStep     = this.manager.currentStep
+    stepflowManager = this.manager
+    stepflowData    = this.manager.data
+  }}
+</UiPanel>
+
+<div class="row" data-test-id={{this.navBarTestId}}>
+	<div class="col-sm-3 btn-col-left">
+		{{#if this.cancellationRoute}}
+			{{ui-link-to "Cancel" this.cancellationRoute
+				class  = "btn btn-secondary"
+				testId = "cancel-btn-bottom"
+			}}
+		{{/if}}
+	</div>
+
+	<div class="col-sm-9 btn-col-right">
+		{{#if this.manager.hasPreviousStep}}
+      <UiButton
+        @variant="secondary"
+        @onClick={{this.manager.goToPreviousStep}}
+        @testId="previous-btn"
+      >
+        Previous
+      </UiButton>
+		{{/if}}
+
+		{{#if this.manager.hasNextStep}}
+      <UiButton
+        @variant="primary"
+        @disabled={{not this.manager.currentStep.isComplete}}
+        @onClick={{this.manager.goToNextStep}}
+        @testId="next-btn"
+      >
+        Next
+      </UiButton>
+		{{else}}
+      <UiButton
+        @variant="primary"
+        @disabled={{not this.manager.currentStep.isComplete}}
+        @onClick={{this.completeStepFlow}}
+        @testId="complete-btn"
+      >
+        {{this.submitButtonText}}
+      </UiButton>
+		{{/if}}
+	</div>
+</div>
