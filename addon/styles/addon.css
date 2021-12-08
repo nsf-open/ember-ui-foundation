@@ -2,6 +2,13 @@
 of stock Bootstrap in order for this library to play
 nice with other libraries/tools. */
 
+:root {
+  --screen-xs: 480px;
+  --screen-sm: 768px;
+  --screen-md: 992px;
+  --screen-lg: 1200px;
+}
+
 .tooltip.top,
 .tooltip.bottom,
 .tooltip.left,
@@ -12,6 +19,9 @@ nice with other libraries/tools. */
 .tooltip.right .tooltip-arrow {
   margin: 0;
 }
+
+.tooltip.menu .tooltip-inner { padding: 0; border: none; }
+.tooltip.menu .btn { text-align: left; }
 
 .ml-1px { margin-left: 1px; }
 .ml-2px { margin-left: 2px; }
@@ -25,5 +35,58 @@ nice with other libraries/tools. */
 .mr-4px { margin-right: 4px; }
 .mr-5px { margin-right: 5px; }
 
-.tooltip.menu .tooltip-inner { padding: 0; border: none; }
-.tooltip.menu .btn { text-align: left; }
+/*
+ * At or above the XS width
+ */
+@media (min-width: var(--screen-xs)) {
+  .hidden-xs-up { display: none !important; }
+}
+
+/*
+ * At or below the XS width
+ */
+@media (max-width: var(--screen-xs)) {
+  .hidden-xs-down { display: none !important; }
+}
+
+/*
+ * At or above the SM width
+ */
+@media (min-width: var(--screen-sm)) {
+  .hidden-sm-up { display: none !important; }
+}
+
+/*
+ * At or below the SM width
+ */
+@media (max-width: var(--screen-sm)) {
+  .hidden-sm-down { display: none !important; }
+}
+
+/*
+ * At or above the MD width
+ */
+@media (min-width: var(--screen-md)) {
+  .hidden-md-up { display: none !important; }
+}
+
+/*
+ * At or below the MD width
+ */
+@media (max-width: var(--screen-md)) {
+  .hidden-md-down { display: none !important; }
+}
+
+/*
+ * At or above the LG width
+ */
+@media (min-width: var(--screen-lg)) {
+  .hidden-lg-up { display: none !important; }
+}
+
+/*
+ * At or below the LG width
+ */
+@media (max-width: var(--screen-lg)) {
+  .hidden-lg-down { display: none !important; }
+}

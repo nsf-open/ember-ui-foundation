@@ -1,6 +1,6 @@
 {{#each this.manager.steps as |step idx|}}
 	<li class="chevron {{step.status}}">
-		{{#if step.canLinkTo}}
+		{{#if step.canBeLinkedTo}}
 			<a href="#" role="button" onclick={{action this.handleChevronClick idx}}>
 				<span class="content">
 					<span class="text-center hidden-md-up">{{get-ones-index idx}}.</span>

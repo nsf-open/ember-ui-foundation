@@ -13,7 +13,7 @@ import StepFlowItem, { StepFlowDescriptor } from './StepFlowItem';
  * ```
  */
 export function stepFlowManager<Data = Record<string, unknown>>(
-  steps?: (StepFlowItem<Data> | StepFlowDescriptor<Data>)[]
+  steps?: StepFlowDescriptor<Data>[]
 ) {
   return computed(function createStepFlowManager() {
     return new StepFlowManager<Data>(steps);

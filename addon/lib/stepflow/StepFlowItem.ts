@@ -1,6 +1,7 @@
+import type Component from '@ember/component';
+import type StepFlowManager from './StepFlowManager';
 import { computed, set, action } from '@ember/object';
 import { or } from '@ember/object/computed';
-import StepFlowManager from './StepFlowManager';
 
 /**
  * Constants that can be joined together to describe the various states
@@ -22,7 +23,7 @@ export enum StatusValues {
  * When rendered via StepFlow a component will receive the additional
  * properties described in this interface.
  */
-export interface StepFlowComponent<Data> {
+export interface StepFlowComponent<Data> extends Component {
   readonly currentStep: StepFlowItem<Data>;
   readonly stepFlowManager: StepFlowManager<Data>;
   readonly stepFlowData: Data;
