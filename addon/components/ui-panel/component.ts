@@ -5,9 +5,7 @@ import { HeadingLevels, PanelVariants } from '../../constants';
 import template from './template';
 
 /**
- * Panels are stylized content blocks with a heading and associated content
- *
- * .
+ * Panels are stylized content blocks with a heading and associated content.
  *
  * ```hbs
  * {{#ui-panel "Panel Heading"}}

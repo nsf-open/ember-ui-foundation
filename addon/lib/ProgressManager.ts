@@ -1,82 +1,99 @@
+import type { ProgressItemDescriptor } from './ProgressItem';
 import { set, computed, action } from '@ember/object';
 import { reads, notEmpty } from '@ember/object/computed';
 import { A, isArray } from '@ember/array';
 import { assert } from '@ember/debug';
-import StepFlowItem, { StepFlowDescriptor } from './StepFlowItem';
+import ProgressItem from './ProgressItem';
 
 /**
- * Decorator to create a new StepFlowManager instance.
+ * Decorator to create a new ProgressManager instance.
  *
  * ```typescript
- * @stepFlowManager([{ label: 'Step A', component: 'steps/step-a' }])
- * public declare manager: StepFlowManager;
+ * @progressManager([{ label: 'Step A', component: 'steps/step-a' }])
+ * public declare manager: ProgressManager;
  * ```
  */
-export function stepFlowManager<Data = Record<string, unknown>>(
-  steps?: StepFlowDescriptor<Data>[]
+export function progressManager<Data = Record<string, unknown>>(
+  steps?: ProgressItemDescriptor<Data>[]
 ) {
   return computed(function createStepFlowManager() {
-    return new StepFlowManager<Data>(steps);
+    return new ProgressManager<Data>(steps);
   });
 }
 
 /**
- * @class StepFlowManager
+ * @class ProgressManager
  */
-export default class StepFlowManager<Data> {
-  constructor(steps?: (StepFlowItem<Data> | StepFlowDescriptor<Data>)[]) {
+export default class ProgressManager<Data> {
+  constructor(steps?: (ProgressItem<Data> | ProgressItemDescriptor<Data>)[]) {
     if (isArray(steps)) {
       steps.forEach((step) => this.addStep(step));
     }
   }
 
   /** The ordered steps of this StepFlow. */
-  public readonly steps = A<StepFlowItem<Data>>();
+  public readonly steps = A<ProgressItem<Data>>();
 
   /**
-   * A single `data` object is shared throughout a StepFlow instance, and is
-   * available for whatever need is required of it. For example, a multipart
-   * form that spans several steps can all record their inputs here for easy
-   * access.
+   * A single generic `data` object that is shared between all ProgressItems
+   * and is available for whatever need is required of it. For example, a multipart
+   * form that spans several workflow steps can all record their inputs here for
+   * easy retrieval.
    */
   public data?: Data;
 
-  /** The index of the current step item in the flow. */
+  /**
+   * The index of the current ProgressItem within the workflow.
+   */
   public currentStepIndex = 0;
 
-  /** The total number of step items within this StepFlow. */
+  /**
+   * The total number of items within the workflow.
+   */
   @reads('steps.length')
   public declare readonly totalStepCount: number;
 
-  /** If true, there is at least one step before the current. */
+  /**
+   * If true, there is at least one ProgressItem before the current.
+   */
   @notEmpty('previousStep')
   public declare readonly hasPreviousStep: boolean;
 
-  /** If true, there is at least one more step after the current. */
+  /**
+   * If true, there is at least one more ProgressItem after the current.
+   */
   @notEmpty('nextStep')
   public declare readonly hasNextStep: boolean;
 
-  /** The current StepFlowItem instance. */
+  /**
+   * The ProgressItem at the current index.
+   */
   @computed('steps.[]', 'currentStepIndex')
   public get currentStep() {
-    return this.steps.objectAt(this.currentStepIndex) as StepFlowItem<Data>;
+    return this.steps.objectAt(this.currentStepIndex) as ProgressItem<Data>;
   }
 
-  /** The reference to the StepFlowItem prior to the current one. */
+  /**
+   * A reference to the ProgressItem prior to the current one.
+   */
   @computed('currentStep', 'currentStepIndex', 'steps')
   public get previousStep() {
     const prevIndex = this.currentStepIndex - 1;
     return prevIndex < 0 ? undefined : this.steps[prevIndex];
   }
 
-  /** A reference to the StepFlowItem after the current one. */
+  /**
+   * A reference to the ProgressItem after the current one.
+   */
   @computed('currentStep', 'currentStepIndex', 'steps.length')
   public get nextStep() {
     const nextIndex = this.currentStepIndex + 1;
     return nextIndex >= this.steps.length ? undefined : this.steps[nextIndex];
   }
 
-  /** The number of steps that have been completed so far. */
+  /**
+   * The number of workflow steps that have been completed so far.
+   */
   @computed('steps.@each.{complete,indeterminate}')
   public get completedStepCount() {
     const steps = this.steps;
@@ -92,28 +109,38 @@ export default class StepFlowManager<Data> {
     return steps.length;
   }
 
-  /** If true, all steps have been marked complete. */
+  /**
+   * If true, all ProgressItems have been marked complete.
+   */
   @computed('totalStepCount', 'completedStepCount')
   public get isComplete() {
     return this.totalStepCount === this.completedStepCount;
   }
 
-  /** Retrieves the step at the specified index. */
+  /**
+   * Retrieves the ProgressItem at the specified index.
+   */
   public getStepAt(index: number) {
     return this.steps.objectAt(index);
   }
 
-  /** Retrieves the step that is one step before the specified index. */
+  /**
+   * Retrieves the ProgressItem that is one step before the specified index.
+   */
   public getStepBefore(index: number) {
     return this.getStepAt(index - 1);
   }
 
-  /** Retrieves the step that is one step after the specified index. */
+  /**
+   * Retrieves the ProgressItem that is one step after the specified index.
+   */
   public getStepAfter(index: number) {
     return this.getStepAt(index + 1);
   }
 
-  /** Action to navigate to the step at a specific index. */
+  /**
+   * Action to navigate to the ProgressItem at a specific index.
+   */
   @action
   public goToStep(index: number) {
     if (index > -1 && index <= this.completedStepCount) {
@@ -124,7 +151,9 @@ export default class StepFlowManager<Data> {
     return false;
   }
 
-  /** Action to navigate forward one step. */
+  /**
+   * Action to navigate forward one step.
+   */
   @action
   public goToNextStep() {
     assert(
@@ -137,19 +166,23 @@ export default class StepFlowManager<Data> {
     return this.goToStep(this.currentStepIndex + 1);
   }
 
-  /** Action to navigate back one step. */
+  /**
+   * Action to navigate back one step.
+   */
   @action
   public goToPreviousStep() {
     return this.goToStep(this.currentStepIndex - 1);
   }
 
-  /** Add a new step to the end of the current list. */
-  public addStep(step: StepFlowItem<Data> | StepFlowDescriptor<Data>) {
-    if (step instanceof StepFlowItem) {
+  /**
+   * Add a new step to the end of the current list.
+   */
+  public addStep(step: ProgressItem<Data> | ProgressItemDescriptor<Data>) {
+    if (step instanceof ProgressItem) {
       set(step, 'manager', this);
       this.steps.addObject(step);
     } else if (typeof step?.label === 'string') {
-      this.steps.addObject(new StepFlowItem(step, this));
+      this.steps.addObject(new ProgressItem(step, this));
     } else {
       assert('The properties passed to "addStep" must be an object', false);
     }

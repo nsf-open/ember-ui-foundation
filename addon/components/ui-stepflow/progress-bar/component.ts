@@ -1,4 +1,4 @@
-import type StepFlowManager from '@nsf/ui-foundation/lib/stepflow/StepFlowManager';
+import type ProgressManager from '@nsf/ui-foundation/lib/ProgressManager';
 import Component from '@ember/component';
 import { layout, tagName, classNames } from '@ember-decorators/component';
 import template from './template';
@@ -15,7 +15,7 @@ export default class UiStepFlowProgressBar extends Component {
    * elements. Each step in the manager will receive a chevron with
    * usage based on that step being `complete`.
    */
-  public declare readonly manager: StepFlowManager<unknown>;
+  public declare readonly manager: ProgressManager<unknown>;
 
   /**
    * Passes the clicked-on chevron index back to the manager.

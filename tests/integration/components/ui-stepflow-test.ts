@@ -1,5 +1,5 @@
 import type UiStepFlow from '@nsf/ui-foundation/components/ui-stepflow/component';
-import type { StepFlowComponent } from '@nsf/ui-foundation/lib/stepflow/StepFlowItem';
+import type { ProgressComponent } from '@nsf/ui-foundation/lib/ProgressItem';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click, settled } from '@ember/test-helpers';
@@ -28,20 +28,20 @@ module('Integration | Component | ui-stepflow', function (hooks) {
   });
 
   test('it exposes additional properties to components that it renders', async function (assert) {
-    const stepFlowData = { content: 'Hello World' };
+    const progressData = { content: 'Hello World' };
 
-    this.set('data', stepFlowData);
+    this.set('data', progressData);
     this.set('steps', [{ label: 'Step A', component: 'test-component-a' }]);
 
     // language=handlebars
     await render(hbs`<UiStepflow @id="stepflow" @steps={{this.steps}} @data={{this.data}} />`);
 
     const flow = lookupComponent<UiStepFlow<unknown>>(this, 'stepflow');
-    const stepA = lookupComponent<StepFlowComponent<unknown>>(this, 'step-a');
+    const stepA = lookupComponent<ProgressComponent<unknown>>(this, 'step-a');
 
-    assert.strictEqual(stepA.stepFlowManager, flow.manager);
-    assert.strictEqual(stepA.currentStep, flow.manager.getStepAt(0));
-    assert.strictEqual(stepA.stepFlowData, stepFlowData);
+    assert.strictEqual(stepA.progressManager, flow.manager);
+    assert.strictEqual(stepA.progressItem, flow.manager.getStepAt(0));
+    assert.strictEqual(stepA.progressData, progressData);
   });
 
   test('it displays a navigable set of components', async function (assert) {
@@ -179,8 +179,8 @@ module('Integration | Component | ui-stepflow', function (hooks) {
     assert.dom(`${chevron2} a`).doesNotExist();
     assert.dom(`${chevron3} a`).doesNotExist();
 
-    const stepB = lookupComponent<StepFlowComponent<unknown>>(this, 'step-b');
-    stepB.currentStep.markComplete();
+    const stepB = lookupComponent<ProgressComponent<unknown>>(this, 'step-b');
+    stepB.progressItem.markComplete();
     await settled();
 
     assert.dom(chevron2).hasClass('complete');
@@ -252,17 +252,17 @@ module('Integration | Component | ui-stepflow', function (hooks) {
     assert.dom(prevBtn).isEnabled();
     assert.dom(saveBtn).doesNotExist();
 
-    const stepB = lookupComponent<StepFlowComponent<unknown>>(this, 'step-b');
+    const stepB = lookupComponent<ProgressComponent<unknown>>(this, 'step-b');
 
-    stepB.currentStep.markComplete();
+    stepB.progressItem.markComplete();
     await settled();
     assert.dom(nextBtn).isEnabled();
 
-    stepB.currentStep.markIncomplete();
+    stepB.progressItem.markIncomplete();
     await settled();
     assert.dom(nextBtn).isDisabled();
 
-    stepB.currentStep.markComplete();
+    stepB.progressItem.markComplete();
     await settled();
     await click(nextBtn);
 
@@ -290,9 +290,9 @@ module('Integration | Component | ui-stepflow', function (hooks) {
     await click(nextBtn);
     await click(nextBtn);
 
-    const stepC = lookupComponent<StepFlowComponent<unknown>>(this, 'step-c');
+    const stepC = lookupComponent<ProgressComponent<unknown>>(this, 'step-c');
 
-    stepC.currentStep.markComplete();
+    stepC.progressItem.markComplete();
     await settled();
 
     assert.dom(saveBtn).isEnabled();

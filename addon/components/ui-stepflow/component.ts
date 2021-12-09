@@ -1,6 +1,6 @@
-import type { StepFlowDescriptor } from '@nsf/ui-foundation/lib/stepflow/StepFlowItem';
+import type { ProgressItemDescriptor } from '@nsf/ui-foundation/lib/ProgressItem';
 import Component from '@ember/component';
-import StepFlowManager from '@nsf/ui-foundation/lib/stepflow/StepFlowManager';
+import ProgressManager from '@nsf/ui-foundation/lib/ProgressManager';
 import { computed, action } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { layout } from '@ember-decorators/component';
@@ -15,8 +15,6 @@ import template from './template';
  * ```handlebars
  * {{ui-stepflow steps=this.steps data=this.workflowData}}
  * ```
- *
- * @class UiStepFlow
  *
  * @yield {object} stepflow
  * */
@@ -54,7 +52,7 @@ export default class UiStepFlow<Data> extends Component {
    * {{ui-stepflow steps=this.steps}}
    * ```
    */
-  public steps?: StepFlowDescriptor<Data>[];
+  public steps?: ProgressItemDescriptor<Data>[];
 
   /**
    * The data object passed into the component. This argument takes an object that
@@ -106,11 +104,6 @@ export default class UiStepFlow<Data> extends Component {
    *   cancellationRoute="route.to.destination.when.clicked"
    * />
    * ```
-   *
-   * @argument cancellationRoute
-   * @type {string|undefined}
-   * @default undefined
-   * @public
    */
   public cancellationRoute?: string;
 
@@ -122,11 +115,11 @@ export default class UiStepFlow<Data> extends Component {
 
   public testId?: string;
 
-  public variant = PanelVariants.Secondary;
+  public variant = PanelVariants.Default;
 
   @computed('data', 'steps')
   public get manager() {
-    const manager = new StepFlowManager<Data>(this.steps);
+    const manager = new ProgressManager<Data>(this.steps);
     manager.data = this.data;
 
     return manager;

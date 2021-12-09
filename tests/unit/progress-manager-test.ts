@@ -1,19 +1,19 @@
 import { module, test } from 'qunit';
-import StepFlowManager, { stepFlowManager } from '@nsf/ui-foundation/lib/stepflow/StepFlowManager';
-import StepFlowItem from '@nsf/ui-foundation/lib/stepflow/StepFlowItem';
+import ProgressManager, { progressManager } from '@nsf/ui-foundation/lib/ProgressManager';
+import ProgressItem from '@nsf/ui-foundation/lib/ProgressItem';
 
 class TestClass {
-  @stepFlowManager([{ label: 'Step A', component: 'test-component-a' }])
-  public declare readonly decoratorBuiltManager: StepFlowManager<unknown>;
+  @progressManager([{ label: 'Step A', component: 'test-component-a' }])
+  public declare readonly decoratorBuiltManager: ProgressManager<unknown>;
 }
 
-module('Unit | Lib | StepFlow', function () {
+module('Unit | Lib | ProgressManager', function () {
   test('@stepFlowManager decorator', function (assert) {
-    assert.true(new TestClass().decoratorBuiltManager instanceof StepFlowManager);
+    assert.true(new TestClass().decoratorBuiltManager instanceof ProgressManager);
   });
 
   test('the manager creates StepFlowItem instances from basic definitions', function (assert) {
-    const manager = new StepFlowManager([
+    const manager = new ProgressManager([
       { label: 'Step A', component: 'test-component-a' },
       { label: 'Step B', component: 'test-component-b', title: 'Step 2' },
       { label: 'Step C', component: 'test-component-c', title: 'Step 3', indeterminate: true },
@@ -46,7 +46,7 @@ module('Unit | Lib | StepFlow', function () {
   });
 
   test('additional steps can be added to the manager', function (assert) {
-    const manager = new StepFlowManager([{ label: 'Step A', component: 'test-component-a' }]);
+    const manager = new ProgressManager([{ label: 'Step A', component: 'test-component-a' }]);
 
     assert.strictEqual(manager.totalStepCount, 1);
 
@@ -55,7 +55,7 @@ module('Unit | Lib | StepFlow', function () {
     assert.strictEqual(stepA?.component, 'test-component-a');
 
     manager.addStep({ label: 'Step B', component: 'test-component-b', title: 'Step 2' });
-    manager.addStep(new StepFlowItem({ label: 'Step C', component: 'test-component-c' }, manager));
+    manager.addStep(new ProgressItem({ label: 'Step C', component: 'test-component-c' }, manager));
 
     assert.throws(() => {
       // @ts-expect-error - Intentionally passing in the wrong type of thing
@@ -72,7 +72,7 @@ module('Unit | Lib | StepFlow', function () {
   });
 
   test('steps can be navigated between', function (assert) {
-    const manager = new StepFlowManager([
+    const manager = new ProgressManager([
       { label: 'Step A', component: 'test-component-a', indeterminate: true },
       { label: 'Step B', component: 'test-component-b', indeterminate: true },
       { label: 'Step C', component: 'test-component-c', indeterminate: true },
@@ -109,8 +109,8 @@ module('Unit | Lib | StepFlow', function () {
     assert.strictEqual(manager.nextStep, undefined);
   });
 
-  test('the completed state of a StepFlowItem can be toggled via updateCompleteState()', function (assert) {
-    const manager = new StepFlowManager([{ label: 'Step A', component: 'test-component-a' }]);
+  test('the completed state of a ProgressItem can be toggled via updateCompleteState()', function (assert) {
+    const manager = new ProgressManager([{ label: 'Step A', component: 'test-component-a' }]);
     const stepA = manager.getStepAt(0);
 
     assert.false(stepA?.isComplete);
