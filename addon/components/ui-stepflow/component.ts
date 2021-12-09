@@ -8,55 +8,69 @@ import { PanelVariants } from '@nsf/ui-foundation/constants';
 import template from './template';
 
 /**
- * A multistep workflow, also commonly referred to as a "wizard".
+ * A linear workflow, also commonly referred to as a "wizard". Typical use cases
+ * include multipart forms and action -> confirm -> execute patterns.
  *
- * The component's inline form expects two main parameters: steps and data.
+ * The UiStepflow component has a very minimal template footprint. You'll need
+ * to provide an array of objects, each one containing `label` and `component`
+ * properties. The contents and order of these objects will dictate what is
+ * rendered for each step of the workflow, and the order in which it happens.
  *
- * ```handlebars
- * {{ui-stepflow steps=this.steps data=this.workflowData}}
+ * ```typescript
+ * public readonly steps = [
+ *   { label: 'Select Movie',    component: 'steps/select-movie' },
+ *   { label: 'Update Director', component: 'steps/update-director' },
+ *   { label: 'Update Actors',   component: 'steps/update-actors' }
+ * ];
  * ```
  *
- * @yield {object} stepflow
- * */
+ * ```hbs
+ *
+ * <UiStepflow @steps={{this.steps}} />
+ *
+ * ```
+ *
+ * UiStepFlow also accepts a generic `data` object that is shared between the steps
+ * and is available for whatever need is required of it. For example, a multipart
+ * form that spans several workflow steps can all record their inputs here for
+ * easy retrieval.
+ *
+ * ```typescript
+ * type MovieWorkflowData = {
+ *   movie:    Movie;
+ *   director: Director;
+ *   actors:   Actor[];
+ * };
+ *
+ * public readonly workflowData: MovieWorkflowData = {
+ *   movie:    null,
+ *   director: null,
+ *   actors:   null,
+ * };
+ * ```
+ *
+ * ```hbs
+ *
+ * <UiStepflow @steps={{this.steps}} @data={{this.workflowData}} />
+ *
+ * ```
+ */
 @layout(template)
 export default class UiStepFlow<Data> extends Component {
-  /**
-   * The positionalParams property indicates that the steps argument can also be
-   * passed to the component as the first positional parameter. For example:
-   *
-   * ```handlebars
-   * {{ui-stepflow this.steps data=this.workflowData}}
-   * ```
-   */
   public static readonly positionalParams = ['steps'];
 
   /**
+   * An array of ProgressItemDefinition objects
+   *
    * The step definitions passed into the component.
    * This can also be set as the first positional parameter of the component.
    * This argument takes an array of StepFlowDescriptor objects. For example:
-   *
-   * ```typescript
-   * public readonly steps = [{
-   *		label:     'Select Movie',
-   *		component: 'components/select-movie',
-   *	}, {
-   *		label:     'Update Director',
-   *		component: 'components/update-director',
-   *	}, {
-   *		label:     'Update Actors',
-   *		component: 'components/update-actors',
-   *	}];
-   * ```
-   *
-   * ```handlebars
-   * {{ui-stepflow steps=this.steps}}
-   * ```
    */
   public steps?: ProgressItemDescriptor<Data>[];
 
   /**
-   * The data object passed into the component. This argument takes an object that
-   * defines which properties will be modified in the stepflow. For example:
+   * The data object passed into each component. This argument takes an object that
+   * defines which properties will be modified in the stepflow.
    *
    * ```typescript
    * type MovieWorkflowData = {
@@ -73,7 +87,7 @@ export default class UiStepFlow<Data> extends Component {
    * ```
    *
    * ```handlebars
-   * {{ui-stepflow steps=this.steps data=this.workflowData}}
+   *
    * ```
    */
   public data?: Data;

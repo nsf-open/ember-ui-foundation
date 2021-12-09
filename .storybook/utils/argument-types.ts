@@ -190,6 +190,27 @@ function buildComponentYieldsEntry(_project: Project, tag: { tag: string, text: 
   };
 }
 
+/**
+ *
+ */
+function buildDescriptionFromComment(comment?: { shortText?: string, text?: string }) {
+  if (!comment) {
+    return undefined;
+  }
+
+  const description = [];
+
+  if (comment.shortText) {
+    description.push(comment.shortText);
+  }
+
+  // if (comment.text) {
+  //   description.push(comment.text);
+  // }
+
+  return description.join('');
+}
+
 
 /**
  * A method that is responsible for putting together a single ArgEntry for the given
@@ -198,9 +219,11 @@ function buildComponentYieldsEntry(_project: Project, tag: { tag: string, text: 
 function buildComponentArgumentEntry(project: Project, property: Property) {
   const argType = toTypeString(property.type || '', project)
 
+  const { name, comment } = property;
+
   const arg: ArgsEntry = {
-    name:         property.name,
-    description:  property.comment?.shortText,
+    name,
+    description:  buildDescriptionFromComment(comment),
     type:         { name: argType, required: false },
     defaultValue: stripEscapedOuterQuotes(property.defaultValue) ?? undefined,
     control:      false,

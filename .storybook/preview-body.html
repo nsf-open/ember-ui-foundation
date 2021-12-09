@@ -1,9 +1,16 @@
 <style>
-  pre.prismjs {
-    background-color: #333 !important;
+  pre.sbdocs > div {
+    margin-top: 0 !important;
   }
 
-  pre .token.tag {
+  pre.prismjs {
+    background-color: #333 !important;
+    color: #fff !important;
+  }
+
+  pre .token.tag,
+  pre .token.operator,
+  pre .token.punctuation {
     color: #fff !important;
   }
 
@@ -12,23 +19,28 @@
     color: #eed975 !important;
   }
 
-  pre .token.tag.mustache {
+  pre .token.keyword,
+  pre .token.mustache.tag,
+  pre .token.mustache.punctuation {
     color: #f38b27 !important;
   }
 
-  pre .token.tag.string {
+  pre .token.string,
+  pre .token.mustache.string {
     color: #b0c975 !important;
   }
 
-  pre .token.tag.number {
+  pre .token.number,
+  pre .token.mustache.number {
     color: #8799B0 !important;
   }
 
-  pre .token.tag.boolean {
+  pre .token.boolean,
+  pre .token.mustache.boolean {
     color: #eed975 !important;
   }
 
-  pre .token.tag.regex {
+  pre .token.regex {
     color: #9b71c6 !important;
   }
 
