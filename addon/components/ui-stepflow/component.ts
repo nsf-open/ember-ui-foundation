@@ -56,7 +56,7 @@ import template from './template';
  * ```
  */
 @layout(template)
-export default class UiStepFlow<Data> extends Component {
+export default class UiStepflow<Data> extends Component {
   public static readonly positionalParams = ['steps'];
 
   /**

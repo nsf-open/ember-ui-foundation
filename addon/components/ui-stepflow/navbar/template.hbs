@@ -1,0 +1,45 @@
+<div class="row" data-test-id={{this.navBarTestId}}>
+  <div class="col-sm-3 btn-col">
+    {{#if this.cancellationRoute}}
+      <LinkTo
+        @route="{{this.cancellationRoute}}"
+        class="btn btn-secondary"
+        data-test-id="cancel-btn"
+      >
+        Cancel
+      </LinkTo>
+    {{/if}}
+  </div>
+
+  <div class="col-sm-9 btn-col-right">
+    {{#if this.manager.hasPreviousStep}}
+      <UiButton
+        @variant="secondary"
+        @onClick={{this.manager.goToPreviousStep}}
+        @testId="previous-btn"
+      >
+        Previous
+      </UiButton>
+    {{/if}}
+
+    {{#if this.manager.hasNextStep}}
+      <UiButton
+        @variant="primary"
+        @disabled={{not this.manager.currentStep.isComplete}}
+        @onClick={{this.manager.goToNextStep}}
+        @testId="next-btn"
+      >
+        Next
+      </UiButton>
+    {{else}}
+      <UiButton
+        @variant="primary"
+        @disabled={{not this.manager.currentStep.isComplete}}
+        @onClick={{this.handleSubmit}}
+        @testId="complete-btn"
+      >
+        {{or this.submitButtonText "Submit"}}
+      </UiButton>
+    {{/if}}
+  </div>
+</div>
