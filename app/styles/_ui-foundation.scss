@@ -1,0 +1,21 @@
+/*
+ * This styling is meant to integrate with Bootstrap SASS.
+ */
+
+$screen-xs: 480px !default;
+$screen-sm: 768px !default;
+$screen-md: 992px !default;
+$screen-lg: 1200px !default;
+
+$breakpoints: (
+  xs: $screen-xs,
+  sm: $screen-sm,
+  md: $screen-md,
+  lg: $screen-lg
+);
+
+@use "components/button-groups" with ( $breakpoints: $breakpoints );
+@use "components/progress-chevron";
+
+@use "utilities/responsive" with ( $breakpoints: $breakpoints );
+@use "utilities/spacing";

@@ -29,7 +29,7 @@
     "postpack": "ember ts:clean",
     "release": "standard-version",
     "storybook:build": "STORYBOOK=true ember build && build-storybook -s dist",
-    "storybook:start": "start-storybook -p 6006 -s dist --ci"
+    "storybook:start": "sleep 20s && start-storybook -p 6006 -s dist --ci"
   },
   "dependencies": {
     "@ember-decorators/component": "^6.1.1",
@@ -88,6 +88,7 @@
     "ember-cli-code-coverage": "^1.0.3",
     "ember-cli-dependency-checker": "^3.2.0",
     "ember-cli-inject-live-reload": "^2.1.0",
+    "ember-cli-sass": "^10.0.1",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
     "ember-cli-typescript-blueprints": "^3.0.0",
@@ -112,6 +113,7 @@
     "prismjs-glimmer": "^1.1.1",
     "qunit": "^2.16.0",
     "qunit-dom": "^1.6.0",
+    "sass": "^1.44.0",
     "standard-version": "^9.3.2",
     "typedoc": "^0.22.8",
     "typescript": "^4.4.4"

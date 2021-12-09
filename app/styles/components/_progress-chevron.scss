@@ -1,0 +1,150 @@
+@use "sass:math";
+
+$breakpoint: 992px !default;
+$margin-bottom: 10px !default;
+$padding: 15px !default;
+$border-radius: 4px !default;
+$size: 20px;
+$gap: 3px;
+$background-color: #f5f5f5 !default;
+$text-color: #333 !default;
+$completed-background-color: #5bc0de !default;
+$completed-text-color: $text-color !default;
+$active-background-color: #337ab7 !default;
+$active-text-color: #fff !default;
+
+
+.progress-chevrons {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin-bottom: $margin-bottom;
+
+  .chevron {
+    flex-grow: 1;
+
+    > span, > a {
+      background: $background-color;
+      color: $text-color;
+      height: $size * 2;
+      line-height: $size * 2;
+      padding: 0 math.div($size, 2) 0 math.div($size, 4);
+      margin-right: $size + $gap;
+      display: block;
+      text-decoration: none;
+      text-align: center;
+      position: relative;
+
+      &:before, &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        border-style: solid;
+        border-color: $background-color;
+        border-width: $size math.div($size, 2);
+        width: 0;
+        height: 0;
+      }
+
+      &:before {
+        left: -($size);
+        border-left-color: transparent;
+      }
+
+      &:after {
+        left: 100%;
+        border-color: transparent;
+        border-left-color: $background-color;
+      }
+    }
+
+    &:first-child > span, &:first-child > a {
+      padding-left: $padding;
+      border-radius: $border-radius 0 0 $border-radius;
+
+      &:before {
+        border: none;
+      }
+    }
+
+    &:last-child > span, &:last-child > a {
+      padding-right: $padding;
+      border-radius: 0 $border-radius $border-radius 0;
+      margin-right:  0;
+
+      &:after {
+        border: none;
+      }
+    }
+
+    &.complete:not(.active):not(.past-active) {
+      > span, > a {
+        background-color: $completed-background-color;
+        color: $completed-text-color;
+
+        &:before {
+          border-color: $completed-background-color;
+          border-left-color: transparent;
+        }
+
+        &:after {
+          border-left-color: $completed-background-color;
+        }
+      }
+    }
+
+    &.active {
+      > span, > a {
+        background-color: $active-background-color;
+        color: $active-text-color;
+
+        &:before {
+          border-color: $active-background-color;
+          border-left-color: transparent;
+        }
+
+        &:after {
+          border-left-color: $active-background-color;
+        }
+      }
+    }
+  }
+
+  @media (min-width: $breakpoint) {
+    justify-content: flex-start;
+
+    .chevron {
+      flex-grow: 0;
+
+      > span, > a {
+        text-align: left;
+      }
+
+      &:last-child {
+        > span, > a {
+          border-radius: 0;
+
+          &:after {
+            border-style: solid;
+            border-width: $size math.div($size, 2);
+            border-color: transparent;
+            border-left-color: $background-color;
+          }
+        }
+
+        &.complete:not(.active):not(.past-active) {
+          > span:after, > a:after {
+            border-left-color: $completed-background-color;
+          }
+        }
+
+        &.active {
+          > span:after, > a:after {
+            border-left-color: $active-background-color;
+          }
+        }
+      }
+    }
+  }
+}
