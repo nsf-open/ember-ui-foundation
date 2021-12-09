@@ -23,6 +23,8 @@ export const decorators = [trimStorySource];
    Parameters
  * ************************ */
 export const parameters = {
+  layout: 'fullscreen',
+
   actions: { argTypesRegex: "^on[A-Z].*" },
 
   controls: {
@@ -32,7 +34,8 @@ export const parameters = {
       boolean: /^is[A-Z].*/,
     },
 
-    expanded: true,
+    expanded: false,
+    hideNoControlsWarning: true,
   },
 
   docs: {

@@ -4,7 +4,7 @@ import dedent from 'ts-dedent';
  * For story source code display, this cuts out the invocation bits of the
  * template within the story, leaving just the template text itself.
  */
-export function trimStorySource(storyFn, context) {
+export function trimStorySource(storyFn: () => unknown, context: Record<string, any>) {
   const source = context.parameters.storySource;
   const story  = storyFn();
 

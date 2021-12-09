@@ -5,6 +5,12 @@ import { ProgressComponent } from '@nsf/ui-foundation/lib/ProgressItem';
 export default {
   title: 'ui-stepflow',
   component: 'UiStepflow',
+
+  parameters: {
+    docs: {
+      iframeHeight: 300,
+    },
+  },
 };
 
 export const Default = (context: unknown) => ({
