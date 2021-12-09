@@ -1,4 +1,5 @@
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism-light';
+// @ts-expect-error
 import glimmer from 'prismjs-glimmer/src/glimmer';
 
 /**
@@ -6,7 +7,7 @@ import glimmer from 'prismjs-glimmer/src/glimmer';
  * the React Syntax Highlighter's Prism parser.
  */
 export function addHtmlBarHighlighting() {
-  const htmlbarsNamedWrapper = function(Prism) {
+  const htmlbarsNamedWrapper = function(Prism: { languages: Record<string, unknown> }) {
     glimmer(Prism);
 
     Prism.languages.handlebars = Prism.languages.glimmer;
