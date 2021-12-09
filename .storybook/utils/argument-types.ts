@@ -72,7 +72,7 @@ function getValueOfEnumDotReference(ref: Enumeration, name: string) {
     const [enumName, propName] = name.split('.');
 
     return stripEscapedOuterQuotes(
-      ref.children.find(member => member.name === (propName ?? enumName))?.defaultValue
+      ref.children?.find(member => member.name === (propName ?? enumName))?.defaultValue
     );
   }
 
@@ -86,7 +86,11 @@ function getValueOfEnumDotReference(ref: Enumeration, name: string) {
 export function buildComponentArgumentsTable(project: Project, componentName: string) {
   const component = findComponentDefinition(project, componentName);
 
-  const tags  = component.comment.tags ?? [];
+  if (!component) {
+    return {};
+  }
+
+  const tags  = component.comment?.tags ?? [];
   const props = getComponentPublicProperties(project, component) || [];
 
   const yields = tags.reduce((accumulator, tag) => {
@@ -97,7 +101,7 @@ export function buildComponentArgumentsTable(project: Project, componentName: st
     }
 
     return accumulator;
-  }, {});
+  }, {} as Record<string, unknown>);
 
   const args = props.reduce((accumulator, prop) => {
     const entry = buildComponentArgumentEntry(project, prop);
@@ -107,7 +111,7 @@ export function buildComponentArgumentsTable(project: Project, componentName: st
     }
 
     return accumulator;
-  }, {});
+  }, {} as Record<string, unknown>);
 
   return Object.assign(yields, args);
 }
@@ -116,14 +120,14 @@ export function buildComponentArgumentsTable(project: Project, componentName: st
 /**
  *
  */
-function buildComponentYieldsEntry(project: Project, tag: { tag: string, text: string }) {
+function buildComponentYieldsEntry(_project: Project, tag: { tag: string, text: string }) {
   if (!['yield', 'yields'].includes(tag.tag) || typeof tag.text !== 'string') {
     return undefined;
   }
 
   let type: string = 'unknown';
-  let name: string;
-  let desc: string;
+  let name: string | undefined = undefined;
+  let desc: string | undefined = undefined;
 
   const text = tag.text.trim();
 
@@ -192,7 +196,7 @@ function buildComponentYieldsEntry(project: Project, tag: { tag: string, text: s
  * Property. A Control might also be put configured, if possible.
  */
 function buildComponentArgumentEntry(project: Project, property: Property) {
-  const argType = toTypeString(property.type, project);
+  const argType = toTypeString(property.type || '', project)
 
   const arg: ArgsEntry = {
     name:         property.name,
@@ -214,21 +218,21 @@ function buildComponentArgumentEntry(project: Project, property: Property) {
   else if (arg.type.name === 'number' || arg.type.name === 'boolean') {
     arg.control = { type: arg.type.name };
   }
-  else if (property.type.type === 'reference') {
+  else if (property.type?.type === 'reference' && property.type.id) {
     const ref = findChildById(project, property.type.id);
 
     if (isKindOf(ref, ReflectionKind.Enum)) {
       arg.control      = { type: 'select', labels: {} };
-      arg.options      = ref.children.map(child => (stripEscapedOuterQuotes(child.defaultValue)));
-      arg.defaultValue = getValueOfEnumDotReference(ref, property.defaultValue);
+      arg.options      = ref.children?.map(child => (stripEscapedOuterQuotes(child.defaultValue)));
+      arg.defaultValue = property.defaultValue ? getValueOfEnumDotReference(ref, property.defaultValue) : 'unknown';
       arg.type.name    = `Enum ${ref.name}`;
     }
   }
-  else if (property.type.type === 'union') {
+  else if (property.type?.type === 'union') {
     arg.control = { type: 'select', labels: {} };
     arg.options = property.type.types
-      .map(item => item.type === 'literal' ? item.value.toString() : undefined)
-      .filter(Boolean);
+      .map(item => item.type === 'literal' ? item.value?.toString() : undefined)
+      .filter(Boolean) as (string | number)[];
   }
 
   // If a select has been created for an optional property then provide a way to unset it.

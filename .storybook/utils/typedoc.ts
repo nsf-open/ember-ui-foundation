@@ -114,14 +114,20 @@ export function findComponentModule(project: Project, name: string) {
   const dashedName = dasherize(name);
   const classyName = classify(name);
 
+  const lookups = [
+    `components/${dashedName}/component`,
+    `components/${dashedName}`,
+    `components/${classyName}/component`,
+    `components/${classyName}`,
+  ];
+
   const module = project.children.find((child) => {
-    return [
-      `components/${dashedName}/component`,
-      `components/${dashedName}`,
-      `components/${classyName}/component`,
-      `components/${classyName}`,
-    ].includes(child.name);
+    return lookups.includes(child.name);
   });
+
+  if (!module) {
+    console.warn(`COMPONENT NOT FOUND IN DOCS. Searched \n[\n  "${lookups.join('",\n  "')}"\n]`);
+  }
 
   return module ?? undefined;
 }
@@ -172,12 +178,16 @@ export function getComponentDescription(project: Project, name: string) {
  * Given a container, return all its children of the requested Kind.
  */
 export function findChildrenOfKind<K extends ReflectionKind>(parent: ContainerReflection, kind: K) {
+  if (!(parent && parent.groups && parent.children)) {
+    return [];
+  }
+
   const group = parent.groups.find(group => group.kind === kind);
 
-  if (group) {
+  if (group && group.children) {
     return group.children.map(
-      id => parent.children.find(child => child.id === id)
-    ) as KindOf<K>[];
+      id => parent.children?.find(child => child.id === id)
+    ).filter(Boolean) as KindOf<K>[];
   }
 
   return [];
@@ -197,7 +207,7 @@ export function findChildByName<K extends ReflectionKind>(
     ? findChildrenOfKind(parent, kind) as Reflection[]
     : parent.children;
 
-  return children.find(child => child.name === name) as KindOf<K> ?? undefined;
+  return children?.find(child => child.name === name) as KindOf<K> ?? undefined;
 }
 
 /**
@@ -219,7 +229,7 @@ export function findChildById<ReturnType extends Reflection = Reflection>(
     }
   }
 
-  return parent.children.find(child => child.id === id) as ReturnType ?? undefined;
+  return parent.children?.find(child => child.id === id) as ReturnType ?? undefined;
 }
 
 /**
@@ -244,11 +254,11 @@ export function toDeclarationString(
   const name     = declaration.name;
   const optional = declaration.flags.isOptional ? '?' : '';
 
-  let type = toTypeString(declaration.type, project);
+  let type = declaration.type ? toTypeString(declaration.type, project) : 'unknown';
 
   // Function signature
   if ('parameters' in declaration) {
-    const params = declaration.parameters.map(
+    const params = declaration.parameters?.map(
       item => toDeclarationString(item, project)
     ).join(', ');
 
@@ -287,11 +297,11 @@ export function toTypeString(type: SomeType | Type, project: Project) {
 
   // The <string> bit in something like Promise<string>
   if ('typeArguments' in type) {
-    const typeArgs = type.typeArguments.map(
+    const typeArgs = type.typeArguments?.map(
       item => toTypeString(item, project)
     );
 
-    str = `${str}<${typeArgs.join(', ')}>`;
+    str = `${str}<${typeArgs?.join(', ')}>`;
   }
 
   // Unions and Intersections
@@ -317,13 +327,12 @@ export function toTypeString(type: SomeType | Type, project: Project) {
   }
 
   // A reflection
-  if ('declaration' in type) {
-
+  if (type && 'declaration' in type && type.declaration) {
     if ('children' in type.declaration) {
-      str = `{ ${ type.declaration.children.map(item => toDeclarationString(item, project)).join(', ') } }`;
+      str = `{ ${ type.declaration.children?.map(item => toDeclarationString(item, project)).join(', ') } }`;
     }
     else if ('signatures' in type.declaration) {
-      str = type.declaration.signatures.map(sig => toDeclarationString(sig, project, false)).join(' | ');
+      str = type.declaration.signatures?.map(sig => toDeclarationString(sig, project, false)).join(' | ') ?? '';
     }
   }
 
