@@ -238,8 +238,13 @@ function buildComponentArgumentEntry(project: Project, property: Property) {
   if (arg.type.name === 'string') {
     arg.control = { type: 'text' };
   }
-  else if (arg.type.name === 'number' || arg.type.name === 'boolean') {
-    arg.control = { type: arg.type.name };
+  else if (arg.type.name === 'number') {
+    arg.control = { type: 'number' };
+    arg.defaultValue = typeof arg.defaultValue === 'string' ? parseFloat(arg.defaultValue) : arg.defaultValue;
+  }
+  else if (arg.type.name === 'boolean') {
+    arg.control = { type: 'boolean' };
+    arg.defaultValue = typeof arg.defaultValue === 'string' ? arg.defaultValue === 'true' : arg.defaultValue;
   }
   else if (property.type?.type === 'reference' && property.type.id) {
     const ref = findChildById(project, property.type.id);
@@ -247,7 +252,7 @@ function buildComponentArgumentEntry(project: Project, property: Property) {
     if (isKindOf(ref, ReflectionKind.Enum)) {
       arg.control      = { type: 'select', labels: {} };
       arg.options      = ref.children?.map(child => (stripEscapedOuterQuotes(child.defaultValue)));
-      arg.defaultValue = property.defaultValue ? getValueOfEnumDotReference(ref, property.defaultValue) : 'unknown';
+      arg.defaultValue = property.defaultValue ? getValueOfEnumDotReference(ref, property.defaultValue) : undefined;
       arg.type.name    = `Enum ${ref.name}`;
     }
   }

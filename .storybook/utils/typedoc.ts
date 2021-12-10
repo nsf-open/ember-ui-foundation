@@ -167,7 +167,11 @@ export function getComponentDescription(project: Project, name: string) {
 
   if (component) {
     const { shortText, text } = component.comment ?? {};
-    return `${shortText}\n\n${text}`.trim();
+
+    return [shortText, text]
+      .map(text => typeof text === 'string' ? text.trim() : text)
+      .filter(Boolean)
+      .join('\n\n');
   }
 
   return undefined;
