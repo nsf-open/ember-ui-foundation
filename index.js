@@ -1,7 +1,5 @@
 'use strict';
 const Funnel = require('broccoli-funnel');
-// eslint-disable-next-line node/no-unpublished-require
-const TypeDoc = require('typedoc');
 const Path = require('path');
 
 module.exports = {
@@ -33,6 +31,16 @@ module.exports = {
 
   async outputReady({ directory }) {
     if (process.env.STORYBOOK) {
+      let TypeDoc;
+
+      try {
+        // eslint-disable-next-line node/no-unpublished-require
+        TypeDoc = require('typedoc');
+      } catch (e) {
+        this.ui.writeWarnLine('TypeDoc not installed', undefined, undefined);
+        return;
+      }
+
       this.ui.writeInfoLine('Running TypeDoc for Storybook');
 
       const app = new TypeDoc.Application();
