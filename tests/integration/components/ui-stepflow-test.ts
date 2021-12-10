@@ -1,5 +1,5 @@
 import type UiStepFlow from '@nsf/ui-foundation/components/ui-stepflow/component';
-import type { ProgressComponent } from '@nsf/ui-foundation/lib/ProgressItem';
+import type { IProgressComponent } from '@nsf/ui-foundation/lib/ProgressComponent';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click, settled } from '@ember/test-helpers';
@@ -37,7 +37,7 @@ module('Integration | Component | ui-stepflow', function (hooks) {
     await render(hbs`<UiStepflow @id="stepflow" @steps={{this.steps}} @data={{this.data}} />`);
 
     const flow = lookupComponent<UiStepFlow<unknown>>(this, 'stepflow');
-    const stepA = lookupComponent<ProgressComponent<unknown>>(this, 'step-a');
+    const stepA = lookupComponent<IProgressComponent<unknown>>(this, 'step-a');
 
     assert.strictEqual(stepA.progressManager, flow.manager);
     assert.strictEqual(stepA.progressItem, flow.manager.getStepAt(0));
@@ -79,144 +79,6 @@ module('Integration | Component | ui-stepflow', function (hooks) {
     assert.dom('[data-test-id="complete-btn"]').hasText('Submit');
   });
 
-  test('it displays a navigable chevron bar', async function (assert) {
-    this.set('steps', [
-      { label: 'Step A', component: 'test-component-a', indeterminate: true },
-      { label: 'Step B', component: 'test-component-b' },
-      { label: 'Step C', component: 'test-component-c', complete: true },
-    ]);
-
-    // language=handlebars
-    await render(hbs`<UiStepflow @steps={{this.steps}} />`);
-
-    const chevron1 = 'ol.progress-chevrons li:nth-child(1)';
-    const chevron2 = 'ol.progress-chevrons li:nth-child(2)';
-    const chevron3 = 'ol.progress-chevrons li:nth-child(3)';
-
-    function shouldHaveClass(selector: string, classNames: string[]) {
-      classNames.forEach(function (name) {
-        assert.dom(selector).hasClass(name);
-      });
-    }
-
-    function shouldNotHaveClass(selector: string, classNames: string[]) {
-      classNames.forEach(function (name) {
-        assert.dom(selector).doesNotHaveClass(name);
-      });
-    }
-
-    shouldHaveClass(chevron1, ['chevron', 'active', 'indeterminate']);
-    shouldNotHaveClass(chevron1, [
-      'complete',
-      'incomplete',
-      'inactive',
-      'prev-active',
-      'past-active',
-      'next-active',
-      'future-active',
-    ]);
-
-    shouldHaveClass(chevron2, ['chevron', 'inactive', 'incomplete', 'prev-active', 'past-active']);
-    shouldNotHaveClass(chevron2, [
-      'complete',
-      'indeterminate',
-      'active',
-      'next-active',
-      'future-active',
-    ]);
-
-    shouldHaveClass(chevron3, ['chevron', 'inactive', 'complete', 'past-active']);
-    shouldNotHaveClass(chevron3, [
-      'incomplete',
-      'indeterminate',
-      'active',
-      'prev-active',
-      'next-active',
-      'future-active',
-    ]);
-
-    assert.dom(`${chevron1} a`).doesNotExist();
-    assert.dom(`${chevron2} a`).exists();
-    assert.dom(`${chevron3} a`).doesNotExist();
-
-    await click(`${chevron2} a`);
-
-    shouldHaveClass(chevron1, [
-      'chevron',
-      'inactive',
-      'indeterminate',
-      'next-active',
-      'future-active',
-    ]);
-    shouldNotHaveClass(chevron1, [
-      'complete',
-      'incomplete',
-      'active',
-      'prev-active',
-      'past-active',
-    ]);
-
-    shouldHaveClass(chevron2, ['chevron', 'active', 'incomplete']);
-    shouldNotHaveClass(chevron2, [
-      'complete',
-      'inactive',
-      'prev-active',
-      'past-active',
-      'next-active',
-      'future-active',
-    ]);
-
-    shouldHaveClass(chevron3, ['chevron', 'inactive', 'complete', 'prev-active', 'past-active']);
-    shouldNotHaveClass(chevron3, [
-      'incomplete',
-      'indeterminate',
-      'active',
-      'next-active',
-      'future-active',
-    ]);
-
-    assert.dom(`${chevron1} a`).exists();
-    assert.dom(`${chevron2} a`).doesNotExist();
-    assert.dom(`${chevron3} a`).doesNotExist();
-
-    const stepB = lookupComponent<ProgressComponent<unknown>>(this, 'step-b');
-    stepB.progressItem.markComplete();
-    await settled();
-
-    assert.dom(chevron2).hasClass('complete');
-    assert.dom(chevron2).doesNotHaveClass('incomplete');
-
-    assert.dom(`${chevron1} a`).exists();
-    assert.dom(`${chevron2} a`).doesNotExist();
-    assert.dom(`${chevron3} a`).exists();
-
-    await click(`${chevron3} a`);
-
-    shouldHaveClass(chevron1, ['chevron', 'inactive', 'indeterminate', 'future-active']);
-    shouldNotHaveClass(chevron1, [
-      'complete',
-      'incomplete',
-      'active',
-      'prev-active',
-      'past-active',
-      'next-active',
-    ]);
-
-    shouldHaveClass(chevron2, ['chevron', 'inactive', 'complete', 'next-active', 'future-active']);
-    shouldNotHaveClass(chevron2, ['incomplete', 'active', 'prev-active', 'past-active']);
-
-    shouldHaveClass(chevron3, ['chevron', 'active', 'complete']);
-    shouldNotHaveClass(chevron3, [
-      'incomplete',
-      'indeterminate',
-      'inactive',
-      'prev-active',
-      'past-active',
-      'next-active',
-      'future-active',
-    ]);
-  });
-
   test('it displays a navigable button bar', async function (assert) {
     this.set('steps', [
       { label: 'Step A', component: 'test-component-a', indeterminate: true },
@@ -252,7 +114,7 @@ module('Integration | Component | ui-stepflow', function (hooks) {
     assert.dom(prevBtn).isEnabled();
     assert.dom(saveBtn).doesNotExist();
 
-    const stepB = lookupComponent<ProgressComponent<unknown>>(this, 'step-b');
+    const stepB = lookupComponent<IProgressComponent<unknown>>(this, 'step-b');
 
     stepB.progressItem.markComplete();
     await settled();
@@ -290,7 +152,7 @@ module('Integration | Component | ui-stepflow', function (hooks) {
     await click(nextBtn);
     await click(nextBtn);
 
-    const stepC = lookupComponent<ProgressComponent<unknown>>(this, 'step-c');
+    const stepC = lookupComponent<IProgressComponent<unknown>>(this, 'step-c');
 
     stepC.progressItem.markComplete();
     await settled();

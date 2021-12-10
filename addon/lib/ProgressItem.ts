@@ -1,17 +1,7 @@
-import type Component from '@ember/component';
 import type ProgressManager from './ProgressManager';
+import type { IProgressComponent } from './ProgressComponent';
 import { computed, set, action } from '@ember/object';
 import { or } from '@ember/object/computed';
-
-/**
- * Components rendered via workflows that leverage a ProgressManager will receive
- * the additional properties described in this interface.
- */
-export interface ProgressComponent<Data> extends Component {
-  readonly progressItem: ProgressItem<Data>;
-  readonly progressManager: ProgressManager<Data>;
-  readonly progressData: Data;
-}
 
 /**
  * The ProgressItemDescriptor describes a basic object that can be provided to a
@@ -35,7 +25,7 @@ export type ProgressItemDescriptor<Data> = {
    * A ProgressComponent class or string name where a component can be resolved.
    * Different workflow implementations will use this in different ways.
    */
-  component?: string | ProgressComponent<Data>;
+  component?: string | IProgressComponent<Data>;
 
   /**
    * If true then the progress item will default to its `completed` state. For
@@ -97,7 +87,7 @@ export default class ProgressItem<Data> {
    * A ProgressComponent class or string name where a component can be resolved.
    * Different workflow implementations will use this in different ways.
    */
-  public component?: string | ProgressComponent<Data>;
+  public component?: string | IProgressComponent<Data>;
 
   /**
    * If true, the flow is allowed to progress past this step item. This value

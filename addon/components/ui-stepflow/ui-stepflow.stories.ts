@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { hbs } from 'ember-cli-htmlbars';
-import { ProgressComponent } from '@nsf/ui-foundation/lib/ProgressItem';
+import { IProgressComponent } from '@nsf/ui-foundation/lib/ProgressComponent';
 
 export default {
   title: 'ui-stepflow',
@@ -36,10 +36,15 @@ export const Default = (context: unknown) => ({
     <UiStepflow
       @data={{this.data}}
       @steps={{this.steps}}
-      @variant={{this.variant}}
+      @panelVariant={{this.panelVariant}}
+      @renderPanel={{this.renderPanel}}
+      @renderPanelHeading={{this.renderPanelHeading}}
       @submitButtonText={{this.submitButtonText}}
       @testId={{this.testId}}
       @cancellationRoute={{this.cancellationRoute}}
+      @progressBarCompact={{this.progressBarCompact}}
+      @progressBarCheckmark={{this.progressBarCheckmark}}
+      @progressBarNumber={{this.progressBarNumber}}
     />
   `,
 });
@@ -49,7 +54,7 @@ export const Default = (context: unknown) => ({
 // used above.
 // ****************************************
 
-type OneStep = ProgressComponent<Record<string, string>>;
+type OneStep = IProgressComponent<Record<string, string>>;
 
 // eslint-disable-next-line ember/no-classic-classes
 const ComponentA = Component.extend({

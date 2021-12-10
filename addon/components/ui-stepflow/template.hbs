@@ -1,14 +1,20 @@
-<UiProgressBar @manager={{this.manager}} />
+<UiProgressBar
+  @manager={{this.manager}}
+  @compact={{this.progressBarCompact}}
+  @checkmark={{this.progressBarCheckmark}}
+  @number={{this.progressBarNumber}}
+/>
 
 <UiPanel
   @heading="{{this.heading}}"
-  @variant="{{this.variant}}"
+  @variant="{{this.panelVariant}}"
   @testId={{this.testId}}
+  @renderPanel={{this.renderPanel}}
 >
   {{component this.manager.currentStep.component
-    progressItem    = this.manager.currentStep
-    progressManager = this.manager
-    progressData    = this.manager.data
+              progressItem    = this.manager.currentStep
+              progressManager = this.manager
+              progressData    = this.manager.data
   }}
 </UiPanel>
 
