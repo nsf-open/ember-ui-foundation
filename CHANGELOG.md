@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.2.0...v1.3.0) (2021-12-10)
+
+
+### Features
+
+* add get-ones-index helper ([47a8edc](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/47a8edc7cae7d795141384045e5d100ba99c896f))
+* export opt-in utility SASS ([6eaf93f](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/6eaf93f68577287f2318752254c224eda1036674))
+* make underlying "StepFlowManager" more generic for reuse, now "ProgressManager" ([596ba40](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/596ba40d974ee24a3865e6e59dc08ecb658c1afc))
+* sb-component-story blueprint to stub Storybook file ([93e2652](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/93e265207a7e28f7e28bd51c606a65c3fa050c1a))
+* Storybook integration using Typedoc to generate args ([b432593](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/b43259370284935e088fca0ffb9d1e01deed330f))
+* support for [@yields](https://bitbucket.nsf.gov/yields) tag to document component template yields ([7869ae8](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/7869ae8aeb5a721a55f3b6b0d048dae5bd7f706b))
+* ui-panel "renderPanel" argument ([2e518a4](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/2e518a43ac365a335602623ce1fa841523a94bab))
+* ui-progress-bar component ([daeec50](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/daeec500c0006f01bb7600773ee9fae8ceefcd1c))
+* ui-progress-bar component and tests ([f643b3d](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/f643b3d2a6d217e2ef8d6a3f65234651b1d75772))
+* ui-stepflow component ([822d779](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/822d779fea2ca2e10c01aa4d3dec3aec24c8841b))
+* ui-stepflow component and tests ([45ef1ba](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/45ef1baa53ff95007fa167c5ea10824ca99aec75))
+
+
+### Bug Fixes
+
+* remove unused ember-engines-router-service dependency ([bb94f12](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/bb94f12c1bfa43e1d4971838973df99053d8cec0))
+
 ## [1.2.0](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.1.0...v1.2.0) (2021-11-09)
 
 
