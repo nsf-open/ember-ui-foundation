@@ -78,6 +78,7 @@ $active-text-color: #fff !default;
       }
     }
 
+    &.indeterminate:not(.active):not(.past-active),
     &.complete:not(.active):not(.past-active) {
       > span, > a {
         background-color: $completed-background-color;
@@ -112,36 +113,38 @@ $active-text-color: #fff !default;
   }
 
   @media (min-width: $breakpoint) {
-    justify-content: flex-start;
+    &.progress-chevrons-compact {
+      justify-content: flex-start;
 
-    .chevron {
-      flex-grow: 0;
+      .chevron {
+        flex-grow: 0;
 
-      > span, > a {
-        text-align: left;
-      }
-
-      &:last-child {
         > span, > a {
-          border-radius: 0;
-
-          &:after {
-            border-style: solid;
-            border-width: $size math.div($size, 2);
-            border-color: transparent;
-            border-left-color: $background-color;
-          }
+          text-align: left;
         }
 
-        &.complete:not(.active):not(.past-active) {
-          > span:after, > a:after {
-            border-left-color: $completed-background-color;
-          }
-        }
+        &:last-child {
+          > span, > a {
+            border-radius: 0;
 
-        &.active {
-          > span:after, > a:after {
-            border-left-color: $active-background-color;
+            &:after {
+              border-style: solid;
+              border-width: $size math.div($size, 2);
+              border-color: transparent;
+              border-left-color: $background-color;
+            }
+          }
+
+          &.complete:not(.active):not(.past-active) {
+            > span:after, > a:after {
+              border-left-color: $completed-background-color;
+            }
+          }
+
+          &.active {
+            > span:after, > a:after {
+              border-left-color: $active-background-color;
+            }
           }
         }
       }

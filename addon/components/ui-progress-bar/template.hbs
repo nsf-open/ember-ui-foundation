@@ -1,17 +1,23 @@
-<ol class="list-unstyled progress-chevrons">
+<ol class="list-unstyled progress-chevrons{{if this.compact ' progress-chevrons-compact'}}">
   {{#each this.manager.steps as |step idx|}}
     <li class="chevron {{step.status}}">
       {{#if step.canBeLinkedTo}}
         <a href="#" role="button" onclick={{action this.handleChevronClick idx}}>
           <span class="content">
-            <span class="text-center hidden-md-up">{{get-ones-index idx}}.</span>
+            <span class="text-center{{unless this.number ' hidden-md-up'}}">{{get-ones-index idx}}.</span>
             <span class="hidden-sm-down">{{step.label}}</span>
+            {{#if this.checkmark}}
+              <span class="fa fa-fw{{if step.isComplete ' fa-check text-success'}}" aria-hidden="true"></span>
+            {{/if}}
           </span>
         </a>
       {{else}}
         <span class="content">
-          <span class="text-center hidden-md-up">{{get-ones-index idx}}.</span>
+          <span class="text-center{{unless this.number ' hidden-md-up'}}">{{get-ones-index idx}}.</span>
           <span class="hidden-sm-down">{{step.label}}</span>
+          {{#if this.checkmark}}
+            <span class="fa fa-fw{{if step.isComplete ' fa-check text-success'}}" aria-hidden="true"></span>
+          {{/if}}
         </span>
       {{/if}}
     </li>
