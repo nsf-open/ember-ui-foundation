@@ -14,8 +14,8 @@ $breakpoints: (
   lg: $screen-lg
 );
 
-@use "components/button-groups" with ( $breakpoints: $breakpoints );
-@use "components/progress-chevron";
+@use "ui-foundation/components/button-groups" with ( $breakpoints: $breakpoints );
+@use "ui-foundation/components/progress-chevron";
 
-@use "utilities/responsive" with ( $breakpoints: $breakpoints );
-@use "utilities/spacing";
+@use "ui-foundation/utilities/responsive" with ( $breakpoints: $breakpoints );
+@use "ui-foundation/utilities/spacing";
