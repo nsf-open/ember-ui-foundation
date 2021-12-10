@@ -2,16 +2,22 @@
 
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2020,
     sourceType: 'module',
+    requireConfigFile: false,
     ecmaFeatures: {
       legacyDecorators: true,
     },
   },
   plugins: ['ember'],
-  extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:ember/recommended',
+    'plugin:prettier/recommended',
+    'plugin:storybook/recommended',
+  ],
   env: {
     browser: true,
   },
@@ -39,8 +45,7 @@ module.exports = {
         'ember/require-tagless-components': 'off',
         'ember/no-computed-properties-in-native-classes': 'off',
       },
-    },
-    // node files
+    }, // node files
     {
       files: [
         './.eslintrc.js',
@@ -53,7 +58,7 @@ module.exports = {
         './config/**/*.js',
         './tests/dummy/config/**/*.js',
       ],
-      parser: 'babel-eslint',
+      parser: '@babel/eslint-parser',
       parserOptions: {
         sourceType: 'script',
       },
