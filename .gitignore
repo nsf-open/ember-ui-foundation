@@ -22,6 +22,7 @@
 /testem.log
 /yarn-error.log
 /.storybook/preview-head.html
+/storybook-static
 
 # ember-try
 /.node_modules.ember-try/

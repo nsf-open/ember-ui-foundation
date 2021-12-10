@@ -86,7 +86,6 @@
     "@types/rsvp": "^4.0.4",
     "@typescript-eslint/eslint-plugin": "^5.6.0",
     "@typescript-eslint/parser": "^5.6.0",
-    "babel-plugin-ember-modules-api-polyfill": "^3.5.0",
     "broccoli-asset-rev": "^3.0.0",
     "ember-cli": "^3.28.4",
     "ember-cli-code-coverage": "^1.0.3",
@@ -135,5 +134,10 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://dis-nexus.nsf.gov:8443/nexus/repository/npm-internal"
+  },
+  "babel": {
+    "plugins": [
+      ["@babel/plugin-proposal-private-property-in-object", { "loose": true }]
+    ]
   }
 }
