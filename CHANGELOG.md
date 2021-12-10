@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.3](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.3.2...v1.3.3) (2021-12-10)
+
+
+### Bug Fixes
+
+* move sass partials into subdirectory to avoid clobbering parent styles ([8852a86](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/8852a864a9f38f62345b80ef3feed0a1200722d1))
+
 ### [1.3.2](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.3.0...v1.3.2) (2021-12-10)
 
 
