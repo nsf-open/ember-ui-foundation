@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { attribute, className, classNames, layout, tagName } from '@ember-decorators/component';
+import { layout, tagName } from '@ember-decorators/component';
 import { HeadingLevels, PanelVariants } from '../../constants';
 import template from './template';
 
@@ -8,9 +8,9 @@ import template from './template';
  * Panels are stylized content blocks with a heading and associated content.
  *
  * ```hbs
- * {{#ui-panel "Panel Heading"}}
+ * <UiPanel @heading="Panel Heading">
  * 	<p>Whatever panel body content is required.</p>
- * {{/ui-panel}}
+ * </UiPanel>
  * ```
  *
  * ## Variants
@@ -19,9 +19,9 @@ import template from './template';
  * argument. By default, this is "default".
  *
  * ```hbs
- * {{#ui-panel "Panel Heading" "primary"}}
+ * <UiPanel @heading="Panel Heading" @variant="primary">
  * 	<p>Whatever panel body content is required.</p>
- * {{/ui-panel}}
+ * </UiPanel>
  * ```
  *
  * ## Headless Panels
@@ -34,8 +34,7 @@ import template from './template';
  * </UiPanel>
  * ```
  */
-@tagName('section')
-@classNames('panel')
+@tagName('')
 @layout(template)
 export default class UiPanel extends Component {
   public static readonly positionalParams = ['heading', 'variant'];
@@ -56,7 +55,7 @@ export default class UiPanel extends Component {
 
   /**
    * The style variant of the panel is any valid Bootstrap type that you would add after
-   * `panel-` in it's class attribute (e.g. `primary` for "panel-primary", `success` for
+   * `panel-` in its class attribute (e.g. `primary` for "panel-primary", `success` for
    * "panel-success" and so on).
    *
    * This can also be set as the second positional parameter of the component.
@@ -64,9 +63,15 @@ export default class UiPanel extends Component {
   public variant? = PanelVariants.Default;
 
   /**
+   * Believe it or not, there are certain times when it is desirable for a panel to not
+   * be a panel. When `false`, the "panel-*" wrapping elements will be removed from
+   * around the yielded content.
+   */
+  public renderPanel = true;
+
+  /**
    * The value of the element's `data-test-id` attribute, if required.
    */
-  @attribute('data-test-id')
   public testId?: string;
 
   @computed('heading')
@@ -74,7 +79,6 @@ export default class UiPanel extends Component {
     return typeof this.heading === 'string' && this.heading !== '';
   }
 
-  @className()
   @computed('variant')
   protected get variantClassName() {
     return this.variant ? `panel-${this.variant}` : undefined;

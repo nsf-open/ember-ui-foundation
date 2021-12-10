@@ -1,15 +1,21 @@
-{{#if this.hasHeading}}
-  <header class="panel-heading">
-    {{#if (is-equal this.level this.headingLevels.H1)}}
-      <h1 class="panel-title">{{this.heading}}</h1>
-    {{else if (is-equal this.level this.headingLevels.H3)}}
-      <h3 class="panel-title">{{this.heading}}</h3>
-    {{else if (is-equal this.level this.headingLevels.H4)}}
-      <h4 class="panel-title">{{this.heading}}</h4>
-    {{else}}
-      <h2 class="panel-title">{{this.heading}}</h2>
+{{#if this.renderPanel}}
+  <section class="panel {{this.variantClassName}}" data-test-id={{this.testId}}>
+    {{#if this.hasHeading}}
+      <header class="panel-heading">
+        {{#if (is-equal this.level this.headingLevels.H1)}}
+          <h1 class="panel-title">{{this.heading}}</h1>
+        {{else if (is-equal this.level this.headingLevels.H3)}}
+          <h3 class="panel-title">{{this.heading}}</h3>
+        {{else if (is-equal this.level this.headingLevels.H4)}}
+          <h4 class="panel-title">{{this.heading}}</h4>
+        {{else}}
+          <h2 class="panel-title">{{this.heading}}</h2>
+        {{/if}}
+      </header>
     {{/if}}
-  </header>
-{{/if}}
 
-<div class="panel-body">{{yield}}</div>
+    <div class="panel-body">{{yield}}</div>
+  </section>
+{{else~}}
+  {{yield}}
+{{~/if}}

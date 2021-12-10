@@ -75,4 +75,23 @@ module('Integration | Component | ui-panel', function (hooks) {
 
     assert.dom('[data-test-id="panel"] .panel-heading .panel-title').hasTagName('h4');
   });
+
+  test('it can yield provided content back without being wrapped in a panel', async function (assert) {
+    this.set('renderPanel', true);
+
+    // language=handlebars
+    await render(
+      hbs`<UiPanel @heading="Hello World" @renderPanel={{this.renderPanel}}>Foo Bar</UiPanel>`
+    );
+
+    assert.dom('.panel .panel-heading').isVisible();
+    assert.dom('.panel .panel-body').isVisible();
+    assert.dom('.panel .panel-body').hasText('Foo Bar');
+
+    this.set('renderPanel', false);
+
+    assert.dom('.panel .panel-heading').doesNotExist();
+    assert.dom('.panel .panel-body').doesNotExist();
+    assert.dom().hasText('Foo Bar');
+  });
 });

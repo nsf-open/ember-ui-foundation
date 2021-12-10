@@ -19,6 +19,7 @@ export const Default = (args: unknown) => ({
       @variant="{{this.variant}}"
       @level="{{this.level}}"
       @testId="{{this.testId}}"
+      @renderPanel={{this.renderPanel}}
     >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
