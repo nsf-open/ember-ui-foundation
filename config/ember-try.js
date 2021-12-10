@@ -3,59 +3,52 @@
 const getChannelURL = require('ember-source-channel-url');
 const { embroiderSafe, embroiderOptimized } = require('@embroider/test-setup');
 
+const devDependenciesForEach = {
+  '@storybook/ember': null,
+  '@storybook/ember-cli-storybook': null,
+  '@storybook/addon-a11y': null,
+  '@storybook/addon-cssresources': null,
+  '@storybook/addon-docs': null,
+  '@storybook/addon-essentials': null,
+};
+
+function makeScenario(name, emberSourceVersion, hash = undefined) {
+  const result = Object.assign({ name }, hash || {});
+
+  if (result.npm) {
+    if (result.npm.devDependencies) {
+      result.npm.devDependencies = Object.assign(
+        {},
+        devDependenciesForEach,
+        result.npm.devDependencies
+      );
+    } else {
+      result.npm.devDependencies = Object.assign({}, devDependenciesForEach);
+    }
+  } else {
+    result.npm = {
+      devDependencies: Object.assign({}, devDependenciesForEach),
+    };
+  }
+
+  if (emberSourceVersion && !('ember-source' in result.npm.devDependencies)) {
+    result.npm.devDependencies['ember-source'] = emberSourceVersion;
+  }
+
+  return result;
+}
+
 module.exports = async function () {
   return {
     scenarios: [
-      {
-        name: 'ember-lts-3.8',
-        npm: {
-          devDependencies: {
-            'ember-source': '~3.8.1',
-          },
-        },
-      },
-      {
-        name: 'ember-lts-3.12',
-        npm: {
-          devDependencies: {
-            'ember-source': '~3.12.4',
-          },
-        },
-      },
-      {
-        name: 'ember-lts-3.16',
-        npm: {
-          devDependencies: {
-            'ember-source': '~3.16.3',
-          },
-        },
-      },
-      {
-        name: 'ember-lts-3.20',
-        npm: {
-          devDependencies: {
-            'ember-source': '~3.20.7',
-          },
-        },
-      },
-      {
-        name: 'ember-current-lts',
-        npm: {
-          devDependencies: {
-            'ember-source': 'lts',
-          },
-        },
-      },
-      {
-        name: 'ember-release',
-        npm: {
-          devDependencies: {
-            'ember-source': await getChannelURL('release'),
-          },
-        },
-      },
-      {
-        name: 'ember-default-with-jquery',
+      makeScenario('ember-lts-3.8', '~3.8.1'),
+      makeScenario('ember-lts-3.12', '~3.12.4'),
+      makeScenario('ember-lts-3.16', '~3.16.3'),
+      makeScenario('ember-lts-3.20', '~3.20.7'),
+      makeScenario('ember-current-lts', 'lts'),
+      makeScenario('ember-release', await getChannelURL('release')),
+
+      makeScenario('ember-default-with-jquery', undefined, {
         env: {
           EMBER_OPTIONAL_FEATURES: JSON.stringify({
             'jquery-integration': true,
@@ -66,9 +59,9 @@ module.exports = async function () {
             '@ember/jquery': '^1.1.0',
           },
         },
-      },
-      {
-        name: 'ember-classic',
+      }),
+
+      makeScenario('ember-classic', '~3.28.0', {
         env: {
           EMBER_OPTIONAL_FEATURES: JSON.stringify({
             'application-template-wrapper': true,
@@ -77,14 +70,12 @@ module.exports = async function () {
           }),
         },
         npm: {
-          devDependencies: {
-            'ember-source': '~3.28.0',
-          },
           ember: {
             edition: 'classic',
           },
         },
-      },
+      }),
+
       embroiderSafe(),
       embroiderOptimized(),
     ],
