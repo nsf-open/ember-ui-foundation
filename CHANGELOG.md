@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.2](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.3.0...v1.3.2) (2021-12-10)
+
+
+### Bug Fixes
+
+* fix failing builds when Typedoc package is missing ([d05d358](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/d05d3587d9ac38ea9f353f3c29a8d978810b0e87))
+
 ### [1.3.1](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.3.0...v1.3.1) (2021-12-10)
 
 ## [1.3.0](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.2.0...v1.3.0) (2021-12-10)
