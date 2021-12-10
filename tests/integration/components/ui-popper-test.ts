@@ -47,7 +47,7 @@ module('Integration | Component | ui-popper', function (hooks) {
       <button id="target-btn">A Button</button>
     `);
 
-    assert.equal(
+    assert.strictEqual(
       find('#test-popper')?.parentNode,
       find('#original-container'),
       "The popper's current parent is its original parent node"
@@ -81,17 +81,17 @@ module('Integration | Component | ui-popper', function (hooks) {
     const registry = this.owner.lookup('-view-registry:main');
     const instance = registry[popperId] as UiPopper;
 
-    assert.equal(instance.realPopperTarget, find('#target-btn'));
+    assert.strictEqual(instance.realPopperTarget, find('#target-btn'));
 
     this.set('popperTarget', find('#other-target'));
     await settled();
 
-    assert.equal(instance.realPopperTarget, find('#other-target'));
+    assert.strictEqual(instance.realPopperTarget, find('#other-target'));
 
     this.set('popperTarget', undefined);
     await settled();
 
-    assert.equal(instance.realPopperTarget, find('#original-container'));
+    assert.strictEqual(instance.realPopperTarget, find('#original-container'));
   });
 
   test('it can be dynamically configured', async function (assert) {
@@ -135,7 +135,7 @@ module('Integration | Component | ui-popper', function (hooks) {
     this.set('renderInPlace', true);
     await settled();
 
-    assert.equal(
+    assert.strictEqual(
       find('#test-popper')?.parentNode,
       find('#original-container'),
       "The popper's current parent is its original parent node"
