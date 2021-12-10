@@ -5,6 +5,10 @@ module.exports = {
   ],
 
   addons: [
-    '@storybook/addon-essentials'
+    '@storybook/addon-cssresources',
+    '@storybook/addon-essentials',
+    '@storybook/addon-a11y',
   ],
+
+  staticDirs: ['../dist'],
 }
