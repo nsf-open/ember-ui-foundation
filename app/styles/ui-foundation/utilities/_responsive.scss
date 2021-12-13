@@ -1,6 +1,5 @@
 @use "../mixins/media-queries" as queries;
-
-$breakpoints: () !default;
+@use "../variables";
 
 /**
  * Utility classes to show/hide content at, above, or below a specified breakpoint.
@@ -14,16 +13,18 @@ $breakpoints: () !default;
  * .hidden-lg-up
  * .hidden-lg-down
  */
-@each $bp in map-keys($breakpoints) {
-  .hidden-#{$bp}-up {
-    @include queries.breakpoint-up($bp, $breakpoints) {
-      display: none !important;
+@mixin style() {
+  @each $bp in map-keys(variables.$breakpoints) {
+    .hidden-#{$bp}-up {
+      @include queries.breakpoint-up($bp, variables.$breakpoints) {
+        display: none !important;
+      }
     }
-  }
 
-  .hidden-#{$bp}-down {
-    @include queries.breakpoint-down($bp, $breakpoints) {
-      display: none !important;
+    .hidden-#{$bp}-down {
+      @include queries.breakpoint-down($bp, variables.$breakpoints) {
+        display: none !important;
+      }
     }
   }
 }

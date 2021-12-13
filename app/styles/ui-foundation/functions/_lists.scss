@@ -1,0 +1,43 @@
+@use "sass:map";
+@use "sass:list";
+
+/**
+ * Describes the possible location of each value in a shorthand
+ * property.
+ *
+ * padding: 10px 5px 8px 4px;
+ * padding: 10px 5px;
+ * padding: 10px;
+ *
+ *   - the "top" value always appears at the 1 index
+ *   - the "right" value appears in either the 2 or 1 index
+ *   - the "bottom" value appears in either the 3 or 1 index
+ *   - this "left" value appears in either the 4, 2, or 1 index
+ */
+$cardinalPositions: (
+  top:    [1],
+  right:  [2, 1],
+  bottom: [3, 1],
+  left:   [4, 2, 1],
+);
+
+/**
+ * Extracts a single cardinal value from a shorthand property.
+ *
+ * >> shorthand-value(10px 5px 8px 4px, bottom);
+ * << 8px;
+ */
+@function shorthand-value($list, $position) {
+  @if map.has-key($cardinalPositions, $position) {
+    $indices: map.get($cardinalPositions, $position);
+    $length: list.length($list);
+
+    @each $index in map.get($cardinalPositions, $position) {
+      @if ($index <= $length) {
+        @return list.nth($list, $index);
+      }
+    }
+  }
+
+  @return null;
+}

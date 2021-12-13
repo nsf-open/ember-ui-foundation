@@ -1,0 +1,18 @@
+/**
+ * A shorthand for if/else.
+ */
+@function ternary($condition, $trueResult, $falseResult) {
+  @if $condition {
+    @return $trueResult;
+  } @else {
+    @return $falseResult;
+  }
+}
+
+/**
+ * Returns the first argument if it is truthy, otherwise it returns
+ * the second argument.
+ */
+@function truthy($optionA, $optionB) {
+  @return ternary($optionA, $optionA, $optionB);
+}

@@ -2,20 +2,28 @@
  * This styling is meant to integrate with Bootstrap SASS.
  */
 
-$screen-xs: 480px !default;
-$screen-sm: 768px !default;
-$screen-md: 992px !default;
-$screen-lg: 1200px !default;
+@forward "ui-foundation/variables";
 
-$breakpoints: (
-  xs: $screen-xs,
-  sm: $screen-sm,
-  md: $screen-md,
-  lg: $screen-lg
-);
+@forward "ui-foundation/components/button-column"    as button-column-*;
+@forward "ui-foundation/components/progress-chevron" as progress-chevron-*;
+@forward "ui-foundation/utilities/responsive"        as responsive-utilities-*;
+@forward "ui-foundation/utilities/spacing"           as spacing-utilities-*;
 
-@use "ui-foundation/components/button-groups" with ( $breakpoints: $breakpoints );
+
+// *******************************
+// The style() mixin is a one-stop
+// to pull in the foundation lib.
+// *******************************
+
+@use "ui-foundation/utilities/responsive";
+@use "ui-foundation/utilities/spacing";
+@use "ui-foundation/components/button-column";
 @use "ui-foundation/components/progress-chevron";
 
-@use "ui-foundation/utilities/responsive" with ( $breakpoints: $breakpoints );
-@use "ui-foundation/utilities/spacing";
+@mixin style() {
+  @include button-column.style();
+  @include progress-chevron.style();
+
+  @include responsive.style();
+  @include spacing.style();
+}

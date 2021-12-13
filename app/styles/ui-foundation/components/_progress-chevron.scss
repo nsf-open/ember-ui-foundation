@@ -1,152 +1,244 @@
 @use "sass:math";
+@use "sass:selector";
+@use "sass:string";
+@use "../functions/lists";
+@use "../functions/logic";
+@use "../mixins/media-queries";
+@use "../variables";
 
-$breakpoint: 992px !default;
-$margin-bottom: 10px !default;
-$padding: 15px !default;
-$border-radius: 4px !default;
-$size: 20px;
-$gap: 3px;
-$background-color: #f5f5f5 !default;
-$text-color: #333 !default;
-$completed-background-color: #5bc0de !default;
-$completed-text-color: $text-color !default;
-$active-background-color: #337ab7 !default;
-$active-text-color: #fff !default;
+$-breakpoint:    sm;
+$-margin-bottom: 20px;
+$-padding:       10px 5px 10px 30px;
+$-border-radius: 4px;
+$-border-weight: 1px;
+$-line-height:   20px;
+
+$-background-color: #e9e9e9;
+$-border-color:     #d7d7d7;
+$-text-color:       #333;
+$-link-color:       $-text-color;
+$-checkmark-color:  $-text-color;
+
+$-completed-background-color: #5bc0de;
+$-completed-border-color:     #5bc0de;
+$-completed-text-color:       #333;
+$-completed-link-color:       $-completed-text-color;
+$-completed-checkmark-color:  $-completed-text-color;
+
+$-active-background-color: #337ab7;
+$-active-border-color:     #337ab7;
+$-active-text-color:       #fff;
+$-active-link-color:       $-active-text-color;
+$-active-checkmark-color:  $-active-text-color;
 
 
-.progress-chevrons {
-  list-style: none;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  margin-bottom: $margin-bottom;
+/**
+ * Configuration for the progress-chevron module.
+ */
+@mixin configure(
+  $breakpoint:                 null,
+  $margin-bottom:              null,
+  $padding:                    null,
+  $border-radius:              null,
+  $border-weight:              null,
+  $line-height:                null,
+  $background-color:           null,
+  $border-color:               null,
+  $text-color:                 null,
+  $link-color:                 null,
+  $checkmark-color:            null,
+  $completed-background-color: null,
+  $completed-border-color:     null,
+  $completed-text-color:       null,
+  $completed-link-color:       null,
+  $completed-checkmark-color:  null,
+  $active-background-color:    null,
+  $active-border-color:        null,
+  $active-text-color:          null,
+  $active-link-color:          null,
+  $active-checkmark-color:     null,
+) {
+  $-breakpoint:                 logic.truthy($breakpoint,                 $-breakpoint) !global;
+  $-margin-bottom:              logic.truthy($margin-bottom,              $-margin-bottom) !global;
+  $-padding:                    logic.truthy($padding,                    $-padding) !global;
+  $-border-radius:              logic.truthy($border-radius,              $-border-radius) !global;
+  $-border-weight:              logic.truthy($border-weight,              $-border-weight) !global;
+  $-line-height:                logic.truthy($line-height,                $-line-height) !global;
+  $-background-color:           logic.truthy($background-color,           $-background-color) !global;
+  $-border-color:               logic.truthy($border-color,               $-border-color) !global;
+  $-text-color:                 logic.truthy($text-color,                 $-text-color) !global;
+  $-link-color:                 logic.truthy($link-color,                 $-link-color) !global;
+  $-checkmark-color:            logic.truthy($checkmark-color,            $-checkmark-color) !global;
+  $-completed-background-color: logic.truthy($completed-background-color, $-completed-background-color) !global;
+  $-completed-border-color:     logic.truthy($completed-border-color,     $-completed-border-color) !global;
+  $-completed-text-color:       logic.truthy($completed-text-color,       $-completed-text-color) !global;
+  $-completed-link-color:       logic.truthy($completed-link-color,       $-completed-link-color) !global;
+  $-completed-checkmark-color:  logic.truthy($completed-checkmark-color,  $-completed-checkmark-color) !global;
+  $-active-background-color:    logic.truthy($active-background-color,    $-active-background-color) !global;
+  $-active-border-color:        logic.truthy($active-border-color,        $-active-border-color) !global;
+  $-active-text-color:          logic.truthy($active-text-color,          $-active-text-color) !global;
+  $-active-link-color:          logic.truthy($active-link-color,          $-active-link-color) !global;
+  $-active-checkmark-color:     logic.truthy($active-checkmark-color,     $-active-checkmark-color) !global;
+}
 
-  .chevron {
-    flex-grow: 1;
 
-    > span, > a {
-      background: $background-color;
-      color: $text-color;
-      height: $size * 2;
-      line-height: $size * 2;
-      padding: 0 math.div($size, 2) 0 math.div($size, 4);
-      margin-right: $size + $gap;
-      display: block;
-      text-decoration: none;
-      text-align: center;
-      position: relative;
+/**
+ * Progress Bar Styling.
+ */
+@mixin style() {
+  $padding-top:           lists.shorthand-value($-padding, top);
+  $padding-bottom:        lists.shorthand-value($-padding, bottom);
+  $chevron-height:        $padding-top + $padding-bottom + $-line-height + ($-border-weight * 2);
+  $computed-border-width: math.div($chevron-height, 2);
 
-      &:before, &:after {
-        content: "";
-        position: absolute;
-        top: 0;
-        border-style: solid;
-        border-color: $background-color;
-        border-width: $size math.div($size, 2);
-        width: 0;
-        height: 0;
-      }
+  .progress-chevrons {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    margin-bottom: $-margin-bottom;
 
-      &:before {
-        left: -($size);
-        border-left-color: transparent;
-      }
-
-      &:after {
-        left: 100%;
-        border-color: transparent;
-        border-left-color: $background-color;
-      }
-    }
-
-    &:first-child > span, &:first-child > a {
-      padding-left: $padding;
-      border-radius: $border-radius 0 0 $border-radius;
-
-      &:before {
-        border: none;
-      }
-    }
-
-    &:last-child > span, &:last-child > a {
-      padding-right: $padding;
-      border-radius: 0 $border-radius $border-radius 0;
-      margin-right:  0;
-
-      &:after {
-        border: none;
-      }
-    }
-
-    &.indeterminate:not(.active):not(.past-active),
-    &.complete:not(.active):not(.past-active) {
-      > span, > a {
-        background-color: $completed-background-color;
-        color: $completed-text-color;
-
-        &:before {
-          border-color: $completed-background-color;
-          border-left-color: transparent;
-        }
-
-        &:after {
-          border-left-color: $completed-background-color;
-        }
-      }
-    }
-
-    &.active {
-      > span, > a {
-        background-color: $active-background-color;
-        color: $active-text-color;
-
-        &:before {
-          border-color: $active-background-color;
-          border-left-color: transparent;
-        }
-
-        &:after {
-          border-left-color: $active-background-color;
-        }
-      }
-    }
-  }
-
-  @media (min-width: $breakpoint) {
     &.progress-chevrons-compact {
-      justify-content: flex-start;
+      width: min-content;
+    }
+
+    &:not(.progress-chevrons-compact) .chevron:last-child {
+      .content {
+        border-top-right-radius: $-border-radius;
+        border-bottom-right-radius: $-border-radius;
+      }
+
+      .chevron-arrow{
+        display: none;
+      }
+    }
+
+    @include media-queries.breakpoint-down($-breakpoint, variables.$breakpoints) {
+      &.progress-chevrons-compact {
+        width: auto;
+      }
 
       .chevron {
-        flex-grow: 0;
-
-        > span, > a {
-          text-align: left;
+        .content {
+          text-align: center;
         }
 
         &:last-child {
-          > span, > a {
-            border-radius: 0;
-
-            &:after {
-              border-style: solid;
-              border-width: $size math.div($size, 2);
-              border-color: transparent;
-              border-left-color: $background-color;
-            }
+          .content {
+            border-top-right-radius: $-border-radius;
+            border-bottom-right-radius: $-border-radius;
           }
 
-          &.complete:not(.active):not(.past-active) {
-            > span:after, > a:after {
-              border-left-color: $completed-background-color;
-            }
-          }
-
-          &.active {
-            > span:after, > a:after {
-              border-left-color: $active-background-color;
-            }
+          .chevron-arrow {
+            display: none;
           }
         }
+      }
+    }
+
+    .chevron {
+      display: grid;
+      grid-auto-flow: row;
+      grid-template-columns: auto min-content;
+
+      &:not(:first-child) {
+        margin-left: -(math.div($chevron-height, 2));
+      }
+
+      &:first-child .content {
+        padding-left: math.div(lists.shorthand-value($-padding, left), 2);
+        border-top-left-radius: $-border-radius;
+        border-bottom-left-radius: $-border-radius;
+      }
+
+      .content {
+        display: block;
+        padding: $-padding;
+        white-space: nowrap;
+      }
+
+      .chevron-arrow {
+        height: $chevron-height;
+        width: math.div($chevron-height, 2);
+        overflow: hidden;
+
+        > div {
+          height: $chevron-height * math.sin(45deg);
+          width: $chevron-height * math.sin(45deg);
+          transform: rotate(45deg);
+          transform-origin: top left;
+        }
+      }
+
+      @include chevron-variant('',
+        $-background-color,
+        $-border-color,
+        $-text-color,
+        $-link-color,
+        $-checkmark-color,
+      );
+
+      @include chevron-variant('.complete',
+        $-completed-background-color,
+        $-completed-border-color,
+        $-completed-text-color,
+        $-completed-link-color,
+        $-completed-checkmark-color,
+      );
+
+      @include chevron-variant('.active',
+        $-active-background-color,
+        $-active-border-color,
+        $-active-text-color,
+        $-active-link-color,
+        $-active-checkmark-color,
+      );
+    }
+  }
+}
+
+
+/**
+ * Styles a chevron for the provided modifier $variant.
+ */
+@mixin chevron-variant($variant, $background, $border, $text, $link: $text, $checkmark: $text) {
+  $selector: &;
+  $chevronClass: '.chevron';
+
+  @if string.length($variant) > 0 {
+    $selector: selector.unify(&, $variant);
+    $chevronClass: selector.append($chevronClass, $variant);
+  }
+
+  @at-root #{$selector} {
+    &:first-child .content {
+      border-left: solid $-border-weight $border;
+    }
+
+    .content {
+      background-color: $background;
+      border-top: solid $-border-weight $border;
+      border-bottom: solid $-border-weight $border;
+      color: $text;
+
+      a {
+        color: $link;
+      }
+    }
+
+    .chevron-arrow > div {
+      background: $background;
+      border: solid $-border-weight $border;
+    }
+  }
+
+  @at-root .progress-chevrons:not(.progress-chevrons-compact) #{$chevronClass}:last-child .content {
+    border-right: solid $-border-weight $border;
+  }
+
+  @at-root {
+    @include media-queries.breakpoint-down($-breakpoint, variables.$breakpoints) {
+      .progress-chevrons #{$chevronClass}:last-child .content {
+        border-right: solid $-border-weight $border;
       }
     }
   }

@@ -26,38 +26,40 @@ $_max: 10;
  * .pb-#px  - Bottom padding
  * .pl-#px  - Left padding
  */
-@while $_count <= $_max {
-  @each $prop, $abbrev in (margin: m, padding: p) {
-    .#{$abbrev}-#{$_count}px {
-      #{$prop}: #{$_count}px !important;
+@mixin style() {
+  @while $_count <= $_max {
+    @each $prop, $abbrev in (margin: m, padding: p) {
+      .#{$abbrev}-#{$_count}px {
+        #{$prop}: #{$_count}px !important;
+      }
+
+      .#{$abbrev}x-#{$_count}px {
+        #{$prop}-left: #{$_count}px !important;
+        #{$prop}-right: #{$_count}px !important;
+      }
+
+      .#{$abbrev}y-#{$_count}px {
+        #{$prop}-top: #{$_count}px !important;
+        #{$prop}-bottom: #{$_count}px !important;
+      }
+
+      .#{$abbrev}t-#{$_count}px {
+        #{$prop}-top: #{$_count}px !important;
+      }
+
+      .#{$abbrev}r-#{$_count}px {
+        #{$prop}-right: #{$_count}px !important;
+      }
+
+      .#{$abbrev}b-#{$_count}px {
+        #{$prop}-bottom: #{$_count}px !important;
+      }
+
+      .#{$abbrev}l-#{$_count}px {
+        #{$prop}-left: #{$_count}px !important;
+      }
     }
 
-    .#{$abbrev}x-#{$_count}px {
-      #{$prop}-left: #{$_count}px !important;
-      #{$prop}-right: #{$_count}px !important;
-    }
-
-    .#{$abbrev}y-#{$_count}px {
-      #{$prop}-top: #{$_count}px !important;
-      #{$prop}-bottom: #{$_count}px !important;
-    }
-
-    .#{$abbrev}t-#{$_count}px {
-      #{$prop}-top: #{$_count}px !important;
-    }
-
-    .#{$abbrev}r-#{$_count}px {
-      #{$prop}-right: #{$_count}px !important;
-    }
-
-    .#{$abbrev}b-#{$_count}px {
-      #{$prop}-bottom: #{$_count}px !important;
-    }
-
-    .#{$abbrev}l-#{$_count}px {
-      #{$prop}-left: #{$_count}px !important;
-    }
+    $_count: $_count + 1;
   }
-
-  $_count: $_count + 1;
 }

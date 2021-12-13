@@ -1,0 +1,67 @@
+@use "../mixins/media-queries" as queries;
+@use "../functions/logic";
+@use "../variables";
+
+$-horizontal-spacing: 10px;
+$-vertical-spacing:   10px;
+
+/**
+ * Configuration for the button-column module.
+ */
+@mixin configure($horizontal-spacing: null, $vertical-spacing: null) {
+  $-horizontal-spacing: logic.truthy($horizontal-spacing, $-horizontal-spacing) !global;
+  $-vertical-spacing:   logic.truthy($vertical-spacing,   $-vertical-spacing) !global;
+}
+
+/**
+ * The .btn-col and .btn-col-right classes are applied along with Bootstrap .col-*
+ * classes. Buttons and/or anchors styled with Bootstrap .btn classes can then
+ * defined inside. The buttons will group left or right, depending on the .btn-col
+ * class used, until the defined .col-* breakpoint is reached at which time the
+ * buttons themselves will stack.
+ */
+@mixin style() {
+  .btn-col-right {
+    text-align: right;
+  }
+
+  .btn-col, .btn-col-right {
+    .btn {
+      margin-right: 0;
+      margin-bottom: $-vertical-spacing;
+      width: 100%;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    + .btn-col, + .btn-col-right {
+      .btn:first-child {
+        margin-top: $-vertical-spacing;
+      }
+    }
+
+    @each $bp in map-keys(variables.$breakpoints) {
+      @include queries.breakpoint-up($bp, variables.$breakpoints) {
+        &[class^='col-#{$bp}-'] {
+          .btn {
+            margin-right: $-horizontal-spacing;
+            margin-bottom: 0;
+            width: auto;
+
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+
+          + .btn-col, + .btn-col-right {
+            .btn:first-child {
+              margin-top: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
