@@ -1,6 +1,5 @@
 'use strict';
 const Funnel = require('broccoli-funnel');
-const Path = require('path');
 
 module.exports = {
   name: require('./package').name,
@@ -27,38 +26,5 @@ module.exports = {
       this,
       new Funnel(addonTree, { exclude: ['**/*.stories.*'] })
     );
-  },
-
-  async outputReady({ directory }) {
-    if (process.env.STORYBOOK) {
-      let TypeDoc;
-
-      try {
-        // eslint-disable-next-line node/no-unpublished-require
-        TypeDoc = require('typedoc');
-      } catch (e) {
-        this.ui.writeWarnLine('TypeDoc not installed', undefined, undefined);
-        return;
-      }
-
-      this.ui.writeInfoLine('Running TypeDoc for Storybook');
-
-      const app = new TypeDoc.Application();
-
-      app.options.addReader(new TypeDoc.TSConfigReader());
-      app.options.addReader(new TypeDoc.TypeDocReader());
-
-      app.bootstrap({
-        entryPoints: ['./addon'],
-        entryPointStrategy: 'expand',
-        excludeExternals: true,
-        excludePrivate: true,
-        excludeProtected: true,
-        disableSources: true,
-        logger: this.ui.writeInfoLine.bind(this.ui),
-      });
-
-      await app.generateJson(app.convert(), Path.join(directory, 'docs', 'index.json'));
-    }
   },
 };
