@@ -57,8 +57,6 @@
     "@glimmer/tracking": "^1.0.4",
     "@nsf/ember-cli-sonarqube": "^1.2.0",
     "@storybook/addon-a11y": "^6.4.15",
-    "@storybook/addon-cssresources": "^6.2.9",
-    "@storybook/addon-docs": "^6.4.15",
     "@storybook/addon-essentials": "^6.4.15",
     "@storybook/ember": "^6.4.15",
     "@storybook/ember-cli-storybook": "^0.4.0",

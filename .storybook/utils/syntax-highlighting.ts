@@ -1,5 +1,4 @@
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism-light';
-// @ts-expect-error
 import glimmer from 'prismjs-glimmer/src/glimmer';
 
 /**

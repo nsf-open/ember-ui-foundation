@@ -1,9 +1,7 @@
-import { withCssResources } from '@storybook/addon-cssresources';
-
 // @ts-expect-error - this will exist at runtime
 import docs from '../dist/docs/index.json';
-import { buildComponentArgumentsTable } from './utils/argument-types';
-import { getComponentDescription } from './utils/typedoc';
+import { getComponentDescription } from './utils/typedoc/ember';
+import { buildComponentArgumentsTable } from './utils/controls/ember';
 import { addHtmlBarHighlighting } from './utils/syntax-highlighting';
 import { trimStorySource } from './utils/decorators';
 
@@ -17,7 +15,7 @@ addHtmlBarHighlighting();
 /* ************************ *
    Decorators
  * ************************ */
-export const decorators = [trimStorySource, withCssResources];
+export const decorators = [trimStorySource];
 
 
 /* ************************ *
@@ -39,11 +37,9 @@ export const parameters = {
     hideNoControlsWarning: true,
   },
 
-  cssresources: [],
-
   a11y: {
-    element:  '#root > .ember-view',
-    manual:   true,
+    element: '#root > .ember-view',
+    manual:  true,
   },
 
   backgrounds: {
@@ -55,14 +51,10 @@ export const parameters = {
   },
 
   sidebar: {
-    showRoots: false,
+    showRoots: true,
   },
 
   docs: {
-    source: {
-      language: 'htmlbars',
-    },
-
     extractComponentDescription(componentName: string) {
       return getComponentDescription(docs, componentName);
     },

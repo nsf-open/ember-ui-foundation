@@ -5,7 +5,6 @@ module.exports = {
   ],
 
   addons: [
-    '@storybook/addon-cssresources',
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
   ],
