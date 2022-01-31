@@ -13,17 +13,6 @@ export default {
     icon: 'superpowers',
     tooltip: null,
   },
-
-  argTypes: {
-    tooltip: {
-      options: ['true', ''],
-      control: {
-        type: 'inline-radio',
-        labels: { true: 'Show', '': 'Hide' },
-        mapping: { '': null },
-      },
-    },
-  },
 };
 
 const Template = (context: unknown) => ({
