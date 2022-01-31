@@ -8,75 +8,54 @@ import template from './template';
 /**
  * Provides standardized layout for icon + text components, e.g., buttons, anchors, and
  * their many variants.
- *
- * @class UiInlineTextIconLayout
  */
 @tagName('')
 @layout(template)
 export default class UiInlineTextIconLayout extends Component {
   /**
-   * @argument text
-   * @type {string}
+   * The text to display.
    */
-  text?: string;
+  public text?: string;
 
   /**
-   * The icon name. Providing the `fa-` prefix is allowed, but not required.
-   *
-   * @argument icon
-   * @type {string}
+   * The icon name. Providing the `fa-` prefix is allowed, but not required. Alias for
+   * `UiIcon.name`.
    */
-  icon?: string;
+  public icon?: string;
 
   /**
    * The placement of the icon, either "left" or "right", relative to the text.
-   *
-   * @argument iconPlacement
-   * @type {"left" | "right"}
    */
-  iconPlacement: DirectionsX = Directions.Left;
+  public iconPlacement: DirectionsX = Directions.Left;
 
   /**
-   * If true, text will be made screen-reader only at the small breakpoint. This will only apply if
-   * an icon has been provided for display.
-   *
-   * @argument responsive
-   * @type {boolean}
+   * If true, text will be made screen-reader only at the small breakpoint. This will
+   * only apply if an icon has been provided for display.
    */
-  responsive = false;
+  public responsive = false;
 
   /**
-   * Whether or not to apply the fixed width modifier to the icon.
-   *
-   * @argument fw
-   * @type {boolean}
+   * Whether to apply the fixed width modifier to the icon. Alias for `UiIcon.fw`.
    */
-  fw = false;
+  public fw = false;
 
   /**
    * Alias for `UiIcon.spin`.
-   *
-   * @argument spin
-   * @type {boolean}
    */
-  spin = false;
+  public spin = false;
 
   /**
-   * For convenience, when set to true the icon will take on the MyNSF standard "loading/pending"
+   * For convenience, when set to true the icon will take on the NSF standard "loading/pending"
    * animation.
-   *
-   * @argument pending
-   * @type {boolean}
    */
-  pending = false;
+  public pending = false;
 
   /**
-   * Tooltip text content. If provided, the standard tooltip icon will be applied.
-   *
-   * @argument tooltip
-   * @type {string}
+   * Tooltip text content. If provided, the standard tooltip icon will be applied. This
+   * does not actually generate a UiTooltip instance, just the icon. It's a string instead
+   * of a boolean because that is what usually gets thrown around when dealing with tooltips.
    */
-  tooltip?: string;
+  public tooltip?: string;
 
   @computed('iconPlacement', 'tooltip')
   get actualIconPlacement() {
