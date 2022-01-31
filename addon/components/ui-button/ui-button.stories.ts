@@ -2,14 +2,10 @@ import { hbs } from 'ember-cli-htmlbars';
 
 export default {
   title: 'Elements/ui-button',
-  component: 'UiButton',
+  component: 'components/ui-button/component',
 
   parameters: {
     layout: 'centered',
-
-    controls: {
-      // include: ['text', 'variant'],
-    },
   },
 
   args: {

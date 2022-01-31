@@ -170,6 +170,9 @@ export default class BackdropService extends Service {
     backdrop?.parentElement?.removeChild(backdrop);
   }
 
+  /**
+   * @protected
+   */
   // eslint-disable-next-line ember/classic-decorator-hooks
   init() {
     super.init();
@@ -179,6 +182,8 @@ export default class BackdropService extends Service {
 
   /**
    * Cleanup. Ensure that the backdrop is destroyed if this service is disposed of.
+   *
+   * @protected
    */
   // eslint-disable-next-line ember/classic-decorator-hooks
   destroy() {

@@ -2,7 +2,7 @@ import { hbs } from 'ember-cli-htmlbars';
 
 export default {
   title: 'Elements/ui-inline-text-icon-layout',
-  component: 'UiInlineTextIconLayout',
+  component: 'components/ui-inline-text-icon-layout/component',
 
   parameters: {
     layout: 'centered',

@@ -1,23 +1,60 @@
 import type { ArgsEntry } from './types';
 import type { DeclarationReflection } from 'typedoc/dist/lib/serialization/schema';
 import { ProjectReflection } from 'typedoc/dist/lib/serialization/schema';
-import { findComponentDefinition, getComponentPublicProperties } from '../typedoc/ember';
-import { buildArgumentEntriesForProperties } from './args';
+import { buildArgumentEntriesObject } from './args';
+import { findChildrenByKind } from '../typedoc/traversal';
+import { ReflectionKind } from '../typedoc/types';
+
+/**
+ * Given at least a partial lookup string as a name, this will return an object whose values
+ * are ArgEntry definitions that Storybook can use to put together documentation. Unlike the
+ * Ember Component specific method below, this includes all public properties and methods,
+ * and does not attempt to create controls.
+ */
+export function buildClassLikeArgumentsTable(project: ProjectReflection, item: DeclarationReflection) {
+  const properties = findChildrenByKind(item, ReflectionKind.Property)
+    .filter(function(prop) {
+      return !(
+        prop.flags.isExternal
+        || prop.flags.isPrivate
+        || prop.flags.isProtected
+      );
+    });
+
+  const methods = findChildrenByKind(item, ReflectionKind.Method)
+    .filter(function(prop) {
+      return !(
+        prop.flags.isExternal
+        || prop.flags.isPrivate
+        || prop.flags.isProtected
+      );
+    });
+
+  return Object.assign(
+    buildArgumentEntriesObject(project, properties, false, 'Properties'),
+    buildArgumentEntriesObject(project, methods, false, 'Methods'),
+  );
+}
 
 /**
  * Given a component name, this will return an object whose values are ArgEntry definitions
- * the Storybook can use to put together the Controls pane and supplemental documentation.
+ * that Storybook can use to put together the Controls pane and supplemental documentation.
  */
-export function buildComponentArgumentsTable(project: ProjectReflection, componentName: string) {
-  const component = findComponentDefinition(project, componentName);
-
-  if (!component) {
-    return {};
-  }
+export function buildComponentArgumentsTable(project: ProjectReflection, component: DeclarationReflection) {
+  const properties = findChildrenByKind(component, ReflectionKind.Property)
+    .filter(function(prop) {
+      return !(
+        prop.flags.isExternal
+        || prop.flags.isStatic
+        || prop.flags.isReadonly
+        || prop.flags.isPrivate
+        || prop.flags.isProtected
+      );
+    });
 
   return Object.assign(
     buildYieldsEntriesForComponent(component),
-    buildArgumentEntriesForProperties(project, getComponentPublicProperties(component))
+    buildArgumentEntriesObject(project, properties, true, 'Properties'),
   );
 }
 
@@ -33,10 +70,11 @@ export function buildYieldsEntriesForComponent(component: DeclarationReflection)
     return {};
   }
 
-  return component.comment.tags
+  const definiteTags = tags
     .map(tag => buildYieldsEntry(tag))
-    .filter(Boolean)
-    .sort((a, b) => a.name.localeCompare(b.name))
+    .filter(Boolean) as ArgsEntry[];
+
+  return definiteTags.sort((a, b) => a.name.localeCompare(b.name))
     .reduce((accumulator, tag) => {
       accumulator[tag.name] = tag;
       return accumulator;
@@ -60,7 +98,8 @@ export function buildYieldsEntry(tag: { tag: string, text: string }): ArgsEntry 
   let name: string | undefined = undefined;
   let desc: string | undefined = undefined;
 
-  const text = tag.text.trim();
+  // Squashes multiple concurrent whitespaces into a single one.
+  const text = tag.text.trim().replace(/\s{2,}/g, ' ');
 
   let i = 0;
   let brackets = 0;

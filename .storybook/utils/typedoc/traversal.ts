@@ -1,4 +1,9 @@
-import { ContainerReflection, Reflection } from 'typedoc/dist/lib/serialization/schema';
+import type {
+  ContainerReflection,
+  ProjectReflection,
+  Reflection,
+} from 'typedoc/dist/lib/serialization/schema';
+
 import { KindOf, ReflectionKind } from './types';
 
 /**
@@ -19,6 +24,10 @@ export function ensureSortedChildren(reflection: ContainerReflection) {
  * each reflection and increment depth-first, so it's The Price is Right rules when
  * it comes to looking one up. In a list of containers, the ID of the direct ancestor
  * of whatever we're trying to find will the closest without going over.
+ *
+ * The `returnParent` boolean will result in the immediate parent of the search target
+ * being returned. This is useful if you have something like an enumeration member and
+ * want to find the enumeration.
  */
 export function findDescendantById<ReturnType extends Reflection = Reflection>(
   parent: ContainerReflection,
@@ -50,9 +59,7 @@ export function findChildByName<ReturnType extends Reflection = Reflection>(
   parent: ContainerReflection,
   name: string | string[]
 ): ReturnType | undefined {
-  return (Array.isArray(name)
-    ? parent.children.find(child => name.includes(child.name))
-    : parent.children.find(child => name === child.name)) as ReturnType ?? undefined;
+  return parent.children?.find(child => name.includes(child.name)) as ReturnType ?? undefined;
 }
 
 /**
@@ -62,13 +69,34 @@ export function findChildrenByKind<K extends ReflectionKind>(
   parent: ContainerReflection,
   kind: K
 ): KindOf<K>[] {
-  const group = parent.groups.find(group => group.kind === kind);
+  const group = parent.groups?.find(group => group.kind === kind);
 
-  if (group) {
+  if (group && group.children) {
     return group.children.map(function (id) {
       return findDescendantById<KindOf<K>>(parent, id);
-    });
+    }).filter(Boolean) as KindOf<K>[];
   }
 
   return [];
+}
+
+/**
+ * Returns a reflection of some named export from a module. To use, the "name" provided
+ * is a concatenation of the module name + export name. For example, the following will
+ * return the reflection for the named export `StreetSuffixes` given it exists inside
+ * a `AddressModel` module.
+ *
+ * ```ts
+ * getModuleExport(project, 'AddressModel#StreetSuffixes');
+ * ```
+ *
+ * By default, the "default" export will be returned if no specific export name is provided.
+ */
+export function getModuleExport(project: ProjectReflection, name: string) {
+  const [moduleName, exportName] = name.split('#', 2);
+  const module = findChildByName(project, moduleName);
+
+  return module
+    ? findChildByName(module, exportName || 'default')
+    : undefined;
 }

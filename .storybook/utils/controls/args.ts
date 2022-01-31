@@ -2,26 +2,33 @@ import type {
   DeclarationReflection,
   ParameterReflection,
   ProjectReflection,
+  SignatureReflection,
   UnionType,
 } from 'typedoc/dist/lib/serialization/schema';
 import type { ArgsEntry } from './types';
 
 import { findChildByName, findDescendantById } from '../typedoc/traversal';
-import { getFullCommentText, stripEscapedOuterQuotes, toTypeString, } from '../typedoc/stringify';
+import { getFullCommentText, stripEscapedOuterQuotes, toDeclarationString, toTypeString, } from '../typedoc/stringify';
 import { isKindOf, ReflectionKind } from '../typedoc/types';
 
 /**
  * Given an array of ParameterReflections, this will return an array of ArgEntry objects
  * describing each property in Storybook-friendly fashion.
  */
-export function buildArgumentEntriesForProperties(
+export function buildArgumentEntriesObject(
   project: ProjectReflection,
-  properties: ParameterReflection[]
+  properties: (ParameterReflection | SignatureReflection)[],
+  inferControls = true,
+  category?: string,
 ) {
   return properties.reduce((accumulator, prop) => {
-    const entry = inferArgumentControl(project, prop, buildArgumentEntry(project, prop));
+    let entry = buildArgumentEntry(project, prop, category);
 
     if (entry) {
+      if (inferControls) {
+        entry = inferArgumentControl(project, prop, entry);
+      }
+
       accumulator[prop.name] = entry;
     }
 
@@ -35,21 +42,25 @@ export function buildArgumentEntriesForProperties(
  */
 export function buildArgumentEntry(
   project: ProjectReflection,
-  property: ParameterReflection
+  property: ParameterReflection | DeclarationReflection,
+  category?: string
 ): ArgsEntry {
-  const argType = toTypeString(property.type || '', project)
+  const isMethod = isKindOf(property, ReflectionKind.Method);
+  const typeString = isMethod
+    ? toDeclarationString(property.signatures?.[0], project)
+    : toTypeString(property.type, project);
 
   return {
     name:         property.name,
     description:  getFullCommentText(property),
-    type:         { name: argType, required: false },
+    type:         { name: typeString, required: false },
     defaultValue: stripEscapedOuterQuotes(property.defaultValue) ?? undefined,
     control:      false,
 
     table: {
-      category:     'Properties',
-      type:         { summary: argType },
-      defaultValue: { summary: property.defaultValue ?? 'undefined' },
+      category,
+      type:         { summary: typeString },
+      defaultValue: { summary: isMethod ? undefined : (property.defaultValue ?? 'undefined') },
     },
   };
 }
@@ -64,13 +75,13 @@ export function inferArgumentControl(
   argEntry: ArgsEntry
 ): ArgsEntry {
   // Strings
-  if (argEntry.type.name === 'string') {
+  if (argEntry.type?.name === 'string') {
     argEntry.control = { type: 'text' };
     return argEntry;
   }
 
   // Numbers
-  if (argEntry.type.name === 'number') {
+  if (argEntry.type?.name === 'number') {
     argEntry.control = { type: 'number' };
     argEntry.defaultValue = typeof argEntry.defaultValue === 'string'
       ? parseFloat(argEntry.defaultValue)
@@ -80,7 +91,7 @@ export function inferArgumentControl(
   }
 
   // Booleans
-  if (argEntry.type.name === 'boolean') {
+  if (argEntry.type?.name === 'boolean') {
     argEntry.control = { type: 'boolean' };
     argEntry.defaultValue = typeof argEntry.defaultValue === 'string'
       ? argEntry.defaultValue === 'true'

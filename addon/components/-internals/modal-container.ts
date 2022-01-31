@@ -16,35 +16,24 @@ import { ModalEvents } from '@nsf/ui-foundation/services/modal';
 @tagName('')
 export default class ModalContainer extends Component {
   @service
-  declare modal: ModalService;
+  declare readonly modal: ModalService;
 
   @service
-  declare backdrop: BackdropService;
+  declare readonly backdrop: BackdropService;
 
   /**
    * Boolean. Toggles the modal window visible or hidden.
-   *
-   * @argument open
-   * @type {boolean}
-   * @default false
    */
   public open = false;
 
   /**
    * String. Naming a modal window allows it to be opened programmatically
    * via the modal service.
-   *
-   * @argument name
-   * @type {string}
    */
   public name?: string;
 
   /**
    * The modal window's heading.
-   *
-   * @argument title
-   * @type {string}
-   * @public
    */
   public title?: string;
 
@@ -60,35 +49,23 @@ export default class ModalContainer extends Component {
 
   /**
    * A callback method executed when the modal window begins opening.
-   *
-   * @argument onShow
-   * @type function
    */
   public onShow?: () => void;
 
   /**
    * A callback method executed when the modal window finishes opening - after
    * any transitions are complete.
-   *
-   * @argument onShown
-   * @type function
    */
   public onShown?: () => void;
 
   /**
    * A callback method executed when the modal window begins closing.
-   *
-   * @argument onHide
-   * @type function
    */
   public onHide?: () => void;
 
   /**
    * A callback method executed when the modal window finishes closing - after
    * any transitions are complete.
-   *
-   * @argument onHidden
-   * @type function
    */
   public onHidden?: () => void;
 
@@ -97,9 +74,6 @@ export default class ModalContainer extends Component {
    * callback has the ability to deny that from occurring if desired by returning a
    * boolean false. In conjunction with `onHideBlocked` this can be used to create
    * some interesting multi-modal workflow patterns.
-   *
-   * @argument onCanHide
-   * @type function
    */
   public onCanHide?: () => void | boolean;
 
@@ -108,38 +82,74 @@ export default class ModalContainer extends Component {
    * because another is currently open and refusing to close. In conjunction with
    * `onCanHide` this can be used to create some interesting multi-modal workflow
    * patterns.
-   *
-   * @argument onHideBlocked
-   * @type function
    */
   public onHideBlocked?: () => void;
 
   public renderInPlace = false;
 
+  /**
+   * @protected
+   */
   dialogId!: string;
 
+  /**
+   * @protected
+   */
   identifier!: string;
 
+  /**
+   * @protected
+   */
   destinationElement!: HTMLElement;
 
+  /**
+   * @protected
+   */
   scrollbarWidth!: number;
 
+  /**
+   * @protected
+   */
   paddingLeft: number | null = null;
 
+  /**
+   * @protected
+   */
   paddingRight: number | null = null;
 
+  /**
+   * @protected
+   */
   isOpen = false;
 
+  /**
+   * @protected
+   */
   inDom = false;
 
+  /**
+   * @protected
+   */
   showDialog = false;
 
+  /**
+   * @protected
+   */
   bodyOverflow = false;
 
+  /**
+   * @protected
+   */
   originalBodyPad: string | null = null;
 
+  /**
+   * @protected
+   */
   resizeListener: EventListener | null = null;
 
+  /**
+   * @protected
+   */
   _renderInPlace = false;
 
   // eslint-disable-next-line ember/classic-decorator-hooks

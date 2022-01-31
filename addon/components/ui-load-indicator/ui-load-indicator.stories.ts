@@ -2,7 +2,7 @@ import { hbs } from 'ember-cli-htmlbars';
 
 export default {
   title: 'Elements/ui-load-indicator',
-  component: 'UiLoadIndicator',
+  component: 'components/ui-load-indicator/component',
 };
 
 const Template = (context: unknown) => ({

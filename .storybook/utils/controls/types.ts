@@ -3,15 +3,15 @@ export type ArgsEntry = {
   description?: string,
   defaultValue: string | number | boolean | null | undefined | Record<string, unknown> | unknown[],
 
-  type: {
-    name: string,
-    required: boolean,
+  type?: {
+    name?: string,
+    required?: boolean,
   },
 
-  table: {
+  table?: {
     category?: string,
-    type: { summary: string },
-    defaultValue: { summary: string },
+    type?: { summary?: string },
+    defaultValue?: { summary?: string },
     disable?: boolean,
   },
 
@@ -19,7 +19,7 @@ export type ArgsEntry = {
 
   mapping?: Record<string, unknown>;
 
-  control: false | {
+  control?: false | {
     type: 'boolean'
       | 'object'
       | 'file'

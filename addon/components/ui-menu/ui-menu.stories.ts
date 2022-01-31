@@ -2,7 +2,7 @@ import { hbs } from 'ember-cli-htmlbars';
 
 export default {
   title: 'Elements/ui-menu',
-  component: 'UiMenu',
+  component: 'components/ui-menu/component',
 
   argTypes: {
     handleSelection: {

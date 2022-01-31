@@ -7,8 +7,7 @@ import template from './template';
 import { SizeVariants } from '@nsf/ui-foundation/constants';
 
 /**
- * @class UiModal
- * @uses UiModalContainer
+ *
  *
  * @yield {hash}      modal
  * @yield {any}       modal.data         The `data` argument given.
@@ -24,51 +23,31 @@ export default class UiModal extends ModalContainer {
   /**
    * Boolean determining vertical position of the modal window. True centers the
    * modal window. False defaults it to top.
-   *
-   * @argument centered
-   * @type {boolean}
-   * @default false
-   * @public
    */
   public centered = false;
 
   /**
    * The width of the modal window. Can be one of either "sm", "md", or "lg".
-   *
-   * @argument size
-   * @type {string}
-   * @default "md"
    */
-  size: SizeVariants = SizeVariants.Medium;
+  public size: SizeVariants = SizeVariants.Medium;
 
   /**
-   * Boolean. Whether or not the close UI (the header and optionally yielded
-   * button) are disabled.
-   *
-   * @argument closeDisabled
-   * @type {boolean}
-   * @default false
+   * Boolean. Whether the close UI (the header and optionally yielded button) are disabled.
    */
   public closeDisabled = false;
 
   /**
    * The value of the element's `data-test-id` attribute, if required.
-   *
-   * @argument testId
-   * @type {string}
    */
   public testId?: string;
 
   /**
    * Use the onSubmit callback in conjunction with the yielded "submitButton".
-   *
-   * @argument onSubmit
-   * @type {() => void}
    */
   public onSubmit?: ((...args: unknown[]) => void | Promise<unknown>) | Task<unknown, unknown[]>;
 
   @or('closeDisabled', 'handleSubmit.isRunning')
-  declare disableCloseOptions: boolean;
+  declare readonly disableCloseOptions: boolean;
 
   @task
   *handleSubmit(...rest: unknown[]) {

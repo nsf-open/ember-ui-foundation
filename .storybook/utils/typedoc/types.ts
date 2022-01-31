@@ -60,7 +60,7 @@ export type KindOf<K extends ReflectionKind> =
               : K extends ReflectionKind.Function
                 ? SignatureReflection
                 : K extends ReflectionKind.Method
-                  ? SignatureReflection
+                  ? DeclarationReflection
                   : K extends ReflectionKind.CallSignature
                     ? SignatureReflection
                     : K extends ReflectionKind.TypeAlias

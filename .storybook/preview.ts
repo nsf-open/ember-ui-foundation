@@ -1,7 +1,6 @@
 // @ts-expect-error - this will exist at runtime
 import docs from '../dist/docs/index.json';
-import { getComponentDescription } from './utils/typedoc/ember';
-import { buildComponentArgumentsTable } from './utils/controls/ember';
+import { extractItemArgTypes, extractItemDescription } from './utils/addon-docs';
 import { addHtmlBarHighlighting } from './utils/syntax-highlighting';
 import { trimStorySource } from './utils/decorators';
 
@@ -55,12 +54,12 @@ export const parameters = {
   },
 
   docs: {
-    extractComponentDescription(componentName: string) {
-      return getComponentDescription(docs, componentName);
+    extractComponentDescription(itemName: string) {
+      return extractItemDescription(docs, itemName);
     },
 
-    extractArgTypes(componentName: string) {
-      return buildComponentArgumentsTable(docs, componentName);
+    extractArgTypes(itemName: string) {
+      return extractItemArgTypes(docs, itemName);
     },
   }
 };

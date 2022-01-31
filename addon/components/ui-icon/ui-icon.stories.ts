@@ -2,7 +2,7 @@ import { hbs } from 'ember-cli-htmlbars';
 
 export default {
   title: 'Elements/ui-icon',
-  component: 'UiIcon',
+  component: 'components/ui-icon/component',
 
   parameters: {
     layout: 'centered',

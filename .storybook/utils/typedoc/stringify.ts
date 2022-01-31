@@ -6,6 +6,7 @@ import type {
   SomeType,
   Type,
 } from 'typedoc/dist/lib/serialization/schema';
+import { isKindOf, ReflectionKind } from './types';
 
 /**
  * Given a string like "\"Hello World\"" this will remove the escaped quotations
@@ -21,8 +22,17 @@ export function stripEscapedOuterQuotes(value: any) {
  * Returns the full description of a reflection, concatenating the short and full comment
  * text as available.
  */
-export function getFullCommentText(reflection: Reflection) {
-  const { shortText, text } = reflection.comment ?? { shortText: null, text: null };
+export function getFullCommentText(reflection: Reflection): string {
+  let { shortText, text } = reflection.comment ?? { shortText: null, text: null };
+
+  // Not sure if this is a bug or not.
+  if (isKindOf(reflection, ReflectionKind.Method)) {
+    const firstSignature = reflection.signatures?.[0];
+
+    if (firstSignature) {
+      return getFullCommentText(firstSignature);
+    }
+  }
 
   return [shortText, text]
     .map(text => typeof text === 'string' ? text.trim() : text)
@@ -34,10 +44,14 @@ export function getFullCommentText(reflection: Reflection) {
  * Stringify a declaration of some sort.
  */
 export function toDeclarationString(
-  declaration: SignatureReflection | DeclarationReflection,
+  declaration: SignatureReflection | DeclarationReflection | undefined,
   project: ProjectReflection,
   showName = true
 ) {
+  if (!declaration) {
+    return '';
+  }
+
   const name     = declaration.name;
   const optional = declaration.flags.isOptional ? '?' : '';
 
@@ -60,7 +74,11 @@ export function toDeclarationString(
 /**
  * Convert a type definition into a string.
  */
-export function toTypeString(type: SomeType | Type, project: ProjectReflection) {
+export function toTypeString(type: SomeType | Type | undefined, project: ProjectReflection) {
+  if (!type) {
+    return '';
+  }
+
   // Literals - strings, numbers, and booleans
   if ('value' in type) {
     return typeof type.value === 'string' ? `"${type.value}"` : String(type.value);
@@ -124,49 +142,4 @@ export function toTypeString(type: SomeType | Type, project: ProjectReflection) 
   }
 
   return str;
-}
-
-
-const STRING_DECAMELCASE_REGEXP = (/([a-z\d])([A-Z])/g);
-const STRING_KEBAB_REGEXP = (/[ _]/g);
-const STRING_CAMELCASE_REGEXP_1 = (/(-|_|\.|\/|\s)+(.)?/g);
-const STRING_CAMELCASE_REGEXP_2 = (/(^|\/)([A-Z])/g);
-
-/**
- * Returns the Capitalized form of a string.
- */
-export function upperFirst(str) {
-  return `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
-}
-
-
-/**
- * Returns the lowerCamelCase form of a string.
- */
-export function camelCase(str) {
-  return str
-  .replace(STRING_CAMELCASE_REGEXP_1, (match, separator, chr) => chr ? chr.toUpperCase() : '')
-  .replace(STRING_CAMELCASE_REGEXP_2, (match) => match.toLowerCase());
-}
-
-/**
- * Returns the UpperCamelCase form of a string.
- */
-export function classyCase(str) {
-  return upperFirst(camelCase(str));
-}
-
-/**
- * Converts a camelized string into all lower case separated by underscores.
- */
-export function deCamelCase(str) {
-  return str.replace(STRING_DECAMELCASE_REGEXP, '$1_$2').toLowerCase();
-}
-
-
-/**
- * Replaces underscores, spaces, or camelCase with dashes.
- */
-export function kebabCase(str) {
-  return deCamelCase(str).replace(STRING_KEBAB_REGEXP, '-');
 }

@@ -2,7 +2,7 @@ import { hbs } from 'ember-cli-htmlbars';
 
 export default {
   title: 'Elements/ui-async-block',
-  component: 'UiAsyncBlock',
+  component: 'components/ui-async-block/component',
 
   parameters: {
     docs: {

@@ -3,7 +3,7 @@ import { set } from '@ember/object';
 
 export default {
   title: 'Elements/ui-collapse',
-  component: 'UiCollapse',
+  component: 'components/ui-collapse/component',
 };
 
 const Template = (context: unknown) => ({
