@@ -1,13 +1,17 @@
 import { hbs } from 'ember-cli-htmlbars';
 
 export default {
-  title: 'ui-panel',
+  title: 'Elements/ui-panel',
   component: 'UiPanel',
 
   parameters: {
     docs: {
       iframeHeight: 200,
     },
+  },
+
+  argTypes: {
+    heading: { control: { type: 'text' } },
   },
 };
 

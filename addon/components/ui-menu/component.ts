@@ -14,24 +14,26 @@ enum ListNav {
 }
 
 /**
- * Menus allow for several related actions/options to be grouped together and only made visible when requested.
+ * Menus allow for several related actions/options to be grouped together and only made visible
+ * when requested.
  *
  * ```js
- * {{#ui-menu "Align" as |menu|}}
- *   {{menu.item "Left"  onClick=(action this.handleAlignSelection "left")}}
- *   {{menu.item "Right" onClick=(action this.handleAlignSelection "right")}}
- * {{/ui-menu}}
+ * <UiMenu @buttonText="Align" as |Menu|>
+ *   <Menu.Item @text="Left"  @onClick={{action this.handleAlignSelection "left"}} />
+ *   <Menu.Item @text="Right" @onClick={{action this.handleAlignSelection "right"}} />
+ * </UiMenu>
  * ```
  *
- * The yielded `item` is just a button with it's styling preconfigured.
+ * The yielded `item` is actually a UiButton reference, so anything that you can do with that
+ * you can also do here for your menu options.
  *
- * By default, the menu options flyout will be positioned below and right of the trigger button, but will
- * automatically pick another orientation if the trigger's placement requires it.
+ * By default, the menu options flyout will be positioned below and right of the trigger button,
+ * but will automatically pick another orientation if the trigger's placement requires it.
  *
- * Accessibility-wise the menu announces itself as such, and provides the expected navigation using keys
- * such as `arrow up`, `arrow down`, `escape`, `enter`, and `spacebar`.
+ * Accessibility-wise the menu announces itself as such, and provides the expected navigation
+ * using keys such as `arrow up`, `arrow down`, `escape`, `enter`, and `space bar`.
  *
- * @class UiMenu
+ * @yields {UiMenuFlyout} item - A UiButton to create menu options with.
  */
 @tagName('')
 @layout(template)
@@ -40,52 +42,27 @@ export default class UiMenu extends Component {
 
   /**
    * Boolean. Programmatically toggle the menu flyout.
-   *
-   * @argument visible
-   * @type {boolean}
-   * @default false
-   * @public
    */
   public visible = false;
 
   /**
    * The text content of the trigger button. This can also be set as the first positional parameter
    * of the component.
-   *
-   * @argument buttonText
-   * @type {string}
-   * @default undefined
-   * @public
    */
   public buttonText?: string;
 
   /**
    * The style variant of the control.
-   *
-   * @argument variant
-   * @type {string}
-   * @default "primary"
-   * @public
    */
   public variant = ButtonVariants.Primary;
 
   /**
    * The value of the element's `data-test-id` attribute, if required.
-   *
-   * @argument testId
-   * @type {string}
-   * @default undefined
-   * @public
    */
   public testId?: string;
 
   /**
    * Boolean. Disables interaction with the control.
-   *
-   * @argument disabled.
-   * @type {boolean}
-   * @default false
-   * @public
    */
   public disabled = false;
 
@@ -93,8 +70,14 @@ export default class UiMenu extends Component {
 
   private overlayKeyListener!: EventListener;
 
+  /**
+   * @protected
+   */
   triggerId!: string;
 
+  /**
+   * @protected
+   */
   overlayId!: string;
 
   // eslint-disable-next-line ember/classic-decorator-hooks
