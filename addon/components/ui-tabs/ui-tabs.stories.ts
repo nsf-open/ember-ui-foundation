@@ -1,9 +1,11 @@
 import { hbs } from 'ember-cli-htmlbars';
 
 export default {
-  title: 'ui-tabs',
-  component: 'UiTabs',
-  subcomponents: { 'Tabs.Option': 'UiTabs/Option' },
+  title: 'Elements/ui-tabs',
+  component: 'components/ui-tabs/component',
+  subcomponents: {
+    'Tabs.Option': 'components/ui-tabs/option/component',
+  },
 };
 
 export const Default = (context: unknown) => ({

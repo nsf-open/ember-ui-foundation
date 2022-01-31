@@ -44,27 +44,46 @@ function calculateScrollbarWidth() {
  * The BackdropService provides a single mechanism for controlling the full window
  * overlay that appears behind modal windows, loading indicators, or whatever else
  * is needed. When the backdrop is "enabled", the document body cannot be scrolled
- * and it's content is muted with a semi-transparent opacity layer.
+ * and its content is muted with a semi-transparent opacity layer.
  *
- * @class BackdropService
+ * You probably won't ever need to interact with this directly. Good to know it
+ * exists though.
+ *
+ * ```ts
+ * import type { BackdropService } from '@nsf/ui-foundation/services';
+ * import { inject as service } from '@ember/service';
+ * // ...
+ * @service
+ * declare readonly backdrop: BackdropService;
+ * ```
  */
 export default class BackdropService extends Service {
   /**
    * The id of the backdrop element.
+   *
+   * @protected
    */
-  public backdropId!: string;
+  backdropId!: string;
 
   /**
    * The calculated width of a scrollbar for the browser being used. When the backdrop
    * is enabled this is set as padding on the document body if needed to counteract
    * losing the vertical scrollbar. Not doing so would result in a very obvious and
    * unsightly horizontal jump of content.
+   *
+   * @protected
    */
-  public scrollbarWidth!: number;
+  scrollbarWidth!: number;
 
-  public bodyOverflow = false;
+  /**
+   * @protected
+   */
+  bodyOverflow = false;
 
-  public originalBodyPad = '';
+  /**
+   * @protected
+   */
+  originalBodyPad = '';
 
   /**
    * The HTMLElement playing the role of the backdrop, if it exists.

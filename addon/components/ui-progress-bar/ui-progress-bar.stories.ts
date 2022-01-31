@@ -7,8 +7,8 @@ const { progressManager } = requirejs('@nsf/ui-foundation/lib/ProgressManager') 
 };
 
 export default {
-  title: 'ui-progress-bar',
-  component: 'UiProgressBar',
+  title: 'Elements/ui-progress-bar',
+  component: 'components/ui-progress-bar/component',
 };
 
 export const Default = (context: unknown) => ({

@@ -16,11 +16,17 @@ const EventedService = Service.extend(Evented);
  * application. Modal windows with a set name can be opened and closed from here
  * instead of having to set up a boolean flag in your controller/template or component.
  *
- * @class ModalService
+ * ```ts
+ * import type { ModalService } from '@nsf/ui-foundation/services';
+ * import { inject as service } from '@ember/service';
+ * // ...
+ * @service
+ * declare readonly modal: ModalService;
+ * ```
  */
 export default class ModalService extends EventedService {
   @service
-  declare backdrop: BackdropService;
+  protected declare readonly backdrop: BackdropService;
 
   /**
    * A reference to the currently opened modal, if there is one.
@@ -48,29 +54,35 @@ export default class ModalService extends EventedService {
 
   /**
    * Closes the currently open modal window. Since only one modal can be open at a time no
-   * more information is require.
+   * more information is required.
    */
   public close() {
     this.trigger(ModalEvents.CloseRequest);
   }
 
   /**
-   * A convenience method to access the BackdropService `open()` method that will cause the overlay
-   * backdrop to be shown.
+   * A convenience method to access the BackdropService `open()` method that will
+   * cause the overlay backdrop to be shown.
    */
   public showBackdrop(animate = true) {
     return this.backdrop.open(animate);
   }
 
   /**
-   * A convenience method to access the BackdropService `close()` method that will cause the overlay
-   * backdrop to be removed.
+   * A convenience method to access the BackdropService `close()` method that will
+   * cause the overlay backdrop to be removed.
    */
   public hideBackdrop(animate = true) {
     return this.backdrop.close(animate);
   }
 
-  async openRequested(target: ModalContainer, animate = true) {
+  /**
+   * This will be called by a Modal before it begins to open. If another Modal is already
+   * open it will first be given the opportunity to close.
+   *
+   * @protected
+   */
+  public async openRequested(target: ModalContainer, animate = true) {
     if (this.currentModal) {
       if (this.currentModal.onCanHide?.() === false) {
         target.onHideBlocked?.();
@@ -94,6 +106,9 @@ export default class ModalService extends EventedService {
     }
   }
 
+  /**
+   * @protected
+   */
   async closeRequested(target: ModalContainer, animate = true) {
     if (this.currentModal === target) {
       await this.hideBackdrop(animate);

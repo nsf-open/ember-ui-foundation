@@ -2,7 +2,7 @@ import { hbs } from 'ember-cli-htmlbars';
 
 export default {
   title: 'Elements/ui-panel',
-  component: 'UiPanel',
+  component: 'components/ui-panel/component',
 
   parameters: {
     docs: {

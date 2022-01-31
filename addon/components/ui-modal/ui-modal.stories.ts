@@ -1,7 +1,7 @@
 import { hbs } from 'ember-cli-htmlbars';
 
 export default {
-  title: 'ui-modal',
+  title: 'Elements/ui-modal',
   component: 'components/ui-modal/component',
 };
 
