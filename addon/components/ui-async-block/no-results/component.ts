@@ -6,6 +6,16 @@ import { layout, tagName } from '@ember-decorators/component';
 import { kindaLooksPlural } from '@nsf/ui-foundation/utils';
 import template from './template';
 
+/**
+ * The UiAsyncBlockNoResultsView component is the default for a UiAsyncBlock whose managed
+ * promise resolves, but appears "empty".
+ *
+ * If the UiAsyncBlock has not been named then it will display:
+ * - "No Content Is Available"
+ *
+ * And if it has been named it will attempt to determine the correct inflection and display:
+ * - "No &lt;NAME&gt; &lt;have/has&gt; been added"
+ */
 @tagName('')
 @layout(template)
 export default class UiAsyncBlockNoResultsView

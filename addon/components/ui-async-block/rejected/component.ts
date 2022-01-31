@@ -5,6 +5,17 @@ import { isEmpty } from '@ember/utils';
 import { layout, tagName } from '@ember-decorators/component';
 import template from './template';
 
+/**
+ * The UiAsyncBlockRejectedView component is the default for a UiAsyncBlock whose managed
+ * promise has been rejected. It will display a Font Awesome "exclamation-triangle" with
+ * accompanying text that will both be styled in the "danger" text variant.
+ *
+ * If the UiAsyncBlock has not been named then it will display:
+ * - "An Error Has Occurred"
+ *
+ * And if it has been named:
+ * - "Could not retrieve &lt;NAME&gt;"
+ */
 @tagName('')
 @layout(template)
 export default class UiAsyncBlockRejectedView

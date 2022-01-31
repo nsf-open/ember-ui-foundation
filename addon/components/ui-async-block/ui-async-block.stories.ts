@@ -6,6 +6,14 @@ export default {
 
   parameters: {
     componentSubtitle: 'Promise State Management UI',
+
+    docs: {
+      iframeHeight: 120,
+    },
+  },
+
+  args: {
+    name: 'Witty Catchphrases',
   },
 };
 
@@ -17,60 +25,50 @@ function makePromise(doResolve = true, content = ['Hello World']) {
   });
 }
 
-function resolvingPromise() {
-  return makePromise();
-}
+const Template = (context: unknown) => ({
+  context,
+  // language=hbs
+  template: hbs`
+    <UiAsyncBlock
+      @name={{this.name}}
+      @promise={{this.promise}}
+      @noResults={{this.noResults}}
+    as |results|>
+      {{results}}
+    </UiAsyncBlock>
+  `,
+});
 
-function rejectingPromise() {
-  return makePromise(false);
-}
-
-function emptyPromise() {
-  return makePromise(true, []);
-}
-
-export const Success = function () {
-  return {
-    template: hbs`
-      {{#ui-async-block "Witty Catchphrases" promise=this.promise as |results|}}
-        <ul>
-          {{#each results as |result|}}
-            <li>{{result}}</li>
-          {{/each}}
-        </ul>
-      {{/ui-async-block}}
-    `,
-
-    context: {
-      promise: resolvingPromise(),
-    },
-  };
+export const Success = (context: unknown) => {
+  return Template(
+    Object.assign({}, context, {
+      promise: makePromise(true),
+    })
+  );
 };
 
-export const Failure = function () {
-  return {
-    template: hbs`
-      {{#ui-async-block "Witty Catchphrases" promise=this.promise as |results|}}
-        {{results}}
-      {{/ui-async-block}}
-    `,
-
-    context: {
-      promise: rejectingPromise(),
-    },
-  };
+export const Failure = (context: unknown) => {
+  return Template(
+    Object.assign({}, context, {
+      promise: makePromise(false),
+    })
+  );
 };
 
-export const NoResults = function () {
-  return {
-    template: hbs`
-      {{#ui-async-block "Witty Catchphrases" promise=this.promise noResults=true as |results|}}
-        {{results}}
-      {{/ui-async-block}}
-    `,
+export const NoResults = (context: unknown) => {
+  return Template(
+    Object.assign({}, context, {
+      promise: makePromise(true, []),
+    })
+  );
+};
 
-    context: {
-      promise: emptyPromise(),
-    },
-  };
+NoResults.args = {
+  noResults: true,
+};
+
+NoResults.parameters = {
+  docs: {
+    iframeHeight: 50,
+  },
 };

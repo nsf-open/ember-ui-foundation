@@ -5,6 +5,17 @@ import { isEmpty } from '@ember/utils';
 import { layout, tagName } from '@ember-decorators/component';
 import template from './template';
 
+/**
+ * The UiAsyncBlockPendingView component is the default for a UiAsyncBlock whose managed
+ * promise is in the pending state. It will display the standard UILoadIndicator with
+ * accompanying text.
+ *
+ * If the UiAsyncBlock has not been named then it will display:
+ * - "Loading..."
+ *
+ * And if it has been named:
+ * - "Loading &lt;NAME&gt;"
+ */
 @tagName('')
 @layout(template)
 export default class UiAsyncBlockPendingView extends Component implements AsyncBlockStateComponent {
