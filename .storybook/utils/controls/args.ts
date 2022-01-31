@@ -90,13 +90,13 @@ export function inferArgumentControl(
   }
 
   // Unions
-  if (property.type.type === 'union') {
+  if (property.type?.type === 'union') {
     return Object.assign(argEntry, buildControlFromUnionType(project, property, property.type));
   }
 
   // References
-  if (property.type.type === 'reference') {
-    const ref = findDescendantById(project, property.type.id);
+  if (property.type?.type === 'reference') {
+    const ref = property.type.id ? findDescendantById(project, property.type.id) : undefined;
 
     // A reference to an Enumeration
     if (isKindOf(ref, ReflectionKind.Enum)) {
@@ -104,7 +104,7 @@ export function inferArgumentControl(
     }
 
     // A reference to a TypeAlias that describes a union
-    if (isKindOf(ref, ReflectionKind.TypeAlias) && ref.type.type === 'union') {
+    if (isKindOf(ref, ReflectionKind.TypeAlias) && ref.type?.type === 'union') {
       return Object.assign(argEntry, buildControlFromUnionType(project, property, ref.type));
     }
   }
@@ -123,7 +123,7 @@ function buildControlFromEnumeration(
   const labels: Record<string, string> = {};
   const mapping: Record<string, unknown> = {};
 
-  enumeration.children.forEach((child) => {
+  enumeration.children?.forEach((child) => {
     const defaultValue = stripEscapedOuterQuotes(child.defaultValue);
     labels[defaultValue] = child.name;
     options.push(defaultValue);
@@ -166,6 +166,7 @@ function buildControlFromUnionType(
 ) {
   const options: unknown[] = [];
   const labels: Record<string, string> = {};
+  const mapping: Record<string, unknown> = {};
   let defaultValue = stripEscapedOuterQuotes(property.defaultValue);
 
   for (let i = 0; i < union.types.length; i += 1) {
@@ -176,7 +177,7 @@ function buildControlFromUnionType(
     // Intersecting with things like enumerations is definitely possible though.
     if (item.type !== 'literal') {
       if (item.type === 'reference') {
-        const ref = findDescendantById(project, item.id);
+        const ref = item.id ? findDescendantById(project, item.id) : undefined;
 
         if (isKindOf(ref, ReflectionKind.EnumMember)) {
           const value = stripEscapedOuterQuotes(ref.defaultValue);
@@ -190,7 +191,7 @@ function buildControlFromUnionType(
           // processed.
           const parent = findDescendantById(project, ref.id, true);
 
-          if(`${parent.name}.${ref.name}` === defaultValue) {
+          if(parent && `${parent.name}.${ref.name}` === defaultValue) {
             defaultValue = stripEscapedOuterQuotes(ref.defaultValue);
           }
 
@@ -204,9 +205,14 @@ function buildControlFromUnionType(
     options.push(item.value);
   }
 
+  if (property.flags.isOptional) {
+    options.unshift('No Selection');
+    mapping['No Selection'] = null;
+  }
+
   return {
     defaultValue,
     options,
-    control: { labels, type: 'select' as 'select' },
+    control: { labels, mapping, type: 'select' as 'select' },
   };
 }
