@@ -1,7 +1,7 @@
 import { hbs } from 'ember-cli-htmlbars';
 
 export default {
-  title: 'Elements/Button',
+  title: 'Elements/ui-button',
   component: 'UiButton',
 
   parameters: {

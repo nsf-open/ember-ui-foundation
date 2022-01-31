@@ -1,12 +1,10 @@
 import { hbs } from 'ember-cli-htmlbars';
 
 export default {
-  title: 'Elements/Async Block',
+  title: 'Elements/ui-async-block',
   component: 'UiAsyncBlock',
 
   parameters: {
-    componentSubtitle: 'Promise State Management UI',
-
     docs: {
       iframeHeight: 120,
     },
