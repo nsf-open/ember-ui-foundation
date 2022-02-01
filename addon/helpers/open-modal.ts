@@ -44,8 +44,11 @@ import { inject as service } from '@ember/service';
  */
 export default class OpenUiModalHelper extends Helper {
   @service
-  declare modal: ModalService;
+  protected declare modal: ModalService;
 
+  /**
+   * @protected
+   */
   compute([name, data, title]: [string, unknown?, string?]): (data?: unknown) => void {
     return (dataArg?: unknown) => {
       this.modal.open(name, data ?? dataArg, title);

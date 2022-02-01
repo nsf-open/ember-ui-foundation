@@ -59,7 +59,21 @@ export function findChildByName<ReturnType extends Reflection = Reflection>(
   parent: ContainerReflection,
   name: string | string[]
 ): ReturnType | undefined {
-  return parent.children?.find(child => name.includes(child.name)) as ReturnType ?? undefined;
+  if (Array.isArray(name)) {
+    let found: ReturnType | undefined;
+
+    for (let i = 0; i < name.length; i += 1) {
+      found = parent.children?.find(child => child.name.includes(name[i])) as ReturnType ?? undefined;
+
+      if (found) {
+        break;
+      }
+    }
+
+    return found;
+  }
+
+  return parent.children?.find(child => child.name.includes(name)) as ReturnType ?? undefined;
 }
 
 /**

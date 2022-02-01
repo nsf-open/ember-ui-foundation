@@ -6,6 +6,11 @@ import { bind } from '@ember/runloop';
 // This mimics the ember-concurrency "perform" helper with a lone difference
 // being that it runs `.unlinked().perform()` instead of just `.perform()`.
 
+/**
+ *
+ */
+export default helper(performUnlinkedHelper);
+
 export function performUnlinkedHelper([task, ...outerArgs]: [
   Task<unknown, unknown[]>,
   ...unknown[]
@@ -25,5 +30,3 @@ export function performUnlinkedHelper([task, ...outerArgs]: [
     return task.unlinked().perform(...outerArgs, ...innerArgs);
   });
 }
-
-export default helper(performUnlinkedHelper);

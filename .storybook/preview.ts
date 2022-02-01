@@ -3,6 +3,7 @@ import docs from '../dist/docs/index.json';
 import { extractItemArgTypes, extractItemDescription } from './utils/addon-docs';
 import { addHtmlBarHighlighting } from './utils/syntax-highlighting';
 import { trimStorySource } from './utils/decorators';
+import theme from './theme';
 
 
 /* ************************ *
@@ -22,6 +23,12 @@ export const decorators = [trimStorySource];
  * ************************ */
 export const parameters = {
   layout: 'fullscreen',
+
+  options: {
+    storySort: {
+      order: ['Welcome', 'Elements', 'Helpers', 'Services'],
+    },
+  },
 
   actions: { argTypesRegex: "^on[A-Z].*" },
 
@@ -50,10 +57,12 @@ export const parameters = {
   },
 
   sidebar: {
-    showRoots: true,
+    showRoots: false,
   },
 
   docs: {
+    theme,
+
     extractComponentDescription(itemName: string) {
       return extractItemDescription(docs, itemName);
     },
