@@ -7,8 +7,6 @@ const devDependenciesForEach = {
   '@storybook/ember': null,
   '@storybook/ember-cli-storybook': null,
   '@storybook/addon-a11y': null,
-  '@storybook/addon-cssresources': null,
-  '@storybook/addon-docs': null,
   '@storybook/addon-essentials': null,
 };
 
@@ -45,8 +43,30 @@ module.exports = async function () {
       makeScenario('ember-lts-3.12', '~3.12.4'),
       makeScenario('ember-lts-3.16', '~3.16.3'),
       makeScenario('ember-lts-3.20', '~3.20.7'),
-      makeScenario('ember-current-lts', 'lts'),
-      makeScenario('ember-release', await getChannelURL('release')),
+
+      makeScenario('ember-current-lts', 'lts', {
+        npm: {
+          dependencies: {
+            'ember-auto-import': '^2',
+          },
+
+          devDependencies: {
+            webpack: '^5',
+          },
+        },
+      }),
+
+      makeScenario('ember-release', await getChannelURL('release'), {
+        npm: {
+          dependencies: {
+            'ember-auto-import': '^2',
+          },
+
+          devDependencies: {
+            webpack: '^5',
+          },
+        },
+      }),
 
       makeScenario('ember-default-with-jquery', undefined, {
         env: {
