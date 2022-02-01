@@ -1,13 +1,16 @@
 import { hbs } from 'ember-cli-htmlbars';
 
 export default {
-  title: '<%= dasherizedModuleName %>',
-  component: '<%= classifiedModuleName %>',
+  title: 'Elements/<%= dasherizedModuleName %>',
+  component: 'components/<%= dasherizedModuleName %>/component',
 };
 
-export const Default = (context: unknown) => ({
+const Template = (context: unknown) => ({
   context,
-
   // language=handlebars
-  template: hbs`<<%= classifiedModuleName %> />`,
+  template: hbs`
+    <<%= classifiedModuleName %> />
+  `,
 });
+
+export const Default = Template.bind({});

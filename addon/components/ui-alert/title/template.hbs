@@ -1,0 +1,13 @@
+{{#if this.plural}}
+	<p aria-live="assertive" data-test-id="label">
+		<strong>
+			<span class="{{this.groupOptions.icon}}" aria-hidden="true"></span>
+			{{this.groupOptions.plural}}
+		</strong>
+	</p>
+{{else}}
+	<strong aria-live="assertive" data-test-id="label">
+		<span class="{{this.groupOptions.icon}}" aria-hidden="true"></span>
+		{{this.groupOptions.singular}}
+	</strong>
+{{/if}}

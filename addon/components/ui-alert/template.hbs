@@ -1,0 +1,34 @@
+{{#if (has-block)}}
+	{{yield (hash
+		title        = (component "ui-alert/title" groupOptions=this.groupOptions)
+		groupOptions = this.groupOptions
+	)}}
+{{else}}
+	{{#if this.pluralize}}
+		{{ui-alert/title plural=true groupOptions=this.groupOptions}}
+		<ul>
+			{{#each this.content as |item|}}
+				<li data-test-id="message" data-test-ident="context-message-item">
+					{{#if (is-primitive item)}}
+						{{item}}
+					{{else}}
+					{{!-- Either double or triple curlies --}}
+						{{#if item.escapeHTML}}{{item.message}}{{else}}{{{item.message}}}{{/if}}
+					{{/if}}
+				</li>
+			{{/each}}
+		</ul>
+	{{else}}
+		<p>
+			{{ui-alert/title groupOptions=this.groupOptions}}
+			<span data-test-ident="context-message-item">
+				{{#if (is-primitive this.oneContentItem)}}
+					{{this.oneContentItem}}
+				{{else}}
+					{{!-- Either double or triple curlies --}}
+					{{#if this.oneContentItem.escapeHTML}}{{this.oneContentItem.message}}{{else}}{{{this.oneContentItem.message}}}{{/if}}
+				{{/if}}
+			</span>
+		</p>
+	{{/if}}
+{{/if}}

@@ -54,3 +54,77 @@ export enum HeadingLevels {
   H3 = 'h3',
   H4 = 'h4',
 }
+
+export enum AlertLevel {
+  ERROR = 'danger',
+  WARNING = 'warning',
+  SUCCESS = 'success',
+  INFO = 'secondary',
+  MUTED = 'muted',
+}
+
+export const AlertLevelAlternates: Record<string, AlertLevel> = {
+  error: AlertLevel.ERROR,
+  errors: AlertLevel.ERROR,
+  alert: AlertLevel.ERROR,
+  warnings: AlertLevel.WARNING,
+  successes: AlertLevel.SUCCESS,
+  info: AlertLevel.INFO,
+  information: AlertLevel.INFO,
+  informationals: AlertLevel.INFO,
+  default: AlertLevel.MUTED,
+};
+
+export type AlertLevelKeys =
+  | 'danger'
+  | 'error'
+  | 'errors'
+  | 'alert'
+  | 'warning'
+  | 'warnings'
+  | 'success'
+  | 'successes'
+  | 'secondary'
+  | 'info'
+  | 'information'
+  | 'informationals'
+  | 'muted'
+  | 'default';
+
+export const AlertLevelOrdering: AlertLevel[] = [
+  AlertLevel.ERROR,
+  AlertLevel.WARNING,
+  AlertLevel.INFO,
+  AlertLevel.SUCCESS,
+  AlertLevel.MUTED,
+];
+
+export type AlertGroupDefinition = {
+  singular?: string;
+  plural?: string;
+  icon?: string;
+};
+
+export const AlertGroups: Record<AlertLevel, AlertGroupDefinition> = {
+  [AlertLevel.ERROR]: {
+    singular: 'ERROR:',
+    plural: 'ERRORS:',
+    icon: 'fa fa-exclamation-triangle',
+  },
+  [AlertLevel.WARNING]: {
+    singular: 'WARNING:',
+    plural: 'WARNINGS:',
+    icon: 'fa fa-exclamation-triangle',
+  },
+  [AlertLevel.SUCCESS]: {
+    singular: 'SUCCESS:',
+    plural: 'SUCCESS:',
+    icon: 'fa fa-check-circle-o',
+  },
+  [AlertLevel.INFO]: {
+    singular: 'INFORMATION:',
+    plural: 'INFORMATION:',
+    icon: 'fa fa-info-circle',
+  },
+  [AlertLevel.MUTED]: {},
+};
