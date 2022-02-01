@@ -1,10 +1,10 @@
+import type NativeArray from '@ember/array/-private/native-array';
 import EmberObject, { computed, setProperties } from '@ember/object';
 import Evented from '@ember/object/evented';
-import MutableArray from '@ember/array/mutable';
 import { guidFor } from '@ember/object/internals';
 import { A, isArray } from '@ember/array';
 import { debounce } from '@ember/runloop';
-import { AlertLevel, AlertLevelAlternates, AlertLevelOrdering } from '../constants';
+import { AlertLevel, AlertLevelAlternates, AlertLevelKeys, AlertLevelOrdering } from '../constants';
 
 interface Message {
   id: string;
@@ -16,7 +16,7 @@ interface Message {
 
 interface MessageGroup {
   name: AlertLevel;
-  messages: MutableArray<Message>;
+  messages: NativeArray<Message>;
   messagesText: Set<string>;
   clear: () => void;
 }
@@ -43,13 +43,7 @@ export function getCorrectedAlertLevel(name: string) {
   return AlertLevelOrdering.indexOf(normalized) > -1 ? (normalized as AlertLevel) : null;
 }
 
-export type MessageHash = {
-  [AlertLevel.INFO]?: StringOrStringArray;
-  [AlertLevel.ERROR]?: StringOrStringArray;
-  [AlertLevel.WARNING]?: StringOrStringArray;
-  [AlertLevel.SUCCESS]?: StringOrStringArray;
-  [key: string]: any;
-};
+export type MessageHash = Partial<Record<AlertLevelKeys, StringOrStringArray>>;
 
 export enum MessageEvents {
   MESSAGE_ADDED = 'received',
@@ -101,7 +95,7 @@ export default class MessageManager extends EmberObject.extend(Evented) {
    * @property groups
    * @type MutableArray<MessageGroup>
    */
-  public readonly groups: MutableArray<MessageGroup>;
+  public readonly groups: NativeArray<MessageGroup>;
 
   constructor() {
     super();
@@ -224,7 +218,7 @@ export default class MessageManager extends EmberObject.extend(Evented) {
   public addMessage(
     groupName: AlertLevel,
     message: string,
-    options: { details?: string | null; clearPrior?: boolean; escape?: true } = {}
+    options: { details?: string | null; clearPrior?: boolean; escape?: boolean } = {}
   ) {
     if (groupName && message) {
       const group = this.getOrAddGroup(groupName);
@@ -243,9 +237,11 @@ export default class MessageManager extends EmberObject.extend(Evented) {
           group.clear();
         }
 
+        const messageId = `${groupName}-${guidFor(message)}`;
+
         const newMessage: Message = {
           message,
-          id: guidFor(message),
+          id: messageId,
           escapeHTML: opts.escape,
           details: this.enableDetails ? opts.details : null,
           detailsOpen: false,
@@ -256,7 +252,7 @@ export default class MessageManager extends EmberObject.extend(Evented) {
 
         this._scheduleTriggerEvent(MessageEvents.MESSAGE_ADDED);
 
-        return `${groupName}-${newMessage.id}`;
+        return messageId;
       }
     }
 
@@ -282,7 +278,7 @@ export default class MessageManager extends EmberObject.extend(Evented) {
   public addMessagesMany(
     groupName: AlertLevel,
     messages: string[],
-    options: { clearPrior?: boolean; escape?: true } = {}
+    options: { clearPrior?: boolean; escape?: boolean } = {}
   ): string[] {
     if (isArrayLike(messages)) {
       if (options?.clearPrior) {
@@ -290,7 +286,7 @@ export default class MessageManager extends EmberObject.extend(Evented) {
       }
 
       return messages
-        .map((message) => this.addMessage(groupName, message, options))
+        .map((message) => this.addMessage(groupName, message, { escape: options.escape }))
         .filter(Boolean) as string[];
     }
 
@@ -337,11 +333,15 @@ export default class MessageManager extends EmberObject.extend(Evented) {
     }
 
     if (obj) {
-      Object.keys(obj).forEach((key) => {
+      Object.keys(obj).forEach((key: keyof MessageHash) => {
         const groupName = getCorrectedAlertLevel(key);
 
         if (groupName) {
-          this.addMessages(groupName, obj[key]);
+          const content = obj[key];
+
+          if (content) {
+            this.addMessages(groupName, content);
+          }
         }
       });
     }
@@ -396,20 +396,24 @@ export default class MessageManager extends EmberObject.extend(Evented) {
    */
   public updateMessage(messageId: string, newMessage: string, newDetails: string | null = null) {
     if (messageId) {
-      const [groupName, id] = messageId.split('-');
+      const [groupName] = messageId.split('-');
       const group = this.getGroup(groupName as AlertLevel);
 
       if (group) {
-        const msgObj = group.messages.findBy('id', id);
+        const msgObj = group.messages.findBy('id', messageId);
 
         if (msgObj) {
           const enableDetails = this.enableDetails;
+          const oldMessage = msgObj.message;
 
           setProperties(msgObj, {
             message: newMessage,
             details: enableDetails ? newDetails : null,
             detailsOpen: enableDetails && !!newDetails && msgObj.detailsOpen,
           });
+
+          group.messagesText.delete(oldMessage);
+          group.messagesText.add(newMessage);
 
           return true;
         }
@@ -425,11 +429,11 @@ export default class MessageManager extends EmberObject.extend(Evented) {
    */
   public removeMessage(messageId: string) {
     if (messageId) {
-      const [groupName, id] = messageId.split('-');
+      const [groupName] = messageId.split('-');
       const group = this.getGroup(groupName as AlertLevel);
 
       if (group) {
-        const messageObj = group.messages.findBy('id', id);
+        const messageObj = group.messages.findBy('id', messageId);
 
         if (messageObj) {
           group.messages.removeObject(messageObj);
@@ -475,7 +479,7 @@ export default class MessageManager extends EmberObject.extend(Evented) {
    */
   public isEmpty(groupName?: AlertLevel) {
     return groupName
-      ? this.getGroup(groupName)?.messages.length === 0
+      ? (this.getGroup(groupName)?.messages.length ?? 0) === 0
       : this.groups.every((group) => group.messages.length === 0);
   }
 

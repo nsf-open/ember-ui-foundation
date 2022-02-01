@@ -1,0 +1,3 @@
+{{#each this.sortedGroups as |group|}}
+  {{#if group.messages}}{{ui-alert group.name content=group.messages}}{{/if}}
+{{/each}}

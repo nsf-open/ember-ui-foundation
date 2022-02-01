@@ -75,9 +75,13 @@ module('Integration | Component | ui-alert', function (hooks) {
 
     assert.dom('[data-test-id="label"]').hasText('ERRORS:');
     assert.dom('[data-test-ident="context-message-item"]:nth-child(1)').hasTagName('li');
-    assert.dom('[data-test-ident="context-message-item"]:nth-child(1)').hasText('This is an error message');
+    assert
+      .dom('[data-test-ident="context-message-item"]:nth-child(1)')
+      .hasText('This is an error message');
     assert.dom('[data-test-ident="context-message-item"]:nth-child(2)').hasTagName('li');
-    assert.dom('[data-test-ident="context-message-item"]:nth-child(2)').hasText('This is another error message');
+    assert
+      .dom('[data-test-ident="context-message-item"]:nth-child(2)')
+      .hasText('This is another error message');
   });
 
   test('it supports generic block content', async function (assert) {
@@ -89,7 +93,9 @@ module('Integration | Component | ui-alert', function (hooks) {
 
     assert.dom('[data-test-id="label"]').hasText('ERROR:');
     assert.dom('[data-test-ident="context-message-item"]').hasTagName('span');
-    assert.dom('[data-test-ident="context-message-item"]').hasText('This is a custom error message');
+    assert
+      .dom('[data-test-ident="context-message-item"]')
+      .hasText('This is a custom error message');
 
     await render(hbs`
 			{{#ui-alert "error" as |alert|}}
@@ -102,7 +108,11 @@ module('Integration | Component | ui-alert', function (hooks) {
 		`);
 
     assert.dom('[data-test-id="label"]').hasText('ERRORS:');
-    assert.dom('[data-test-ident="context-message-item"]:nth-child(1)').hasText('This is a custom error message');
-    assert.dom('[data-test-ident="context-message-item"]:nth-child(2)').hasText('This is another custom error message');
+    assert
+      .dom('[data-test-ident="context-message-item"]:nth-child(1)')
+      .hasText('This is a custom error message');
+    assert
+      .dom('[data-test-ident="context-message-item"]:nth-child(2)')
+      .hasText('This is another custom error message');
   });
 });
