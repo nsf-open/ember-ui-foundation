@@ -1,6 +1,6 @@
 import type NativeArray from '@ember/array/-private/native-array';
-import EmberObject, { computed, setProperties } from '@ember/object';
-import Evented from '@ember/object/evented';
+import { computed, setProperties } from '@ember/object';
+import { sendEvent } from '@ember/object/events';
 import { guidFor } from '@ember/object/internals';
 import { A, isArray } from '@ember/array';
 import { debounce } from '@ember/runloop';
@@ -73,7 +73,7 @@ export const messageManager = function (options: { enableScrollTo?: boolean } = 
  *
  * @class MessageManager
  */
-export default class MessageManager extends EmberObject.extend(Evented) {
+export default class MessageManager {
   public enableDetails = false;
 
   /**
@@ -98,7 +98,6 @@ export default class MessageManager extends EmberObject.extend(Evented) {
   public readonly groups: NativeArray<MessageGroup>;
 
   constructor() {
-    super();
     this.groups = A<MessageGroup>();
   }
 
@@ -501,6 +500,6 @@ export default class MessageManager extends EmberObject.extend(Evented) {
   }
 
   private _triggerEvent(name: MessageEvents) {
-    this.trigger(name);
+    sendEvent(this, name);
   }
 }
