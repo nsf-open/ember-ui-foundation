@@ -1,0 +1,7 @@
+{{#if this.isParagraph~}}
+  {{#each this.content as |para|}}
+    <p>{{para}}</p>
+  {{/each}}
+  {{~else~}}
+  {{this.content}}
+{{~/if}}
