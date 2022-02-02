@@ -16,6 +16,7 @@ import {
   triggerKeyEvent,
   focus,
 } from '@ember/test-helpers';
+import MessageManager from '@nsf/ui-foundation/lib/MessageManager';
 
 module('Integration | Component | ui-modal', function (hooks) {
   setupRenderingTest(hooks);
@@ -414,5 +415,127 @@ module('Integration | Component | ui-modal', function (hooks) {
     await clickPromise;
 
     assert.verifySteps(['task']);
+  });
+
+  test('it renders a ui-alert-block if provided a MessageManager instance', async function (assert) {
+    const manager = new MessageManager();
+    this.set('manager', manager);
+
+    manager.addSuccessMessages('Success Message A');
+
+    // language=handlebars
+    await render(hbs`
+      <UiModal @title="Hello World" @testId="modal" @open={{true}} @messageManager={{this.manager}} as |modal|>
+        <p>Content Goes Here</p>
+      </UiModal>
+    `);
+
+    assert.dom('[data-test-id="modal"] [data-test-ident="context-message-success"]').isVisible();
+    assert
+      .dom('[data-test-id="modal"] [data-test-ident="context-message-item"]')
+      .hasText('Success Message A');
+  });
+
+  test('it clears its ui-alert-block when closed', async function (assert) {
+    const manager = new MessageManager();
+    this.set('manager', manager);
+
+    manager.addSuccessMessages('Success Message A');
+
+    // language=handlebars
+    await render(hbs`
+      <button data-test-modal-toggle onclick={{open-modal "test-modal"}}>Open Modal</button>
+      <UiModal
+        @title="Hello World"
+        @testId="modal"
+        @name="test-modal"
+        @open={{true}}
+        @messageManager={{this.manager}}
+      as |modal|>
+        <p>Content Goes Here</p>
+      </UiModal>
+    `);
+
+    assert
+      .dom('[data-test-id="modal"] [data-test-ident="context-message-item"]')
+      .hasText('Success Message A');
+
+    await click('.modal-header button.close');
+
+    assert.dom('[data-test-id="modal"]').doesNotExist();
+
+    await click('button[data-test-modal-toggle]');
+
+    assert.dom('[data-test-id="modal"]').isVisible();
+    assert.dom('[data-test-id="modal"] [data-test-ident="context-message-item"]').doesNotExist();
+  });
+
+  test('it adds error messages to its ui-alert-block when an exception is thrown from its onSubmit method', async function (assert) {
+    const manager = new MessageManager();
+
+    this.set('manager', manager);
+
+    this.set('handleSubmit', async function () {
+      throw new Error('Thrown Error Message');
+    });
+
+    manager.addSuccessMessages('Success Message A');
+
+    // language=handlebars
+    await render(hbs`
+      <UiModal
+        @title="Hello World"
+        @testId="modal"
+        @open={{true}}
+        @onSubmit={{this.handleSubmit}}
+        @messageManager={{this.manager}}
+      as |modal|>
+        <p>Content Goes Here</p>
+        {{modal.submitButton}}
+      </UiModal>
+    `);
+
+    assert.dom('[data-test-id="modal"] [data-test-ident="context-message-success"]').isVisible();
+    assert.dom('[data-test-id="modal"] [data-test-ident="context-message-danger"]').doesNotExist();
+
+    await click('.modal-body button.btn');
+
+    assert.dom('[data-test-id="modal"] [data-test-ident="context-message-success"]').doesNotExist();
+    assert.dom('[data-test-id="modal"] [data-test-ident="context-message-danger"]').isVisible();
+    assert
+      .dom(
+        '[data-test-id="modal"] [data-test-ident="context-message-danger"] [data-test-ident="context-message-item"]'
+      )
+      .hasText('Thrown Error Message');
+  });
+
+  test('it creates its own MessageManager if needed to display error messages thrown from onSubmit', async function (assert) {
+    this.set('handleSubmit', async function () {
+      throw new Error('Thrown Error Message');
+    });
+
+    // language=handlebars
+    await render(hbs`
+      <UiModal
+        @title="Hello World"
+        @testId="modal"
+        @open={{true}}
+        @onSubmit={{this.handleSubmit}}
+      as |modal|>
+        <p>Content Goes Here</p>
+        {{modal.submitButton}}
+      </UiModal>
+    `);
+
+    assert.dom('[data-test-id="modal"] [data-test-ident="context-message-danger"]').doesNotExist();
+
+    await click('.modal-body button.btn');
+
+    assert.dom('[data-test-id="modal"] [data-test-ident="context-message-danger"]').isVisible();
+    assert
+      .dom(
+        '[data-test-id="modal"] [data-test-ident="context-message-danger"] [data-test-ident="context-message-item"]'
+      )
+      .hasText('Thrown Error Message');
   });
 });
