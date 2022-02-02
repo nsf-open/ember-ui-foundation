@@ -8,14 +8,35 @@ import { AlertLevelOrdering } from '@nsf/ui-foundation/constants';
 import template from './template';
 
 /**
- * @class UiAlertBlock
+ * A UiAlertBlock will create a stack of UiAlert components based on the inputs provided
+ * to a MessageManager instance.
+ *
+ * ```handlebars
+ *
+ * <UiAlertBlock @manager={{this.messages}} />
+ * ```
+ *
+ * ```ts
+ * import type { MessageManager } from '@nsf/ui-foundation';
+ * import { messageManager } from '@nsf/ui-foundation';
+ * // ...
+ * @messageManager()
+ * declare readonly messages: MessageManager;
+ * ```
  */
 @layout(template)
 export default class UiAlertBlock extends Component {
   public static readonly positionalParams = ['manager'];
 
+  /**
+   * The MessageManager instance that will be used by this component to generate
+   * alert blocks.
+   */
   public declare manager: MessageManager;
 
+  /**
+   * The data-test-id attribute for this element, if required.
+   */
   @attribute('data-test-ident')
   public testId = 'context-message-block';
 
