@@ -398,7 +398,10 @@ module('Unit | Lib | MessageManager', function (hooks) {
   test('the message helper method will add, update, or remove a message based on provided arguments', function (assert) {
     const manager = new MessageManager();
 
-    const messageId = manager.message({ message: 'Message A', groupName: AlertLevel.INFO }) as string;
+    const messageId = manager.message({
+      message: 'Message A',
+      groupName: AlertLevel.INFO,
+    }) as string;
 
     assert.strictEqual(typeof messageId, 'string');
     assert.true(manager.hasMessage('Message A', AlertLevel.INFO));

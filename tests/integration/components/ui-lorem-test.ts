@@ -70,11 +70,7 @@ module('Integration | Component | ui-lorem', function (hooks) {
       hbs`<UiLorem @count={{this.count}} @units={{this.units}} @wordsPerSentence={{this.wordsPerSentence}} />`
     );
 
-    assert.strictEqual(
-      getRootElement().textContent?.split(' ').length,
-      8,
-      'it generated 8 words'
-    );
+    assert.strictEqual(getRootElement().textContent?.split(' ').length, 8, 'it generated 8 words');
   });
 
   test('the number of sentences in a paragraph can be controlled', async function (assert) {
