@@ -1,14 +1,15 @@
 import type { Task } from 'ember-concurrency';
-import ModalContainer from '../-internals/modal-container';
 import { task } from 'ember-concurrency';
+import ModalContainer from '../-internals/modal-container';
+import { set } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { layout } from '@ember-decorators/component';
 import template from './template';
-import { SizeVariants } from '@nsf/ui-foundation/constants';
+import { AlertLevel, SizeVariants } from '@nsf/ui-foundation/constants';
+import { extractErrorMessages } from '@nsf/ui-foundation/utils';
+import MessageManager from '@nsf/ui-foundation/lib/MessageManager';
 
 /**
- *
- *
  * @yield {hash}      modal
  * @yield {any}       modal.data         The `data` argument given.
  * @yield {Function}  modal.close        The modal’s `onClose` handler; useful for passing to children components.
@@ -32,7 +33,7 @@ export default class UiModal extends ModalContainer {
   public size: SizeVariants = SizeVariants.Medium;
 
   /**
-   * Boolean. Whether the close UI (the header and optionally yielded button) are disabled.
+   * Whether the close UI (the header and optionally yielded button) are disabled.
    */
   public closeDisabled = false;
 
@@ -40,6 +41,12 @@ export default class UiModal extends ModalContainer {
    * The value of the element's `data-test-id` attribute, if required.
    */
   public testId?: string;
+
+  /**
+   * The ui-modal will conveniently provide you with an ui-alert-block if you give it
+   * a message manager instance to control the alert-block with.
+   */
+  public messageManager?: MessageManager;
 
   /**
    * Use the onSubmit callback in conjunction with the yielded "submitButton".
@@ -50,10 +57,11 @@ export default class UiModal extends ModalContainer {
   declare readonly disableCloseOptions: boolean;
 
   @task
-  *handleSubmit(...rest: unknown[]) {
+  protected *handleSubmit(...rest: unknown[]) {
     try {
+      this.getMessageManager()?.clear();
+
       const args = [...rest, this.data];
-      // TODO: Generalize this for other components?
 
       // ui-buttons return the event instance from their onClick, no problem there.
       // For the sake of simplicity though, we're going to make sure the event is
@@ -76,11 +84,29 @@ export default class UiModal extends ModalContainer {
           : this.onSubmit(...args);
       }
 
-      // TODO: Some generic success "thumbs up" as it closes?
-
       yield this.close();
     } catch (err) {
-      // no-op
+      const messages = extractErrorMessages(err);
+
+      if (messages) {
+        this.getMessageManager(true)?.addMessagesMany(AlertLevel.ERROR, messages);
+      }
     }
+  }
+
+  protected getMessageManager(createIfNeeded = false) {
+    let manager = this.messageManager;
+
+    if (!manager && createIfNeeded) {
+      manager = new MessageManager();
+      set(this, 'messageManager', manager);
+    }
+
+    return manager;
+  }
+
+  closeDialog() {
+    this.getMessageManager()?.clear();
+    return super.closeDialog();
   }
 }

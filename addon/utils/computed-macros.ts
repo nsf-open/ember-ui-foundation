@@ -8,7 +8,10 @@ import { computed, get } from '@ember/object';
  *
  * Kudos to @fsmanuel for coming up with this solution.
  */
-export function listenTo<V>(dependentKey: string, defaultValue = null): ComputedProperty<V> {
+export function listenTo<V>(
+  dependentKey: string,
+  defaultValue: unknown = null
+): ComputedProperty<V> {
   return computed(dependentKey, {
     get() {
       const value = get(this, dependentKey);

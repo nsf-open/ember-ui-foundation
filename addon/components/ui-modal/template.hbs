@@ -12,6 +12,8 @@
       closeDisabled  = this.disableCloseOptions
       testId         = this.testId
     }}
+      {{#if this.messageManager}}<UiAlertBlock @manager={{this.messageManager}} />{{/if}}
+
       {{yield (hash
         close         = (action this.close)
         submit        = (perform-unlinked this.handleSubmit)
@@ -34,6 +36,8 @@
         closeDisabled  = this.disableCloseOptions
         testId         = this.testId
       }}
+        {{#if this.messageManager}}<UiAlertBlock @manager={{this.messageManager}} />{{/if}}
+
         {{yield (hash
           close         = (action this.close)
           submit        = (perform-unlinked this.handleSubmit)
