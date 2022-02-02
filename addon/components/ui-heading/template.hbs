@@ -1,0 +1,13 @@
+{{#if (is-equal this.level this.HeadingLevels.H1)}}
+  <h1 class={{this.class}}>{{this.text}}</h1>
+{{else if (is-equal this.level this.HeadingLevels.H2)}}
+  <h2 class={{this.class}}>{{this.text}}</h2>
+{{else if (is-equal this.level this.HeadingLevels.H3)}}
+  <h3 class={{this.class}}>{{this.text}}</h3>
+{{else if (is-equal this.level this.HeadingLevels.H4)}}
+  <h4 class={{this.class}}>{{this.text}}</h4>
+{{else if (is-equal this.level this.HeadingLevels.H5)}}
+  <h5 class={{this.class}}>{{this.text}}</h5>
+{{else if (is-equal this.level this.HeadingLevels.H6)}}
+  <h6 class={{this.class}}>{{this.text}}</h6>
+{{/if}}
