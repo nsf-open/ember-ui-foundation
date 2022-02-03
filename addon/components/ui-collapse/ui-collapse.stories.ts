@@ -51,3 +51,8 @@ const Template = (context: unknown) => ({
 });
 
 export const Default = Template.bind({});
+Default.parameters = {
+  docs: {
+    iframeHeight: 280,
+  },
+};

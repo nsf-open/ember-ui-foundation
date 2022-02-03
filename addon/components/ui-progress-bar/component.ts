@@ -3,6 +3,28 @@ import Component from '@ember/component';
 import { layout, tagName } from '@ember-decorators/component';
 import template from './template';
 
+/**
+ * Use the UiProgressBar component to denote progression through an ordered
+ * set of steps. It's most commonly used along with larger "multistep management"
+ * components such as UiStepflow, but with a bit of imagination it could be at
+ * home just about anywhere you're trying to get a user to do things in a
+ * specific order.
+ *
+ * To use, all it needs is a ProgressManager instance.
+ *
+ * ```typescript
+ * import type { ProgressManager } from '@nsf/ui-foundation';
+ * import { progressManager } from '@nsf/ui-foundation';
+ * // ...
+ * @progressManager([{ label: 'Step A', component: 'steps/step-a' }])
+ * public declare manager: ProgressManager;
+ * ```
+ *
+ * ```handlebars
+ *
+ * <UiProgressBar @manager={{this.progressManager}} />
+ * ```
+ */
 @tagName('')
 @layout(template)
 export default class UiProgressBar extends Component {

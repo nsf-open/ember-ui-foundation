@@ -9,6 +9,9 @@ import ProgressItem from './ProgressItem';
  * Decorator to create a new ProgressManager instance.
  *
  * ```typescript
+ * import type { ProgressManager } from '@nsf/ui-foundation';
+ * import { progressManager } from '@nsf/ui-foundation';
+ * // ...
  * @progressManager([{ label: 'Step A', component: 'steps/step-a' }])
  * public declare manager: ProgressManager;
  * ```
@@ -22,7 +25,16 @@ export function progressManager<Data = Record<string, unknown>>(
 }
 
 /**
- * @class ProgressManager
+ * The ProgressManager acts as an interface for step-oriented workflows such as
+ * the UiStepflow, and supporting components like UiProgressBar.
+ *
+ * ```typescript
+ * import type { ProgressManager } from '@nsf/ui-foundation';
+ * import { progressManager } from '@nsf/ui-foundation';
+ * // ...
+ * @progressManager([{ label: 'Step A', component: 'steps/step-a' }])
+ * public declare manager: ProgressManager;
+ * ```
  */
 export default class ProgressManager<Data> {
   constructor(steps?: (ProgressItem<Data> | ProgressItemDescriptor<Data>)[]) {

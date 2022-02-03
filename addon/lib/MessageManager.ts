@@ -67,7 +67,7 @@ export const messageManager = function (options: { enableScrollTo?: boolean } = 
 };
 
 /**
- * The MessageManagerInstance acts as the interface for a UiAlertBlock.
+ * The MessageManager acts as the interface for a UiAlertBlock.
  * Messages can be added, updated, and/or removed from an instance of this class, and the component
  * that it is attached to will update in response.
  *

@@ -99,6 +99,7 @@ function pluckRandomWord(): string {
  * whole paragraphs. It's for developers!
  *
  * ```hbs
+ *
  * <UiLorem @count={{2}} @units="paragraph" />
  * ```
  */
