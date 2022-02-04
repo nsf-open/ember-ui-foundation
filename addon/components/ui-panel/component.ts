@@ -39,8 +39,6 @@ import template from './template';
 export default class UiPanel extends Component {
   public static readonly positionalParams = ['heading', 'variant'];
 
-  public readonly headingLevels = HeadingLevels;
-
   /**
    * The title text of the panel.
    *
@@ -51,7 +49,7 @@ export default class UiPanel extends Component {
   /**
    * The heading level to use, if text is provided.
    */
-  public level = HeadingLevels.H2;
+  public headingLevel = HeadingLevels.H2;
 
   /**
    * The style variant of the panel is any valid Bootstrap type that you would add after
@@ -61,6 +59,12 @@ export default class UiPanel extends Component {
    * This can also be set as the second positional parameter of the component.
    */
   public variant? = PanelVariants.Default;
+
+  /**
+   * Optional CSS class names for the panel heading. This is in addition to "panel-heading"
+   * which is always applied.
+   */
+  public headingClass?: string;
 
   /**
    * Believe it or not, there are certain times when it is desirable for a panel to not

@@ -21,7 +21,7 @@ export const Default = (args: unknown) => ({
     <UiPanel
       @heading="{{this.heading}}"
       @variant="{{this.variant}}"
-      @level="{{this.level}}"
+      @headingLevel="{{this.headingLevel}}"
       @testId="{{this.testId}}"
       @renderPanel={{this.renderPanel}}
     >

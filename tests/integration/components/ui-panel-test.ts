@@ -58,20 +58,20 @@ module('Integration | Component | ui-panel', function (hooks) {
   });
 
   test('is can create a panel heading with different heading level (H1, H2, etc)', async function (assert) {
-    this.set('level', 'h1');
+    this.set('headingLevel', 'h1');
 
     // language=handlebars
     await render(
-      hbs`<UiPanel @heading="Hello World" @level={{this.level}} @testId="panel">Foo Bar</UiPanel>`
+      hbs`<UiPanel @heading="Hello World" @headingLevel={{this.headingLevel}} @testId="panel">Foo Bar</UiPanel>`
     );
 
     assert.dom('[data-test-id="panel"] .panel-heading .panel-title').hasTagName('h1');
 
-    this.set('level', 'h3');
+    this.set('headingLevel', 'h3');
 
     assert.dom('[data-test-id="panel"] .panel-heading .panel-title').hasTagName('h3');
 
-    this.set('level', 'h4');
+    this.set('headingLevel', 'h4');
 
     assert.dom('[data-test-id="panel"] .panel-heading .panel-title').hasTagName('h4');
   });
