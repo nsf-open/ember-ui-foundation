@@ -39,6 +39,7 @@ import template from './template';
  * but if you need the icon to be shown _after_ then you'll need to set `iconPlacement="right"`.
  *
  * ```handlebars
+ *
  * {{ui-button "Search" "primary" icon="search" iconPlacement="left"}}
  * ```
  *

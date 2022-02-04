@@ -47,6 +47,7 @@ const Template = (context: unknown) => ({
 });
 
 export const Default = Template.bind({});
+Default.storyName = 'ui-alert-block';
 Default.args = {
   successes: ['Success Message A'],
   errors: ['Error Message A'],

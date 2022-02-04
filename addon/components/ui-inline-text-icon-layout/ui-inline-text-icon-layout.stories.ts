@@ -35,3 +35,4 @@ const Template = (context: unknown) => ({
 });
 
 export const Default = Template.bind({});
+Default.storyName = 'ui-inline-text-icon-layout';

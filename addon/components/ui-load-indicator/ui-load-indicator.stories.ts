@@ -17,3 +17,4 @@ const Template = (context: unknown) => ({
 });
 
 export const Default = Template.bind({});
+Default.storyName = 'ui-load-indicator';

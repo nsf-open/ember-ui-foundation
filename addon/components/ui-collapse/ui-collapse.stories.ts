@@ -51,6 +51,7 @@ const Template = (context: unknown) => ({
 });
 
 export const Default = Template.bind({});
+Default.storyName = 'ui-collapse';
 Default.parameters = {
   docs: {
     iframeHeight: 280,

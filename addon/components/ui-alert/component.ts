@@ -19,6 +19,7 @@ import template from './template';
  * Single alert messages, and arrays of strings are both supported by the component's inline form.
  *
  * ```handlebars
+ *
  * {{ui-alert "success" "Hurray, it worked! An array of strings would have worked here too!"}}
  * ```
  *

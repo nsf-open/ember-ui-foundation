@@ -42,3 +42,4 @@ export const Default = (context: unknown) => ({
       @number={{this.number}}
     />`,
 });
+Default.storyName = 'ui-progress-bar';
