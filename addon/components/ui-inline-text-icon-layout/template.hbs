@@ -3,10 +3,17 @@
 {{~/if~}}
 
 {{~#if this.renderIcon~}}
-  <span class="{{this.textClassName}}">
-    {{~#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if~}}
-  </span>
-  {{~else~}}
+  {{!--
+    If an icon has been provided without any text, and the button does not have block content,
+    then this wrapper span will cause the icon to not be centered. It's possible that aria-label
+    has been added and the purposeful intent is to only show an icon.
+  --}}
+  {{~#if (or this.text (and (has-block) this.doesParentHaveBlockContent))~}}
+    <span class="{{this.textClassName}}">
+      {{~#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if~}}
+    </span>
+  {{~/if~}}
+{{~else~}}
   {{#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if}}
 {{~/if~}}
 

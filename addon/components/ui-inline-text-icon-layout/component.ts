@@ -57,16 +57,6 @@ export default class UiInlineTextIconLayout extends Component {
    */
   public tooltip?: string;
 
-  /**
-   * So this is a pretty wild kind of confusing. This allows an implementing component to
-   * tell this one whether it should behave as though it has block content for the sake
-   * of laying out text. You can see this at work in the template, where it has the ability
-   * to falsify (has-block) if it is true.
-   *
-   * It's used by UiButton to support the icon-only scenario.
-   */
-  protected doesParentHaveBlockContent = true;
-
   @computed('iconPlacement', 'tooltip')
   get actualIconPlacement() {
     return isPresent(this.tooltip) ? Directions.Right : this.iconPlacement;
@@ -100,7 +90,7 @@ export default class UiInlineTextIconLayout extends Component {
   get textClassName() {
     const names = [];
 
-    // Only collapse down to an icon if said icon is actually available, and it isn't
+    // Only collapse down to an icon if said icon is actually available and it isn't
     // the generic tooltip icon, which wouldn't give any visual cues to what the
     // button does.
     if (this.responsive && this.renderIcon && !isPresent(this.tooltip)) {

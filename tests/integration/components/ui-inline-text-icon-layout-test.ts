@@ -52,6 +52,19 @@ module('Integration | Component | ui-inline-text-icon-layout', function (hooks) 
     assert.dom('span:nth-child(2)').hasClass('fa-mail');
   });
 
+  test('it will not render an empty text span next to an icon', async function (assert) {
+    await render(hbs`<UiInlineTextIconLayout @icon="superpowers" />`);
+
+    assert.dom('span:nth-child(1)').hasClass('fa');
+    assert.dom('span:nth-child(2)').doesNotExist();
+
+    await render(hbs`<UiInlineTextIconLayout @icon="superpowers"></UiInlineTextIconLayout>`);
+
+    //
+    assert.dom('span:nth-child(1)').hasClass('fa');
+    assert.dom('span:nth-child(2)').exists();
+  });
+
   test('it will provide a responsive class name to hide text when required', async function (assert) {
     this.set('icon', 'superpowers');
     this.set('responsive', false);
