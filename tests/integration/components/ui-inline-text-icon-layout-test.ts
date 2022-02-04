@@ -60,7 +60,6 @@ module('Integration | Component | ui-inline-text-icon-layout', function (hooks) 
 
     await render(hbs`<UiInlineTextIconLayout @icon="superpowers"></UiInlineTextIconLayout>`);
 
-    //
     assert.dom('span:nth-child(1)').hasClass('fa');
     assert.dom('span:nth-child(2)').exists();
   });
