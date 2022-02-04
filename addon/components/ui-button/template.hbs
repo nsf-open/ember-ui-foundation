@@ -6,6 +6,7 @@
   @pending={{this.isPending}}
   @fw={{true}}
   @tooltip={{this.tooltip}}
+  @doesParentHaveBlockContent={{if (has-block) true false}}
 >
   {{#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if}}
   {{#if this.tooltip}}

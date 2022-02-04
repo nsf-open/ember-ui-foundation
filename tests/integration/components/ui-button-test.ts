@@ -41,6 +41,55 @@ module('Integration | Component | ui-button', function (hooks) {
     assert.verifySteps(['click']);
   });
 
+  test('it cannot be clicked on when disabled', async function (assert) {
+    this.setProperties({
+      disabled: false,
+
+      clickAction() {
+        assert.step('click A');
+      },
+    });
+
+    // language=handlebars
+    await render(hbs`
+        <UiButton
+          @text="Hello World"
+          @variant="primary"
+          @disabled={{this.disabled}}
+          @onClick={{action this.clickAction}}
+        />
+    `);
+
+    await click('button');
+
+    this.setProperties({
+      disabled: true,
+
+      clickAction() {
+        assert.step('I should not be ran');
+      },
+    });
+
+    try {
+      await click('button');
+    } catch (e) {
+      // Noop. @ember/test-helpers throws and error if the button is
+      // disabled when you try to click on it.
+    }
+
+    this.setProperties({
+      disabled: false,
+
+      clickAction() {
+        assert.step('click B');
+      },
+    });
+
+    await click('button');
+
+    assert.verifySteps(['click A', 'click B']);
+  });
+
   test('it goes into a "pending" state when a promise is returned from the onClick action', async function (this, assert) {
     const promise = new Promise((resolve) => setTimeout(resolve, 100));
 

@@ -207,8 +207,10 @@ export default class UiButton extends AsyncAwareComponent {
   }
 
   click(event: Event) {
-    this._libraryOnClick?.();
-    set(this, 'promise', this.onClick?.(event) ?? undefined);
+    if (!this.disableButton) {
+      this._libraryOnClick?.();
+      set(this, 'promise', this.onClick?.(event) ?? undefined);
+    }
   }
 
   /**
