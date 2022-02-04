@@ -16,7 +16,7 @@ module('Integration | Component | ui-heading', function (hooks) {
     );
 
     assert.dom('h1').hasText('Hello World');
-    assert.dom('h1').hasClass('a-heading-class')
+    assert.dom('h1').hasClass('a-heading-class');
 
     this.set('level', HeadingLevels.H2);
     assert.dom('h2').hasText('Hello World');
