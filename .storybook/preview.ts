@@ -26,7 +26,7 @@ export const parameters = {
 
   options: {
     storySort: {
-      order: ['Welcome', 'Elements', 'Helpers', 'Services', 'Library'],
+      order: ['Welcome', 'Elements', 'Helpers', 'Services', 'Classes'],
     },
   },
 
