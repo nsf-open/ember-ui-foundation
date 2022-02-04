@@ -3,6 +3,7 @@ import { computed } from '@ember/object';
 import { layout, tagName } from '@ember-decorators/component';
 import { HeadingLevels, PanelVariants } from '../../constants';
 import template from './template';
+import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component';
 
 /**
  * Panels are stylized content blocks with a heading and associated content.
@@ -31,6 +32,39 @@ import template from './template';
  * ```hbs
  * <UiPanel>
  * 	<p>Whatever panel body content is required.</p>
+ * </UiPanel>
+ * ```
+ *
+ * ## Async Aware Panels
+ * The UiPanel will render a UiAsyncBlock instance if provided a promise. A name can also be
+ * provided for the AsyncBlock. If a name is not given, but a heading string is available then
+ * that will be used instead.
+ *
+ * ```hbs
+ * <UiPanel @name="Albums" @promise={{this.someAlbumLoadingPromise}} as |albums|>
+ *   <p>This will render when the promise resolves.</p>
+ * </UiPanel>
+ * ```
+ *
+ * If you really need some customization in how the AsyncBlock behaves then you can swap out
+ * the default one with your own.
+ *
+ * ```typescript
+ * import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component';
+ *
+ * class SomeCustomAsyncBlockClass extends UiAsyncBlock {
+ *   pendingMessage = () => {
+ *     return "Look at me, I'm totally custom!";
+ *   };
+ * }
+ * ```
+ *
+ * ```hbs
+ * <UiPanel
+ *   @promise={{this.someAlbumLoadingPromise}}
+ *   @uiAsyncBlock={{this.SomeCustomAsyncBlockClass}}
+ * as |albums|>
+ *   <p>This will render when the promise resolves.</p>
  * </UiPanel>
  * ```
  */
@@ -77,6 +111,23 @@ export default class UiPanel extends Component {
    * The value of the element's `data-test-id` attribute, if required.
    */
   public testId?: string;
+
+  /**
+   * A UiAsyncBlock component can be provided if there is a need to really customize
+   * the experience.
+   */
+  public uiAsyncBlock: typeof UiAsyncBlock = UiAsyncBlock;
+
+  /**
+   * A PromiseLike that will be provided to the UiAsyncBlock component.
+   */
+  public promise?: PromiseLike<unknown>;
+
+  /**
+   * A name for the UiAsyncBlock component. If not provided then the panel heading
+   * will be used.
+   */
+  public name?: string;
 
   @computed('heading')
   public get hasHeading(): boolean {

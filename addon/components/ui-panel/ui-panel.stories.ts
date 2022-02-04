@@ -10,12 +10,22 @@ export default {
     },
   },
 
-  argTypes: {
-    heading: { control: { type: 'text' } },
+  args: {
+    heading: 'Panel Heading',
   },
 };
 
-export const Default = (args: unknown) => ({
+function makePromise(doResolve = true, time = 5000) {
+  return new Promise(function (resolve, reject) {
+    setTimeout(() => {
+      doResolve ? resolve(undefined) : reject();
+    }, time);
+  });
+}
+
+const Template = (context: unknown) => ({
+  context,
+
   // language=handlebars
   template: hbs`
     <UiPanel
@@ -24,18 +34,60 @@ export const Default = (args: unknown) => ({
       @headingLevel="{{this.headingLevel}}"
       @testId="{{this.testId}}"
       @renderPanel={{this.renderPanel}}
+      @promise={{this.promise}}
+      @name={{this.name}}
     >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-        ea commodo consequat. Duis aute irure dolor in reprehenderit in
-        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-        sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+        <UiLorem />
     </UiPanel>`,
-  context: args,
 });
 
+export const Primary = Template.bind({});
+Primary.args = {
+  variant: 'primary',
+};
+
+export const Secondary = Template.bind({});
+Secondary.args = {
+  variant: 'secondary',
+};
+
+export const Info = Template.bind({});
+Info.args = {
+  variant: 'info',
+};
+
+export const Default = Template.bind({});
 Default.args = {
-  heading: 'Panel Heading',
+  variant: 'default',
+};
+
+export const Warning = Template.bind({});
+Warning.args = {
+  variant: 'warning',
+};
+
+export const Danger = Template.bind({});
+Danger.args = {
+  variant: 'danger',
+};
+
+export const NoHeading = Template.bind({});
+NoHeading.args = {
+  heading: undefined,
+};
+
+export const PendingAsyncBlock = Template.bind({});
+PendingAsyncBlock.args = {
+  get promise() {
+    return makePromise(true, 200000);
+  },
+};
+
+export const RejectedAsyncBlock = Template.bind({});
+RejectedAsyncBlock.args = {
+  variant: 'default',
+
+  get promise() {
+    return makePromise(false, 2000);
+  },
 };

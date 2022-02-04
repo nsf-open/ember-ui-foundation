@@ -1,7 +1,9 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import wait from 'dummy/tests/helpers/wait';
+import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component';
 
 module('Integration | Component | ui-panel', function (hooks) {
   setupRenderingTest(hooks);
@@ -45,15 +47,12 @@ module('Integration | Component | ui-panel', function (hooks) {
     await render(
       hbs`<UiPanel @heading="Hello World" @variant={{this.variant}} @testId="panel">Foo Bar</UiPanel>`
     );
-
     assert.dom('[data-test-id="panel"].panel-primary').isVisible();
 
     this.set('variant', 'secondary');
-
     assert.dom('[data-test-id="panel"].panel-secondary').isVisible();
 
     this.set('variant', 'success');
-
     assert.dom('[data-test-id="panel"].panel-success').isVisible();
   });
 
@@ -64,15 +63,12 @@ module('Integration | Component | ui-panel', function (hooks) {
     await render(
       hbs`<UiPanel @heading="Hello World" @headingLevel={{this.headingLevel}} @testId="panel">Foo Bar</UiPanel>`
     );
-
     assert.dom('[data-test-id="panel"] .panel-heading .panel-title').hasTagName('h1');
 
     this.set('headingLevel', 'h3');
-
     assert.dom('[data-test-id="panel"] .panel-heading .panel-title').hasTagName('h3');
 
     this.set('headingLevel', 'h4');
-
     assert.dom('[data-test-id="panel"] .panel-heading .panel-title').hasTagName('h4');
   });
 
@@ -93,5 +89,83 @@ module('Integration | Component | ui-panel', function (hooks) {
     assert.dom('.panel .panel-heading').doesNotExist();
     assert.dom('.panel .panel-body').doesNotExist();
     assert.dom().hasText('Foo Bar');
+  });
+
+  test('it will provide a ui-async-block instance when given a promise', async function (assert) {
+    const promise = wait(500, 'Hello World');
+    this.set('promise', promise);
+
+    // language=handlebars
+    await render(
+      hbs`<UiPanel
+        @heading="Information"
+        @name="Infotainment"
+        @promise={{this.promise}}
+      as |content|>
+          {{content}}
+      </UiPanel>`
+    );
+
+    assert.dom('[data-test-id="load-indicator"]').isVisible();
+    assert.dom('[data-test-id="load-indicator"] p:nth-child(2)').hasText('Loading Infotainment');
+
+    await promise;
+    await settled();
+
+    assert.dom('.panel-body').hasText('Hello World');
+  });
+
+  test('it will use the heading if a name is not provided for the ui-async-block', async function (assert) {
+    const promise = wait(500, 'Hello World');
+    this.set('promise', promise);
+
+    // language=handlebars
+    await render(
+      hbs`<UiPanel
+        @heading="Information"
+        @promise={{this.promise}}
+      as |content|>
+          {{content}}
+      </UiPanel>`
+    );
+
+    assert.dom('[data-test-id="load-indicator"]').isVisible();
+    assert.dom('[data-test-id="load-indicator"] p:nth-child(2)').hasText('Loading Information');
+
+    await promise;
+    await settled();
+
+    assert.dom('.panel-body').hasText('Hello World');
+  });
+
+  test('it can be provided a ui-async-block class to customize everything possible', async function (assert) {
+    class TestAsyncBlock extends UiAsyncBlock {
+      pendingMessage = 'Loading Foo and a bit of Bar';
+    }
+
+    const promise = wait(500, 'Hello World');
+    this.set('promise', promise);
+    this.set('uiAsyncBlock', TestAsyncBlock);
+
+    // language=handlebars
+    await render(
+      hbs`<UiPanel
+        @heading="Information"
+        @promise={{this.promise}}
+        @uiAsyncBlock={{this.uiAsyncBlock}}
+      as |content|>
+          {{content}}
+      </UiPanel>`
+    );
+
+    assert.dom('[data-test-id="load-indicator"]').isVisible();
+    assert
+      .dom('[data-test-id="load-indicator"] p:nth-child(2)')
+      .hasText('Loading Foo and a bit of Bar');
+
+    await promise;
+    await settled();
+
+    assert.dom('.panel-body').hasText('Hello World');
   });
 });

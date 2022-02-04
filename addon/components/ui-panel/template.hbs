@@ -6,7 +6,14 @@
       </header>
     {{/if}}
 
-    <div class="panel-body">{{yield}}</div>
+    <div class="panel-body">
+      {{#component this.uiAsyncBlock
+        name=(or this.name this.heading)
+        promise=this.promise
+      as |asyncResults|}}
+        {{yield asyncResults}}
+      {{/component}}
+    </div>
   </section>
 {{else~}}
   {{yield}}
