@@ -1,3 +1,4 @@
+import type MessageManager from '@nsf/ui-foundation/lib/MessageManager';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { layout, tagName } from '@ember-decorators/component';
@@ -67,6 +68,23 @@ import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component
  *   <p>This will render when the promise resolves.</p>
  * </UiPanel>
  * ```
+ *
+ * ## Messaging Block
+ * If needed, UiPanel will provide a UiAlertBlock instance for you - all you need to do is provide the MessageManager.
+ *
+ * ```handlebars
+ * <UiPanel @heading="Hello World" @messageManager={{this.panelMessages}}>
+ *   <p>Here is some content</p>
+ * </UiModal>
+ * ```
+ *
+ * ```ts
+ * import type { MessageManager } from '@nsf/ui-foundation';
+ * import { messageManager } from '@nsf/ui-foundation';
+ * // ...
+ * @messageManager()
+ * declare readonly panelMessages: MessageManager;
+ * ```
  */
 @tagName('')
 @layout(template)
@@ -128,6 +146,12 @@ export default class UiPanel extends Component {
    * will be used.
    */
   public name?: string;
+
+  /**
+   * The ui-modal will conveniently provide you with an ui-alert-block if you give it
+   * a message manager instance to control the alert-block with.
+   */
+  public messageManager?: MessageManager;
 
   @computed('heading')
   public get hasHeading(): boolean {

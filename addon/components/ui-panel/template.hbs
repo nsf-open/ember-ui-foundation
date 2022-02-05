@@ -11,6 +11,10 @@
         name=(or this.name this.heading)
         promise=this.promise
       as |asyncResults|}}
+        {{#if this.messageManager}}
+          <UiAlertBlock @manager={{this.messageManager}} />
+        {{/if}}
+
         {{yield asyncResults}}
       {{/component}}
     </div>

@@ -4,6 +4,7 @@ import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'dummy/tests/helpers/wait';
 import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component';
+import MessageManager from '@nsf/ui-foundation/lib/MessageManager';
 
 module('Integration | Component | ui-panel', function (hooks) {
   setupRenderingTest(hooks);
@@ -167,5 +168,24 @@ module('Integration | Component | ui-panel', function (hooks) {
     await settled();
 
     assert.dom('.panel-body').hasText('Hello World');
+  });
+
+  test('it renders a ui-alert-block if provided a MessageManager instance', async function (assert) {
+    const manager = new MessageManager();
+    this.set('manager', manager);
+
+    manager.addSuccessMessages('Success Message A');
+
+    // language=handlebars
+    await render(hbs`
+      <UiPanel @heading="Hello World" @testId="panel" @messageManager={{this.manager}} as |modal|>
+        <p>Content Goes Here</p>
+      </UiPanel>
+    `);
+
+    assert.dom('[data-test-id="panel"] [data-test-ident="context-message-success"]').isVisible();
+    assert
+      .dom('[data-test-id="panel"] [data-test-ident="context-message-item"]')
+      .hasText('Success Message A');
   });
 });
