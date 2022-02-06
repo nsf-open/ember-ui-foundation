@@ -36,10 +36,19 @@ const Template = (context: unknown) => ({
       @renderPanel={{this.renderPanel}}
       @promise={{this.promise}}
       @name={{this.name}}
+      @collapsed={{this.collapsed}}
+      @startCollapsed={{this.startCollapsed}}
+      @onShow={{this.onShow}}
+      @onHidden={{this.onHidden}}
     >
         <UiLorem />
     </UiPanel>`,
 });
+
+export const Default = Template.bind({});
+Default.args = {
+  variant: 'default',
+};
 
 export const Primary = Template.bind({});
 Primary.args = {
@@ -54,11 +63,6 @@ Secondary.args = {
 export const Info = Template.bind({});
 Info.args = {
   variant: 'info',
-};
-
-export const Default = Template.bind({});
-Default.args = {
-  variant: 'default',
 };
 
 export const Warning = Template.bind({});
@@ -89,5 +93,26 @@ RejectedAsyncBlock.args = {
 
   get promise() {
     return makePromise(false, 2000);
+  },
+};
+
+export const Collapsible = Template.bind({});
+Collapsible.args = {
+  collapsed: false,
+};
+
+export const LoadOnOpen = Template.bind({});
+LoadOnOpen.args = {
+  startCollapsed: true,
+  onShow() {
+    return makePromise(true, 5000);
+  },
+};
+
+export const FailOnOpen = Template.bind({});
+FailOnOpen.args = {
+  startCollapsed: true,
+  onShow() {
+    return makePromise(false, 5000);
   },
 };

@@ -1,7 +1,9 @@
 import type MessageManager from '@nsf/ui-foundation/lib/MessageManager';
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { computed, set, action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import { layout, tagName } from '@ember-decorators/component';
+import { isPromiseLike } from '@nsf/general-utils';
 import { HeadingLevels, PanelVariants } from '../../constants';
 import template from './template';
 import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component';
@@ -14,6 +16,7 @@ import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component
  * 	<p>Whatever panel body content is required.</p>
  * </UiPanel>
  * ```
+ *
  *
  * ## Variants
  * You're not going to need this day-to-day because panel usage is so uniform, but it is possible
@@ -35,6 +38,7 @@ import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component
  * 	<p>Whatever panel body content is required.</p>
  * </UiPanel>
  * ```
+ *
  *
  * ## Async Aware Panels
  * The UiPanel will render a UiAsyncBlock instance if provided a promise. A name can also be
@@ -69,8 +73,13 @@ import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component
  * </UiPanel>
  * ```
  *
+ * The UiAsyncBlock will also take a PromiseLike return value of a collapsable panel's `onOpen`,
+ * read more on that in the "Collapsable Panels" section below.
+ *
+ *
  * ## Messaging Block
- * If needed, UiPanel will provide a UiAlertBlock instance for you - all you need to do is provide the MessageManager.
+ * If needed, UiPanel will provide a UiAlertBlock instance for you - all you need to do is provide
+ * the MessageManager.
  *
  * ```handlebars
  * <UiPanel @heading="Hello World" @messageManager={{this.panelMessages}}>
@@ -84,6 +93,48 @@ import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component
  * // ...
  * @messageManager()
  * declare readonly panelMessages: MessageManager;
+ * ```
+ *
+ *
+ * ## Collapsable Panels
+ *
+ * Panels can have their body content shown/hidden via a user controlled toggled when the `collapsed` or
+ * `startCollapsed` property is set to a boolean value. Note that there is a subtle difference in how each
+ * should be used.
+ *
+ * ```handlebars
+ * {{!-- Use the `collapsed` property when you want programmatic control of the panel's "openness". --}}
+ * <UiPanel @heading="Hello World" @collapsed={{this.isPanelCollapsed}}>
+ *   <p>Here is some content</p>
+ * </UiPanel>
+ * ```
+ *
+ * ```handlebars
+ * {{!--
+ *   Use the `startCollapsed` property when you want to set the starting position of the toggle when the
+ *   panel first renders with a boolean literal.
+ * --}}
+ * <UiPanel @heading="Hello World" @startCollapsed={{true}}>
+ *   <p>Here is some content</p>
+ * </UiPanel>
+ * ```
+ *
+ * Two callbacks, `onShow` and `onHidden`, can be provided to the UiPanel. These behave like the UiCollapse
+ * component's callbacks of the same name, with `onShow` being run before the opening animation starts, and
+ * `onCloses` being run after the closing animation ends.
+ *
+ * If the `onShow` callback returns a PromiseLike then it will be given to the panel's UiAsyncBlock instance.
+ * This makes it really easy to do things like deferred loading of content in collapsed panels that might
+ * never be opened. Neat.
+ *
+ * ```handlebars
+ * <UiPanel
+ *   @heading="Hello World"
+ *   @startCollapsed={{true}}
+ *   @onShow={{action this.somePromiseReturningMethod}}
+ * as |loadedData|>
+ *   <p>{{loadedData}}</p>
+ * </UiPanel>
  * ```
  */
 @tagName('')
@@ -153,6 +204,35 @@ export default class UiPanel extends Component {
    */
   public messageManager?: MessageManager;
 
+  /**
+   * If set to a boolean, the panel will be configured as "collapsible" with the boolean
+   * being used to toggle it's collapsed/expanded state.
+   */
+  public collapsed?: boolean;
+
+  /**
+   * This is an alias for "collapse" that is safe to be set as a boolean literal directly
+   * in the template.
+   */
+  public startCollapsed?: boolean;
+
+  /**
+   * For a collapsing panel, this callback will run when the panel is first toggled to be
+   * open, before any animation has begun. If a PromiseLike is returned from the callback
+   * it will be given to the panel's UiAsyncBlock instance.
+   */
+  public onShow?: () => void | PromiseLike<unknown>;
+
+  /**
+   * For a collapsing panel, this callback will run once the panel has finished closing.
+   */
+  public onHidden?: () => void;
+
+  /**
+   * @protected
+   */
+  declare collapseTargetId: string;
+
   @computed('heading')
   public get hasHeading(): boolean {
     return typeof this.heading === 'string' && this.heading !== '';
@@ -161,5 +241,38 @@ export default class UiPanel extends Component {
   @computed('variant')
   protected get variantClassName() {
     return this.variant ? `panel-${this.variant}` : undefined;
+  }
+
+  @computed('collapsed')
+  protected get isCollapsible() {
+    return typeof this.collapsed === 'boolean';
+  }
+
+  /**
+   * @protected
+   */
+  // eslint-disable-next-line ember/classic-decorator-hooks
+  init() {
+    super.init();
+
+    set(this, 'collapseTargetId', `${guidFor(this)}-content`);
+
+    if (typeof this.collapsed !== 'boolean') {
+      set(this, 'collapsed', this.startCollapsed);
+    }
+  }
+
+  @action
+  protected toggleCollapsedState() {
+    set(this, 'collapsed', !this.collapsed);
+  }
+
+  @action
+  protected handleCollapsablePanelOpen() {
+    const result = this.onShow?.();
+
+    if (isPromiseLike(result)) {
+      set(this, 'promise', result);
+    }
   }
 }

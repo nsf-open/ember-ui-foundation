@@ -1,23 +1,65 @@
 {{#if this.renderPanel}}
-  <section class="panel {{this.variantClassName}}" data-test-id={{this.testId}}>
-    {{#if this.hasHeading}}
+  <section
+    class="panel {{this.variantClassName}} {{if this.collapsed 'closed'}} {{if this.isCollapsible 'panel-collapsible'}}"
+    data-test-id={{this.testId}}
+    data-collapsed={{this.collapsed}}
+    data-collapsible={{this.isCollapsible}}
+  >
+    {{#if this.isCollapsible}}
+      <header class="panel-heading {{this.headingClass}}">
+        <div class="row">
+          <div class="col-xs-10">
+            <UiHeading @class="panel-title" @level="{{this.headingLevel}}">{{this.heading}}</UiHeading>
+          </div>
+
+          <div class="col-xs-2 text-right">
+            <UiPanel::Toggle
+              @isCollapsed={{this.collapsed}}
+              @ariaControls={{this.collapseTargetId}}
+              @onClick={{this.toggleCollapsedState}}
+            />
+          </div>
+        </div>
+
+      </header>
+    {{else if this.hasHeading}}
       <header class="panel-heading {{this.headingClass}}">
         <UiHeading @class="panel-title" @level="{{this.headingLevel}}">{{this.heading}}</UiHeading>
       </header>
     {{/if}}
 
-    <div class="panel-body">
-      {{#component this.uiAsyncBlock
-        name=(or this.name this.heading)
-        promise=this.promise
-      as |asyncResults|}}
-        {{#if this.messageManager}}
-          <UiAlertBlock @manager={{this.messageManager}} />
-        {{/if}}
-
-        {{yield asyncResults}}
-      {{/component}}
-    </div>
+    {{#if this.isCollapsible}}
+      <UiCollapse
+        @collapsed={{this.collapsed}}
+        @id={{this.collapseTargetId}}
+        @onShow={{this.handleCollapsablePanelOpen}}
+        @onHidden={{this.onHidden}}
+      >
+        <div class="panel-body">
+          {{#component this.uiAsyncBlock
+             name=(or this.name this.heading)
+             promise=this.promise
+          as |asyncResults|}}
+            {{#if this.messageManager}}
+              <UiAlertBlock @manager={{this.messageManager}} />
+            {{/if}}
+            {{yield asyncResults}}
+          {{/component}}
+        </div>
+      </UiCollapse>
+    {{else}}
+      <div class="panel-body">
+        {{#component this.uiAsyncBlock
+          name=(or this.name this.heading)
+          promise=this.promise
+        as |asyncResults|}}
+          {{#if this.messageManager}}
+            <UiAlertBlock @manager={{this.messageManager}} />
+          {{/if}}
+          {{yield asyncResults}}
+        {{/component}}
+      </div>
+    {{/if}}
   </section>
 {{else~}}
   {{yield}}

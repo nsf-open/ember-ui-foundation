@@ -1,12 +1,13 @@
-$_count: 1;
+$_count: -10;
 $_max: 10;
 
 /**
  * Utility classes to bump margins and padding around by single pixel values.
- * Where # is a number between 1 and 10.
+ * Where # is a number between -10 and 10.
  *
  * e.g. ".m-5px" = margin: 5px;
  * e.g. ".pt-7px" = padding-top: 7px;
+ * e.g. ".px--2px" = padding-left: -2px; padding-right: -2px;
  *
  * _Margins_
  * .m-#px   - All margins

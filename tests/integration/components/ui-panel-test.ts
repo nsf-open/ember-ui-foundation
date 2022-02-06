@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'dummy/tests/helpers/wait';
 import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component';
@@ -187,5 +187,116 @@ module('Integration | Component | ui-panel', function (hooks) {
     assert
       .dom('[data-test-id="panel"] [data-test-ident="context-message-item"]')
       .hasText('Success Message A');
+  });
+
+  test('it can be made collapsible', async function (assert) {
+    this.set('collapsed', false);
+
+    // language=handlebars
+    await render(
+      hbs`<UiPanel @collapsed={{this.collapsed}}>
+        <p>Hello World</p>
+      </UiPanel>`
+    );
+
+    const btnSelector = '.panel-heading button';
+
+    assert.dom(btnSelector).isVisible();
+    assert.dom(btnSelector).hasText('Collapse');
+    assert.dom(btnSelector).hasAttribute('aria-label', 'collapse section');
+    assert.dom(btnSelector).hasAttribute('aria-expanded', 'true');
+    assert
+      .dom(btnSelector)
+      .hasAttribute('aria-controls', find('.panel-body')?.parentElement?.id ?? '');
+    assert.dom('.panel-body').isVisible();
+
+    await click(btnSelector);
+
+    assert.dom(btnSelector).hasText('Expand');
+    assert.dom(btnSelector).hasAttribute('aria-label', 'expand section');
+    assert.dom(btnSelector).hasAttribute('aria-expanded', 'false');
+    assert.dom('.panel-body').isNotVisible();
+
+    // eslint-disable-next-line ember/no-get
+    assert.true(this.get('collapsed'), 'The "collapsed" property is true');
+
+    this.set('collapsed', false);
+    await settled();
+
+    assert.dom(btnSelector).hasText('Collapse');
+    assert.dom('.panel-body').isVisible();
+  });
+
+  test('it can be initially rendered in the collapsed state', async function (assert) {
+    // language=handlebars
+    await render(
+      hbs`<UiPanel @startCollapsed={{true}}>
+        <p>Hello World</p>
+      </UiPanel>`
+    );
+
+    const btnSelector = '.panel-heading button';
+
+    assert.dom(btnSelector).isVisible();
+    assert.dom('.panel-body').isNotVisible();
+
+    await click(btnSelector);
+
+    assert.dom('.panel-body').isVisible();
+  });
+
+  test('its onShow and onHidden callbacks are run when its collapsed state changes', async function(assert) {
+    this.set('onShow', function () {
+      assert.step('onShow');
+    });
+
+    this.set('onHidden', function () {
+      assert.step('onHidden');
+    });
+
+    // language=handlebars
+    await render(
+      hbs`<UiPanel @startCollapsed={{false}} @onHidden={{action this.onHidden}} @onShow={{action this.onShow}}>
+        <p>Hello World</p>
+      </UiPanel>`
+    );
+
+    const btnSelector = '.panel-heading button';
+
+    assert.dom('.panel-body').isVisible();
+
+    await click(btnSelector);
+    assert.dom('.panel-body').isNotVisible();
+
+    await click(btnSelector);
+    assert.dom('.panel-body').isVisible();
+
+    assert.verifySteps(['onHidden', 'onShow']);
+  });
+
+  test('a promise returned from the onShow callback will be given to the ui-async-block', async function (assert) {
+    let promise;
+
+    this.set('onShow', function () {
+      promise = wait(500, 'Hello World');
+      return promise;
+    });
+
+    // language=handlebars
+    await render(
+      hbs`<UiPanel @heading="Information" @startCollapsed={{true}} @onShow={{action this.onShow}} as |content|>
+          {{content}}
+      </UiPanel>`
+    );
+
+    await click('.panel-heading button');
+
+    assert.dom('[data-test-id="load-indicator"]').isVisible();
+    assert.dom('[data-test-id="load-indicator"] p:nth-child(2)').hasText('Loading Information');
+
+    await promise;
+    await settled();
+
+    assert.dom('.panel-body').hasText('Hello World');
   });
 });
