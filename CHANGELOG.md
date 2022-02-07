@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.3.3...v1.4.0) (2022-02-07)
+
+
+### Features
+
+* drop usage of EmberObject and Evented from MessageManager ([1679e94](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/1679e94d61a2a83170fb62ddbeabfd59d7a8d0b9))
+* modularize Sass files ([ab0137c](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/ab0137c4c24e4fbe0779e50f8355fc7d0f7eae93))
+* shrink ui-heading template with element helper and support block content ([c905771](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/c9057713beb52e952158843012d9f09a694285ed))
+* support an icon-only situation by having the parent element supply its own block state ([5dbdd0e](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/5dbdd0ead5a65930357fa8bfac588d77d6ac856b))
+* ui-alert and ui-alert-block components, tests, and stories ([8dc1848](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/8dc1848147b5de78a52241bd9f6c28033fcfb020))
+* ui-alert component, tests, and stories ([cac8f4e](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/cac8f4ea4899e07eb3fd02688be60857509d4475))
+* ui-heading component, tests, and stories ([9697849](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/96978493563a5bbe67cf6a632fe0339a40a52b3a))
+* ui-lorem component, tests, and stories ([ccdb1d1](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/ccdb1d1fad2e5ece4ed0cd846fba077664d2abcd))
+* ui-modal supports a managed ui-alert-block instance if provided a MessageManager ([f5fbe53](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/f5fbe531e856d72abffbcd14012b4a16abff3e58))
+* ui-panel can be collapsed/expanded ([025fb79](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/025fb79b59e545aa42923b37e09d061664d5a607))
+* ui-panel provides a ui-alert-block when given a MessageManager ([a1dd03b](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/a1dd03b13eb189ddca43ff70d1d043f4ce0f2309))
+* ui-panel provides a ui-async-block when given a promise ([f14397b](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/f14397b3b5f4d35558c8d18315360a60311e53fd))
+
+
+### Bug Fixes
+
+* ensure UiButton onClick does not execute when button is disabled ([68fe79e](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/68fe79ecacc16bcb03bb7299347ab4de3d108034))
+* revert to curly notation and string component invocation in ui-panel for Ember < 3.26 ([31a1850](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/31a185031f05b00b68c7de783abb08a4d9b97ebb))
+
 ### [1.3.3](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.3.2...v1.3.3) (2021-12-10)
 
 
