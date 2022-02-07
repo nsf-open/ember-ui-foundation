@@ -144,9 +144,11 @@ module('Integration | Component | ui-panel', function (hooks) {
       pendingMessage = 'Loading Foo and a bit of Bar';
     }
 
+    this.owner.register('component:test-async-block', TestAsyncBlock);
+
     const promise = wait(500, 'Hello World');
     this.set('promise', promise);
-    this.set('uiAsyncBlock', TestAsyncBlock);
+    this.set('uiAsyncBlock', 'test-async-block');
 
     // language=handlebars
     await render(

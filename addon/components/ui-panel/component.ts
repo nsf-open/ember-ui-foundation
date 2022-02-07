@@ -54,6 +54,9 @@ import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component
  * If you really need some customization in how the AsyncBlock behaves then you can swap out
  * the default one with your own.
  *
+ * > Note that passing the component class directly is only supported in Ember 3.26 and up. In
+ * earlier versions, you'll need to supply the string name of the component instead.
+ *
  * ```typescript
  * import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component';
  *
@@ -185,7 +188,7 @@ export default class UiPanel extends Component {
    * A UiAsyncBlock component can be provided if there is a need to really customize
    * the experience.
    */
-  public uiAsyncBlock: typeof UiAsyncBlock = UiAsyncBlock;
+  public uiAsyncBlock: string | typeof UiAsyncBlock = 'ui-async-block';
 
   /**
    * A PromiseLike that will be provided to the UiAsyncBlock component.

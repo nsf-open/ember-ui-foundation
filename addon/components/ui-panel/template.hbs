@@ -13,11 +13,11 @@
           </div>
 
           <div class="col-xs-2 text-right">
-            <UiPanel::Toggle
-              @isCollapsed={{this.collapsed}}
-              @ariaControls={{this.collapseTargetId}}
-              @onClick={{this.toggleCollapsedState}}
-            />
+            {{ui-panel/toggle
+              isCollapsed=this.collapsed
+              ariaControls=this.collapseTargetId
+              onClick=this.toggleCollapsedState
+            }}
           </div>
         </div>
 
