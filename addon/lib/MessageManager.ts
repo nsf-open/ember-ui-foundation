@@ -6,7 +6,7 @@ import { A, isArray } from '@ember/array';
 import { debounce } from '@ember/runloop';
 import { AlertLevel, AlertLevelAlternates, AlertLevelKeys, AlertLevelOrdering } from '../constants';
 
-interface Message {
+export interface Message {
   id: string;
   message: string;
   escapeHTML: boolean;
@@ -14,14 +14,14 @@ interface Message {
   detailsOpen: boolean;
 }
 
-interface MessageGroup {
+export interface MessageGroup {
   name: AlertLevel;
   messages: NativeArray<Message>;
   messagesText: Set<string>;
   clear: () => void;
 }
 
-type StringOrStringArray = string | string[];
+export type StringOrStringArray = string | string[];
 
 export type MessageMetadata = {
   hasSuccesses: boolean;

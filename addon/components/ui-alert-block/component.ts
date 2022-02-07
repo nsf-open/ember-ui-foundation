@@ -1,4 +1,5 @@
 import type MessageManager from '@nsf/ui-foundation/lib/MessageManager';
+import type { MessageGroup } from '@nsf/ui-foundation/lib/MessageManager';
 import Component from '@ember/component';
 import { layout, attribute } from '@ember-decorators/component';
 import { computed } from '@ember/object';
@@ -41,7 +42,7 @@ export default class UiAlertBlock extends Component {
   public testId = 'context-message-block';
 
   @computed('manager.groups.[]')
-  get sortedGroups() {
+  get sortedGroups(): MessageGroup[] {
     const groups = this.manager.groups;
 
     return groups.sort(function (a, b) {
