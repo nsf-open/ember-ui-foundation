@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.4.0...v1.4.1) (2022-02-07)
+
+
+### Bug Fixes
+
+* provide type exports for Typescript ([36089eb](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/36089ebdd49cbde442292f066b17dcb7eb3f009e))
+
 ## [1.4.0](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.3.3...v1.4.0) (2022-02-07)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@nsf/ui-foundation",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "The starting point for Ember Application UI libraries at NSF.",
   "keywords": [
     "ember-addon"
