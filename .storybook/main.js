@@ -12,4 +12,9 @@ module.exports = {
   ],
 
   staticDirs: ['../dist', './static', '../storybook-utilities/static'],
+
+  features: {
+    postcss: false,
+    emotionAlias: false,
+  },
 }

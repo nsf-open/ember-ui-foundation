@@ -10,6 +10,7 @@ cd ..
 
 source ./.env
 npm run storybook:build
+npx sb extract
 
 aws s3 rm "$STORYBOOK_S3/storybook/ui-foundation" --recursive --profile "$S3_PROFILE"
 aws s3 cp ./storybook-static "$STORYBOOK_S3/storybook/ui-foundation" --recursive --profile "$S3_PROFILE"
