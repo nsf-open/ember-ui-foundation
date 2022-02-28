@@ -5,12 +5,9 @@ const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 module.exports = function (defaults) {
   let app = new EmberAddon(defaults, {
     'ember-cli-typedoc': {
-      enabled: process.env.STORYBOOK === 'true' || process.env.PUBLISH_DOCS === 'true',
+      enabled: process.env.STORYBOOK === 'true',
       out: null,
-      json:
-        process.env.PUBLISH_DOCS === 'true'
-          ? './ui-foundation-docs.json'
-          : './dist/docs/index.json',
+      json: './dist/docs/index.json',
     },
   });
 

@@ -1,5 +1,5 @@
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism-light';
-// @ts-expect-error
+// @ts-expect-error - it exists, just isn't typed
 import { setup } from 'prismjs-glimmer';
 
 /**
@@ -7,16 +7,16 @@ import { setup } from 'prismjs-glimmer';
  * the React Syntax Highlighter's Prism parser.
  */
 export function addHtmlBarHighlighting(Highlighter?: typeof SyntaxHighlighter) {
-  const htmlbarsNamedWrapper = function(Prism: { languages: Record<string, unknown> }) {
+  const htmlbarsNamedWrapper = function (Prism: { languages: Record<string, unknown> }) {
     setup(Prism);
 
     Prism.languages.handlebars = Prism.languages.glimmer;
-    Prism.languages.hbs        = Prism.languages.glimmer;
-    Prism.languages.htmlbars   = Prism.languages.glimmer;
-  }
+    Prism.languages.hbs = Prism.languages.glimmer;
+    Prism.languages.htmlbars = Prism.languages.glimmer;
+  };
 
   htmlbarsNamedWrapper.displayName = 'handlebars';
-  htmlbarsNamedWrapper.aliases     = ['htmlbars', 'handlebars', 'hbs'];
+  htmlbarsNamedWrapper.aliases = ['htmlbars', 'handlebars', 'hbs'];
 
   (Highlighter || SyntaxHighlighter).registerLanguage('handlebars', htmlbarsNamedWrapper);
 }

@@ -8,7 +8,8 @@ module.exports = {
   addons: [
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
+    '@storybook/addon-cssresources',
   ],
 
-  staticDirs: ['../dist', './static'],
+  staticDirs: ['../dist', './static', '../storybook-utilities/static'],
 }

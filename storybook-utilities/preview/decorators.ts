@@ -6,18 +6,18 @@ import dedent from 'ts-dedent';
  */
 export function trimStorySource(storyFn: () => unknown, context: Record<string, any>) {
   const source = context.parameters.storySource;
-  const story  = storyFn();
+  const story = storyFn();
 
   if (source.transformed) {
     return story;
   }
 
   const startIdx = source.source.indexOf('hbs`') + 4;
-  const endIdx   = source.source.lastIndexOf('`');
+  const endIdx = source.source.lastIndexOf('`');
 
   source.transformed = true;
-  source.language    = 'glimmer';
-  source.source      = dedent(source.source.substring(startIdx, endIdx).trim());
+  source.language = 'glimmer';
+  source.source = dedent(source.source.substring(startIdx, endIdx).trim());
 
   return story;
 }

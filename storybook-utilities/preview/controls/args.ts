@@ -8,7 +8,12 @@ import type {
 import type { ArgsEntry } from './types';
 
 import { findChildByName, findDescendantById } from '../typedoc/traversal';
-import { getFullCommentText, stripEscapedOuterQuotes, toDeclarationString, toTypeString, } from '../typedoc/stringify';
+import {
+  getFullCommentText,
+  stripEscapedOuterQuotes,
+  toDeclarationString,
+  toTypeString,
+} from '../typedoc/stringify';
 import { isKindOf, ReflectionKind } from '../typedoc/types';
 
 /**
@@ -19,7 +24,7 @@ export function buildArgumentEntriesObject(
   project: ProjectReflection,
   properties: (ParameterReflection | SignatureReflection)[],
   inferControls = true,
-  category?: string,
+  category?: string
 ) {
   return properties.reduce((accumulator, prop) => {
     let entry = buildArgumentEntry(project, prop, category);
@@ -51,16 +56,16 @@ export function buildArgumentEntry(
     : toTypeString(property.type, project);
 
   return {
-    name:         property.name,
-    description:  getFullCommentText(property),
-    type:         { name: typeString, required: false },
+    name: property.name,
+    description: getFullCommentText(property),
+    type: { name: typeString, required: false },
     defaultValue: stripEscapedOuterQuotes(property.defaultValue) ?? undefined,
-    control:      false,
+    control: false,
 
     table: {
       category,
-      type:         { summary: typeString },
-      defaultValue: { summary: isMethod ? undefined : (property.defaultValue ?? 'undefined') },
+      type: { summary: typeString },
+      defaultValue: { summary: isMethod ? undefined : property.defaultValue ?? 'undefined' },
     },
   };
 }
@@ -83,9 +88,10 @@ export function inferArgumentControl(
   // Numbers
   if (argEntry.type?.name === 'number') {
     argEntry.control = { type: 'number' };
-    argEntry.defaultValue = typeof argEntry.defaultValue === 'string'
-      ? parseFloat(argEntry.defaultValue)
-      : argEntry.defaultValue;
+    argEntry.defaultValue =
+      typeof argEntry.defaultValue === 'string'
+        ? parseFloat(argEntry.defaultValue)
+        : argEntry.defaultValue;
 
     return argEntry;
   }
@@ -93,9 +99,10 @@ export function inferArgumentControl(
   // Booleans
   if (argEntry.type?.name === 'boolean') {
     argEntry.control = { type: 'boolean' };
-    argEntry.defaultValue = typeof argEntry.defaultValue === 'string'
-      ? argEntry.defaultValue === 'true'
-      : argEntry.defaultValue;
+    argEntry.defaultValue =
+      typeof argEntry.defaultValue === 'string'
+        ? argEntry.defaultValue === 'true'
+        : argEntry.defaultValue;
 
     return argEntry;
   }
@@ -148,7 +155,10 @@ function buildControlFromEnumeration(
   let defaultValue = property.defaultValue;
 
   // Going to pull the value out of the enumeration if possible.
-  if (typeof property.defaultValue === 'string' && property.defaultValue.startsWith(enumeration.name)) {
+  if (
+    typeof property.defaultValue === 'string' &&
+    property.defaultValue.startsWith(enumeration.name)
+  ) {
     const [, memberName] = property.defaultValue.split('.', 2);
 
     if (memberName) {
@@ -163,7 +173,7 @@ function buildControlFromEnumeration(
   return {
     defaultValue,
     options,
-    control: { labels, mapping, type: 'select' as 'select' },
+    control: { labels, mapping, type: 'select' as const },
   };
 }
 
@@ -202,7 +212,7 @@ function buildControlFromUnionType(
           // processed.
           const parent = findDescendantById(project, ref.id, true);
 
-          if(parent && `${parent.name}.${ref.name}` === defaultValue) {
+          if (parent && `${parent.name}.${ref.name}` === defaultValue) {
             defaultValue = stripEscapedOuterQuotes(ref.defaultValue);
           }
 
@@ -224,6 +234,6 @@ function buildControlFromUnionType(
   return {
     defaultValue,
     options,
-    control: { labels, mapping, type: 'select' as 'select' },
+    control: { labels, mapping, type: 'select' as const },
   };
 }

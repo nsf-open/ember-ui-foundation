@@ -11,28 +11,21 @@ import { ReflectionKind } from '../typedoc/types';
  * Ember Component specific method below, this includes all public properties and methods,
  * and does not attempt to create controls.
  */
-export function buildClassLikeArgumentsTable(project: ProjectReflection, item: DeclarationReflection) {
-  const properties = findChildrenByKind(item, ReflectionKind.Property)
-    .filter(function(prop) {
-      return !(
-        prop.flags.isExternal
-        || prop.flags.isPrivate
-        || prop.flags.isProtected
-      );
-    });
+export function buildClassLikeArgumentsTable(
+  project: ProjectReflection,
+  item: DeclarationReflection
+) {
+  const properties = findChildrenByKind(item, ReflectionKind.Property).filter(function (prop) {
+    return !(prop.flags.isExternal || prop.flags.isPrivate || prop.flags.isProtected);
+  });
 
-  const methods = findChildrenByKind(item, ReflectionKind.Method)
-    .filter(function(prop) {
-      return !(
-        prop.flags.isExternal
-        || prop.flags.isPrivate
-        || prop.flags.isProtected
-      );
-    });
+  const methods = findChildrenByKind(item, ReflectionKind.Method).filter(function (prop) {
+    return !(prop.flags.isExternal || prop.flags.isPrivate || prop.flags.isProtected);
+  });
 
   return Object.assign(
     buildArgumentEntriesObject(project, properties, false, 'Properties'),
-    buildArgumentEntriesObject(project, methods, false, 'Methods'),
+    buildArgumentEntriesObject(project, methods, false, 'Methods')
   );
 }
 
@@ -40,21 +33,23 @@ export function buildClassLikeArgumentsTable(project: ProjectReflection, item: D
  * Given a component name, this will return an object whose values are ArgEntry definitions
  * that Storybook can use to put together the Controls pane and supplemental documentation.
  */
-export function buildComponentArgumentsTable(project: ProjectReflection, component: DeclarationReflection) {
-  const properties = findChildrenByKind(component, ReflectionKind.Property)
-    .filter(function(prop) {
-      return !(
-        prop.flags.isExternal
-        || prop.flags.isStatic
-        || prop.flags.isReadonly
-        || prop.flags.isPrivate
-        || prop.flags.isProtected
-      );
-    });
+export function buildComponentArgumentsTable(
+  project: ProjectReflection,
+  component: DeclarationReflection
+) {
+  const properties = findChildrenByKind(component, ReflectionKind.Property).filter(function (prop) {
+    return !(
+      prop.flags.isExternal ||
+      prop.flags.isStatic ||
+      prop.flags.isReadonly ||
+      prop.flags.isPrivate ||
+      prop.flags.isProtected
+    );
+  });
 
   return Object.assign(
     buildYieldsEntriesForComponent(component),
-    buildArgumentEntriesObject(project, properties, true, 'Properties'),
+    buildArgumentEntriesObject(project, properties, true, 'Properties')
   );
 }
 
@@ -70,11 +65,10 @@ export function buildYieldsEntriesForComponent(component: DeclarationReflection)
     return {};
   }
 
-  const definiteTags = tags
-    .map(tag => buildYieldsEntry(tag))
-    .filter(Boolean) as ArgsEntry[];
+  const definiteTags = tags.map((tag) => buildYieldsEntry(tag)).filter(Boolean) as ArgsEntry[];
 
-  return definiteTags.sort((a, b) => a.name.localeCompare(b.name))
+  return definiteTags
+    .sort((a, b) => a.name.localeCompare(b.name))
     .reduce((accumulator, tag) => {
       accumulator[tag.name] = tag;
       return accumulator;
@@ -89,12 +83,12 @@ export function buildYieldsEntriesForComponent(component: DeclarationReflection)
  * @yield {string} name - the name of the user
  * ```
  */
-export function buildYieldsEntry(tag: { tag: string, text: string }): ArgsEntry | undefined {
+export function buildYieldsEntry(tag: { tag: string; text: string }): ArgsEntry | undefined {
   if (!['yield', 'yields'].includes(tag.tag) || typeof tag.text !== 'string') {
     return undefined;
   }
 
-  let type: string = 'unknown';
+  let type = 'unknown';
   let name: string | undefined = undefined;
   let desc: string | undefined = undefined;
 
@@ -113,8 +107,12 @@ export function buildYieldsEntry(tag: { tag: string, text: string }): ArgsEntry 
 
     for (i = 1; i < text.length; i += 1) {
       switch (text.charAt(i)) {
-        case '{': brackets += 1; break;
-        case '}': brackets -= 1; break;
+        case '{':
+          brackets += 1;
+          break;
+        case '}':
+          brackets -= 1;
+          break;
       }
 
       if (brackets === 0) {
@@ -126,7 +124,7 @@ export function buildYieldsEntry(tag: { tag: string, text: string }): ArgsEntry 
   }
 
   // If a type was described, bump the pointer over the closing "}"
-  i = (i > 0) ? (i + 1) : i;
+  i = i > 0 ? i + 1 : i;
 
   // There is either a name, or name + description remaining. Find the
   // next whitespace - that'll be the end of the name, or go to the
@@ -156,6 +154,6 @@ export function buildYieldsEntry(tag: { tag: string, text: string }): ArgsEntry 
     table: {
       category: 'Yields',
       type: { summary: type },
-    }
+    },
   } as ArgsEntry;
 }

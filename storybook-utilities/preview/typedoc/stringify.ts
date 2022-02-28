@@ -13,9 +13,7 @@ import { isKindOf, ReflectionKind } from './types';
  * at the beginning and end.
  */
 export function stripEscapedOuterQuotes(value: any) {
-  return typeof value === 'string'
-    ? value.replace(/^"|^'|"$|'$/g, '')
-    : value;
+  return typeof value === 'string' ? value.replace(/^"|^'|"$|'$/g, '') : value;
 }
 
 /**
@@ -23,7 +21,7 @@ export function stripEscapedOuterQuotes(value: any) {
  * text as available.
  */
 export function getFullCommentText(reflection: Reflection): string {
-  let { shortText, text } = reflection.comment ?? { shortText: null, text: null };
+  const { shortText, text } = reflection.comment ?? { shortText: null, text: null };
 
   // Not sure if this is a bug or not.
   if (isKindOf(reflection, ReflectionKind.Method)) {
@@ -35,7 +33,7 @@ export function getFullCommentText(reflection: Reflection): string {
   }
 
   return [shortText, text]
-    .map(text => typeof text === 'string' ? text.trim() : text)
+    .map((text) => (typeof text === 'string' ? text.trim() : text))
     .filter(Boolean)
     .join('\n\n');
 }
@@ -52,23 +50,21 @@ export function toDeclarationString(
     return '';
   }
 
-  const name     = declaration.name;
+  const name = declaration.name;
   const optional = declaration.flags.isOptional ? '?' : '';
 
   let type = declaration.type ? toTypeString(declaration.type, project) : 'unknown';
 
   // Function signature
   if ('parameters' in declaration) {
-    const params = declaration.parameters?.map(
-      item => toDeclarationString(item, project)
-    ).join(', ');
+    const params = declaration.parameters
+      ?.map((item) => toDeclarationString(item, project))
+      .join(', ');
 
     type = `(${params}) => ${type}`;
   }
 
-  return showName
-    ? `${name}${optional}: ${type}`
-    : type;
+  return showName ? `${name}${optional}: ${type}` : type;
 }
 
 /**
@@ -102,31 +98,29 @@ export function toTypeString(type: SomeType | Type | undefined, project: Project
 
   // The <string> bit in something like Promise<string>
   if ('typeArguments' in type) {
-    const typeArgs = type.typeArguments?.map(
-      item => toTypeString(item, project)
-    );
+    const typeArgs = type.typeArguments?.map((item) => toTypeString(item, project));
 
     str = `${str}<${typeArgs?.join(', ')}>`;
   }
 
   // Unions and Intersections
   if ('types' in type) {
-    const separator = type.type === 'union'
-      ? ' | '
-      : ' & ';
+    const separator = type.type === 'union' ? ' | ' : ' & ';
 
-    const typeString = type.types.map(item => {
-      const result = toTypeString(item, project);
+    const typeString = type.types
+      .map((item) => {
+        const result = toTypeString(item, project);
 
-      if (
-        (type.type === 'union' && item.type === 'intersection') ||
-        (item.type === 'union' && type.type === 'intersection')
-      ) {
-        return `(${result})`;
-      }
+        if (
+          (type.type === 'union' && item.type === 'intersection') ||
+          (item.type === 'union' && type.type === 'intersection')
+        ) {
+          return `(${result})`;
+        }
 
-      return result;
-    }).join(separator);
+        return result;
+      })
+      .join(separator);
 
     str = `${str}${typeString}`;
   }
@@ -134,10 +128,14 @@ export function toTypeString(type: SomeType | Type | undefined, project: Project
   // A reflection
   if (type && 'declaration' in type && type.declaration) {
     if ('children' in type.declaration) {
-      str = `{ ${ type.declaration.children?.map(item => toDeclarationString(item, project)).join(', ') } }`;
-    }
-    else if ('signatures' in type.declaration) {
-      str = type.declaration.signatures?.map(sig => toDeclarationString(sig, project, false)).join(' | ') ?? '';
+      str = `{ ${type.declaration.children
+        ?.map((item) => toDeclarationString(item, project))
+        .join(', ')} }`;
+    } else if ('signatures' in type.declaration) {
+      str =
+        type.declaration.signatures
+          ?.map((sig) => toDeclarationString(sig, project, false))
+          .join(' | ') ?? '';
     }
   }
 

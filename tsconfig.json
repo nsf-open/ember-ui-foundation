@@ -32,6 +32,12 @@
       "@nsf/ui-foundation": [
         "addon"
       ],
+      "@nsf/ui-foundation/storybook-utilities": [
+        "storybook-utilities"
+      ],
+      "@nsf/ui-foundation/storybook-utilities/*": [
+        "storybook-utilities/*"
+      ],
       "@nsf/ui-foundation/*": [
         "addon/*"
       ],

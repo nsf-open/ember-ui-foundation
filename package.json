@@ -25,8 +25,8 @@
     "test:all": "npm-run-all lint test:*",
     "test": "ember test",
     "test:ember-compatibility": "ember try:each",
-    "prepack": "PUBLISH_DOCS=true npm run build && ember ts:precompile",
-    "postpack": "ember ts:clean && rm ui-foundation-docs.json",
+    "prepack": "ember ts:precompile",
+    "postpack": "ember ts:clean",
     "release": "standard-version",
     "storybook:build": "STORYBOOK=true ember build && build-storybook",
     "storybook:start": "sleep 30s && start-storybook -p 6006 --ci"
@@ -46,8 +46,7 @@
     "ember-element-helper": "^0.5.5",
     "ember-in-element-polyfill": "^1.0.1",
     "ember-truth-helpers": "^3.0.0",
-    "font-awesome": "^4.7.0",
-    "prismjs-glimmer": "^1.1.1"
+    "font-awesome": "^4.7.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.5",
@@ -59,6 +58,7 @@
     "@glimmer/tracking": "^1.0.4",
     "@nsf/ember-cli-sonarqube": "^1.2.0",
     "@storybook/addon-a11y": "^6.4.18",
+    "@storybook/addon-cssresources": "^6.2.9",
     "@storybook/addon-essentials": "^6.4.18",
     "@storybook/ember": "^6.4.18",
     "@storybook/ember-cli-storybook": "^0.4.0",
@@ -122,6 +122,9 @@
     "sass": "^1.44.0",
     "standard-version": "^9.3.2",
     "typescript": "^4.5.3"
+  },
+  "peerDependencies": {
+    "prismjs-glimmer": "^1.1.1"
   },
   "engines": {
     "node": "12.* || 14.* || >= 16"

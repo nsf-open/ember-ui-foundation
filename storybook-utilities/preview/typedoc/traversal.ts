@@ -11,10 +11,10 @@ import { KindOf, ReflectionKind } from './types';
  * their numeric ids.
  */
 export function ensureSortedChildren(reflection: ContainerReflection) {
-  // @ts-expect-error
+  // @ts-expect-error - usage of __sorted__
   if (Array.isArray(reflection.children) && !reflection.children.__sorted__) {
     reflection.children.sort((a, b) => a.id - b.id);
-    // @ts-expect-error
+    // @ts-expect-error - usage of __sorted__
     reflection.children.__sorted__ = true;
   }
 }
@@ -32,7 +32,7 @@ export function ensureSortedChildren(reflection: ContainerReflection) {
 export function findDescendantById<ReturnType extends Reflection = Reflection>(
   parent: ContainerReflection,
   id: number,
-  returnParent = false,
+  returnParent = false
 ): ReturnType | undefined {
   if (Array.isArray(parent?.children)) {
     ensureSortedChildren(parent);
@@ -63,7 +63,8 @@ export function findChildByName<ReturnType extends Reflection = Reflection>(
     let found: ReturnType | undefined;
 
     for (let i = 0; i < name.length; i += 1) {
-      found = parent.children?.find(child => child.name.includes(name[i])) as ReturnType ?? undefined;
+      found =
+        (parent.children?.find((child) => child.name.includes(name[i])) as ReturnType) ?? undefined;
 
       if (found) {
         break;
@@ -73,7 +74,7 @@ export function findChildByName<ReturnType extends Reflection = Reflection>(
     return found;
   }
 
-  return parent.children?.find(child => child.name.includes(name)) as ReturnType ?? undefined;
+  return (parent.children?.find((child) => child.name.includes(name)) as ReturnType) ?? undefined;
 }
 
 /**
@@ -83,12 +84,14 @@ export function findChildrenByKind<K extends ReflectionKind>(
   parent: ContainerReflection,
   kind: K
 ): KindOf<K>[] {
-  const group = parent.groups?.find(group => group.kind === kind);
+  const group = parent.groups?.find((group) => group.kind === kind);
 
   if (group && group.children) {
-    return group.children.map(function (id) {
-      return findDescendantById<KindOf<K>>(parent, id);
-    }).filter(Boolean) as KindOf<K>[];
+    return group.children
+      .map(function (id) {
+        return findDescendantById<KindOf<K>>(parent, id);
+      })
+      .filter(Boolean) as KindOf<K>[];
   }
 
   return [];
@@ -110,7 +113,5 @@ export function getModuleExport(project: ProjectReflection, name: string) {
   const [moduleName, exportName] = name.split('#', 2);
   const module = findChildByName(project, moduleName);
 
-  return module
-    ? findChildByName(module, exportName || 'default')
-    : undefined;
+  return module ? findChildByName(module, exportName || 'default') : undefined;
 }

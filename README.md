@@ -3,14 +3,15 @@
 @nsf/ui-foundation
 ==============================================================================
 
-The starting point for Ember Application UI libraries at NSF.
+The NSF UI Foundation library is the starting point for Ember Application user interfaces 
+within NSF.
 
 
 Compatibility
 ------------------------------------------------------------------------------
 
 * Ember.js v3.8 or above
-* Ember CLI v3.20 or above
+* Ember CLI v3.8 or above
 * Node.js v12 or above
 
 
@@ -18,13 +19,8 @@ Installation
 ------------------------------------------------------------------------------
 
 ```
-ember install @nsf/ui-foundation
+npm install @nsf/ui-foundation
 ```
-
-
-Usage
-------------------------------------------------------------------------------
-
 
 
 Contributing
