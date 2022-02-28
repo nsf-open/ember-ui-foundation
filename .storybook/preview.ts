@@ -35,13 +35,26 @@ export const decorators = [trimStorySource, withCssResources];
 
 // Using document referrer gets around same origin security exceptions
 // when trying to reach into a parent frame.
-const topDomain = document.referrer.startsWith(window.location.origin)
-  ? './'
-  : document.referrer;
+let host = document.referrer || './';
 
-const vendorUrl = `${topDomain}assets/vendor.css`;
-const dummyUrl = `${topDomain}assets/dummy.css`;
+let idx = host.indexOf('?');
 
+if (idx > -1) {
+  host = host.substring(0, idx);
+}
+
+idx = host.indexOf('index.html');
+
+if (idx > -1) {
+  host = host.substring(0, idx);
+}
+
+if (!host.endsWith('/')) {
+  host = `${host}/`;
+}
+
+const vendorUrl = `${host}assets/vendor.css`;
+const dummyUrl = `${host}assets/dummy.css`;
 
 /* ************************ *
    Parameters
