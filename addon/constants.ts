@@ -1,4 +1,21 @@
+import type Controller from '@ember/controller';
+
 export type DirectionsX = Directions.Left | Directions.Right;
+
+export type BreadCrumb =
+  | string
+  | {
+      label: string;
+      path?: string;
+      model?: unknown | unknown[];
+      linkable?: boolean;
+      isCurrent?: boolean;
+    };
+
+export interface IBreadCrumbController extends Controller {
+  breadCrumb?: BreadCrumb;
+  breadCrumbs?: BreadCrumb[];
+}
 
 export enum Directions {
   Left = 'left',
