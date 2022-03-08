@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1>@nsf/ui-foundation</h1>
+  </div>
+
+  <UiBreadCrumbs />
+
+  <UiPanel @heading="Main Menu" @startCollapsed={{true}}>
+    <ul class="mb-0px">
+      <li><LinkTo @route="playground">Playground</LinkTo></li>
+      <li><LinkTo @route="artists">Musical Artists</LinkTo></li>
+    </ul>
+  </UiPanel>
+
+  {{outlet}}
+</div>

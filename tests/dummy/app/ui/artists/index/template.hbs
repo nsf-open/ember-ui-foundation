@@ -1,0 +1,7 @@
+<h2>Current Rotation</h2>
+
+<ol>
+  {{#each this.model as |artist|}}
+    <li><LinkTo @route="artists.artist" @model={{artist.id}}>{{artist.name}}</LinkTo></li>
+  {{/each}}
+</ol>

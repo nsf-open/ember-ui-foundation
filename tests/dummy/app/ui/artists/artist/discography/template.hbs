@@ -1,0 +1,9 @@
+<h3>Albums</h3>
+
+<ul>
+  {{#each this.model.discography as |album|}}
+    <li>
+      <LinkTo @route="artists.artist.album" @model={{album.id}}>{{album.name}}</LinkTo>
+    </li>
+  {{/each}}
+</ul>
