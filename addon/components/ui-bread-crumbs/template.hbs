@@ -5,16 +5,34 @@
     {{~else~}}
       <li>
         {{~#if crumb.linkable~}}
-          {{~#if crumb.model~}}
-            {{~#if (is-array crumb.model)~}}
-              {{!-- This isn't going to work in Ember 3.8 --}}
-              <LinkTo @params={{array crumb.path}} @models={{crumb.model}}>{{crumb.label}}</LinkTo>
-            {{~else~}}
-              <LinkTo @params={{array crumb.path crumb.model}}>{{crumb.label}}</LinkTo>
+          {{!---------------------}}
+          {{!-- Ember >= 3.16   --}}
+          {{!---------------------}}
+          {{#if (-ember-octane)}}
+            {{~#if crumb.model~}}
+              {{~#if (is-array crumb.model)~}}
+                <LinkTo @route={{crumb.path}} @models={{crumb.model}}>{{crumb.label}}</LinkTo>
+                {{~else~}}
+                <LinkTo @route={{crumb.path}} @model={{crumb.model}}>{{crumb.label}}</LinkTo>
+              {{~/if~}}
+              {{~else~}}
+              <LinkTo @route={{crumb.path}}>{{crumb.label}}</LinkTo>
             {{~/if~}}
-          {{~else~}}
-            <LinkTo @params={{array crumb.path}}>{{crumb.label}}</LinkTo>
-          {{~/if~}}
+          {{!---------------------}}
+          {{!-- Ember < 3.16    --}}
+          {{!---------------------}}
+          {{else}}
+            {{~#if crumb.model~}}
+              {{~#if (is-array crumb.model)~}}
+              {{!-- This isn't going to work in Ember 3.8 --}}
+                <LinkTo @params={{array crumb.path}} @models={{crumb.model}}>{{crumb.label}}</LinkTo>
+                {{~else~}}
+                <LinkTo @params={{array crumb.path crumb.model}}>{{crumb.label}}</LinkTo>
+              {{~/if~}}
+              {{~else~}}
+              <LinkTo @params={{array crumb.path}}>{{crumb.label}}</LinkTo>
+            {{~/if~}}
+          {{/if}}
         {{~else~}}
           {{crumb.label}}
         {{~/if~}}

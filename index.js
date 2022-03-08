@@ -1,5 +1,6 @@
 'use strict';
 const Funnel = require('broccoli-funnel');
+const { has } = require('@ember/edition-utils');
 
 module.exports = {
   name: require('./package').name,
@@ -13,6 +14,17 @@ module.exports = {
     this.import('node_modules/font-awesome/fonts/fontawesome-webfont.ttf', { destDir: 'fonts' });
     this.import('node_modules/font-awesome/fonts/fontawesome-webfont.woff', { destDir: 'fonts' });
     this.import('node_modules/font-awesome/fonts/fontawesome-webfont.woff2', { destDir: 'fonts' });
+  },
+
+  config(environment, config) {
+    const addonConfig = Object.assign(
+      {
+        isEmberOctaneEdition: has('octane', this.project.root),
+      },
+      config['ui-foundation'] || {}
+    );
+
+    return { 'ui-foundation': addonConfig };
   },
 
   contentFor(type, config) {
