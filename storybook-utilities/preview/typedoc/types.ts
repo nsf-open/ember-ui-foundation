@@ -4,7 +4,7 @@ import type {
   ProjectReflection,
   Reflection,
   SignatureReflection,
-  TypeParameterReflection
+  TypeParameterReflection,
 } from 'typedoc/dist/lib/serialization/schema';
 
 // Lifted out of typedoc/src/lib/models/reflections/abstract.ts
@@ -44,30 +44,29 @@ export interface EnumerationMemberReflection extends Reflection {
 /**
  * Type casting various reflections to increase specificity.
  */
-export type KindOf<K extends ReflectionKind> =
-  K extends ReflectionKind.Project
-    ? ProjectReflection
-    : K extends ReflectionKind.Module
-      ? DeclarationReflection
-      : K extends ReflectionKind.Class
-        ? DeclarationReflection
-        : K extends ReflectionKind.Property
-          ? ParameterReflection
-          : K extends ReflectionKind.Parameter
-            ? ParameterReflection
-            : K extends ReflectionKind.Enum
-              ? DeclarationReflection
-              : K extends ReflectionKind.Function
-                ? SignatureReflection
-                : K extends ReflectionKind.Method
-                  ? DeclarationReflection
-                  : K extends ReflectionKind.CallSignature
-                    ? SignatureReflection
-                    : K extends ReflectionKind.TypeAlias
-                      ? TypeParameterReflection
-                      : K extends ReflectionKind.EnumMember
-                        ? EnumerationMemberReflection
-                        : Reflection;
+export type KindOf<K extends ReflectionKind> = K extends ReflectionKind.Project
+  ? ProjectReflection
+  : K extends ReflectionKind.Module
+  ? DeclarationReflection
+  : K extends ReflectionKind.Class
+  ? DeclarationReflection
+  : K extends ReflectionKind.Property
+  ? ParameterReflection
+  : K extends ReflectionKind.Parameter
+  ? ParameterReflection
+  : K extends ReflectionKind.Enum
+  ? DeclarationReflection
+  : K extends ReflectionKind.Function
+  ? SignatureReflection
+  : K extends ReflectionKind.Method
+  ? DeclarationReflection
+  : K extends ReflectionKind.CallSignature
+  ? SignatureReflection
+  : K extends ReflectionKind.TypeAlias
+  ? TypeParameterReflection
+  : K extends ReflectionKind.EnumMember
+  ? EnumerationMemberReflection
+  : Reflection;
 
 /**
  * Reflection type check.

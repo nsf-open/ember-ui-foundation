@@ -247,7 +247,7 @@ module('Integration | Component | ui-panel', function (hooks) {
     assert.dom('.panel-body').isVisible();
   });
 
-  test('its onShow and onHidden callbacks are run when its collapsed state changes', async function(assert) {
+  test('its onShow and onHidden callbacks are run when its collapsed state changes', async function (assert) {
     this.set('onShow', function () {
       assert.step('onShow');
     });

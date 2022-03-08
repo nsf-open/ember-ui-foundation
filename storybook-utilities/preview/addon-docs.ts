@@ -1,10 +1,7 @@
 import type { ProjectReflection } from 'typedoc/dist/lib/serialization/schema';
 import { getModuleExport } from './typedoc/traversal';
 import { getFullCommentText } from './typedoc/stringify';
-import {
-  buildClassLikeArgumentsTable,
-  buildComponentArgumentsTable,
-} from './controls/ember';
+import { buildClassLikeArgumentsTable, buildComponentArgumentsTable } from './controls/ember';
 
 /**
  * Finds a module export in one or more ProjectReflection definitions.
