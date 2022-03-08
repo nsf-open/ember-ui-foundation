@@ -7,8 +7,8 @@
 
   <UiPanel @heading="Main Menu" @startCollapsed={{true}}>
     <ul class="mb-0px">
-      <li><LinkTo @route="playground">Playground</LinkTo></li>
-      <li><LinkTo @route="artists">Musical Artists</LinkTo></li>
+      <li><LinkTo @params={{array "playground"}}>Playground</LinkTo></li>
+      <li><LinkTo @params={{array "artists"}}>Musical Artists</LinkTo></li>
     </ul>
   </UiPanel>
 

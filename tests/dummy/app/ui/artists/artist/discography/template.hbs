@@ -3,7 +3,7 @@
 <ul>
   {{#each this.model.discography as |album|}}
     <li>
-      <LinkTo @route="artists.artist.album" @model={{album.id}}>{{album.name}}</LinkTo>
+      <LinkTo @params={{array "artists.artist.album" album.id}}>{{album.name}}</LinkTo>
     </li>
   {{/each}}
 </ul>

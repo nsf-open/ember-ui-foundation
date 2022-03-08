@@ -7,12 +7,13 @@
         {{~#if crumb.linkable~}}
           {{~#if crumb.model~}}
             {{~#if (is-array crumb.model)~}}
-              <LinkTo @route={{crumb.path}} @models={{crumb.model}}>{{crumb.label}}</LinkTo>
+              {{!-- This isn't going to work in Ember 3.8 --}}
+              <LinkTo @params={{array crumb.path}} @models={{crumb.model}}>{{crumb.label}}</LinkTo>
             {{~else~}}
-              <LinkTo @route={{crumb.path}} @model={{crumb.model}}>{{crumb.label}}</LinkTo>
+              <LinkTo @params={{array crumb.path crumb.model}}>{{crumb.label}}</LinkTo>
             {{~/if~}}
           {{~else~}}
-            <LinkTo @route={{crumb.path}}>{{crumb.label}}</LinkTo>
+            <LinkTo @params={{array crumb.path}}>{{crumb.label}}</LinkTo>
           {{~/if~}}
         {{~else~}}
           {{crumb.label}}

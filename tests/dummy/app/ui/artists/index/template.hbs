@@ -2,6 +2,6 @@
 
 <ol>
   {{#each this.model as |artist|}}
-    <li><LinkTo @route="artists.artist" @model={{artist.id}}>{{artist.name}}</LinkTo></li>
+    <li><LinkTo @params={{array "artists.artist" artist.id}}>{{artist.name}}</LinkTo></li>
   {{/each}}
 </ol>
