@@ -33,7 +33,6 @@
   },
   "dependencies": {
     "@ember-decorators/component": "^6.1.1",
-    "@ember/edition-utils": "^1.2.0",
     "@nsf/general-utils": "^1.1.1",
     "@popperjs/core": "^2.11.0",
     "broccoli-funnel": "^3.0.8",
@@ -41,6 +40,7 @@
     "ember-cli-babel": "^7.26.6",
     "ember-cli-htmlbars": "^6.0.1",
     "ember-cli-typescript": "^4.2.1",
+    "ember-compatibility-helpers": "^1.2.6",
     "ember-concurrency": "^2.2.0",
     "ember-concurrency-ts": "^0.3.1",
     "ember-decorators-polyfill": "^1.1.5",

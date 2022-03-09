@@ -1,7 +1,5 @@
 import Helper from '@ember/component/helper';
-import { getOwner } from '@ember/application';
-
-let isOctane: boolean | undefined = undefined;
+import { gte } from 'ember-compatibility-helpers';
 
 /**
  * This is a private helper to distinguish between pre- and post-Ember Octane
@@ -13,13 +11,6 @@ let isOctane: boolean | undefined = undefined;
  */
 export default class EmberOctaneEdition extends Helper {
   compute() {
-    if (typeof isOctane === 'boolean') {
-      return isOctane;
-    }
-
-    const config = getOwner(this).resolveRegistration('config:environment');
-    const octane = config?.['ui-foundation']?.isEmberOctaneEdition === true;
-
-    return (isOctane = octane);
+    return gte('3.15.0');
   }
 }
