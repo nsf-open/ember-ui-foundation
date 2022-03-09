@@ -27,11 +27,11 @@
               {{/each}}
 
               {{#if this.isCollapsible}}
-                <UiPanel::Toggle
-                  @isCollapsed={{this.collapsed}}
-                  @ariaControls={{this.collapseTargetId}}
-                  @onClick={{this.toggleCollapsedState}}
-                />
+                {{ui-panel/toggle
+                  isCollapsed=this.collapsed
+                  ariaControls=this.collapseTargetId
+                  onClick=this.toggleCollapsedState
+                }}
               {{/if}}
             </div>
           {{/if}}
