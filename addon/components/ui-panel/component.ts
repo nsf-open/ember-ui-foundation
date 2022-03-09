@@ -1,4 +1,5 @@
 import type MessageManager from '@nsf/ui-foundation/lib/MessageManager';
+import type { ButtonVariants } from '../../constants';
 import Component from '@ember/component';
 import { computed, set, action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
@@ -232,13 +233,39 @@ export default class UiPanel extends Component {
   public onHidden?: () => void;
 
   /**
+   * Add one or more buttons to the right edge of the panel header.
+   *
+   * ```handlebars
+   * <UiPanel
+   *   @heading="User Information"
+   *   @headerButtons={{array (hash text="Edit" variant="info" onClick=this.navigateToEdit)}}
+   * >
+   *   ...
+   * </UiPanel>
+   * ```
+   */
+  public headerButtons?: {
+    text: string;
+    variant: ButtonVariants;
+    onClick: () => void;
+    disabled?: boolean;
+    icon?: string;
+    class?: string;
+  }[];
+
+  @computed('headerButtons.[]', 'isCollapsible')
+  public get hasHeaderButtons() {
+    return (this.headerButtons?.length ?? 0) > 0 || this.isCollapsible;
+  }
+
+  /**
    * @protected
    */
   declare collapseTargetId: string;
 
-  @computed('heading')
+  @computed('heading', 'hasHeaderButtons')
   public get hasHeading(): boolean {
-    return typeof this.heading === 'string' && this.heading !== '';
+    return (typeof this.heading === 'string' && this.heading !== '') || this.hasHeaderButtons;
   }
 
   @computed('variant')

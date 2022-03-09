@@ -301,4 +301,61 @@ module('Integration | Component | ui-panel', function (hooks) {
 
     assert.dom('.panel-body').hasText('Hello World');
   });
+
+  test('the headerButtons array can be used to create button elements in the header', async function (assert) {
+    function handleClick(event: Event) {
+      const btn = event.target as HTMLButtonElement;
+      assert.step(`${btn.textContent?.trim()} clicked`);
+    }
+
+    this.set('headerButtons', [
+      { text: 'Button A', variant: 'info', onClick: handleClick },
+      { text: 'Button B', class: 'test-classname', disabled: true, icon: 'superpowers' },
+    ]);
+
+    // language=handlebars
+    await render(
+      hbs`<UiPanel @heading="Panel Heading" @headerButtons={{this.headerButtons}}>
+        Hello World
+      </UiPanel>`
+    );
+
+    const btnA = '.panel-heading button:nth-child(1)';
+    const btnB = '.panel-heading button:nth-child(2)';
+
+    assert.dom(btnA).hasText('Button A');
+    assert.dom(btnA).hasClass('btn-info');
+    assert.dom(btnA).isNotDisabled();
+
+    await click(btnA);
+
+    assert.dom(btnB).hasText('Button B');
+    assert.dom(btnB).hasClass('test-classname');
+    assert.dom(btnB).isDisabled();
+    assert.dom(`${btnB} .fa-superpowers`).exists();
+
+    assert.verifySteps(['Button A clicked']);
+  });
+
+  test('the headerButtons array can be used to create button elements in the header next to a collapse toggle', async function (assert) {
+    this.set('headerButtons', [
+      { text: 'Button A', variant: 'info' },
+      { text: 'Button B', variant: 'info' },
+    ]);
+
+    // language=handlebars
+    await render(
+      hbs`<UiPanel @heading="Panel Heading" @headerButtons={{this.headerButtons}} @startCollapsed={{true}}>
+        Hello World
+      </UiPanel>`
+    );
+
+    const btnA = '.panel-heading button:nth-child(1)';
+    const btnB = '.panel-heading button:nth-child(2)';
+    const btnC = '.panel-heading button:nth-child(3)';
+
+    assert.dom(btnA).hasText('Button A');
+    assert.dom(btnB).hasText('Button B');
+    assert.dom(btnC).hasText('Expand');
+  });
 });

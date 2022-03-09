@@ -13,6 +13,10 @@ export default {
   args: {
     heading: 'Panel Heading',
   },
+
+  argTypes: {
+    headerButtons: { control: { type: 'array' } },
+  },
 };
 
 function makePromise(doResolve = true, time = 5000) {
@@ -40,6 +44,7 @@ const Template = (context: unknown) => ({
       @startCollapsed={{this.startCollapsed}}
       @onShow={{this.onShow}}
       @onHidden={{this.onHidden}}
+      @headerButtons={{this.headerButtons}}
     >
         <UiLorem />
     </UiPanel>`,

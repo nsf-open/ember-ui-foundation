@@ -5,26 +5,37 @@
     data-collapsed={{this.collapsed}}
     data-collapsible={{this.isCollapsible}}
   >
-    {{#if this.isCollapsible}}
+    {{#if this.hasHeading}}
       <header class="panel-heading {{this.headingClass}}">
-        <div class="row">
-          <div class="col-xs-10">
+        <div class={{if this.hasHeaderButtons "row"}}>
+          <div class={{if this.hasHeaderButtons "col-xs-8"}}>
             <UiHeading @class="panel-title" @level="{{this.headingLevel}}">{{this.heading}}</UiHeading>
           </div>
 
-          <div class="col-xs-2 text-right">
-            {{ui-panel/toggle
-              isCollapsed=this.collapsed
-              ariaControls=this.collapseTargetId
-              onClick=this.toggleCollapsedState
-            }}
-          </div>
-        </div>
+          {{#if this.hasHeaderButtons}}
+            <div class="col-xs-4 text-right">
+              {{#each this.headerButtons as |btn|}}
+                <UiButton
+                  @variant={{btn.variant}}
+                  @disabled={{btn.disabled}}
+                  @icon={{btn.icon}}
+                  @onClick={{btn.onClick}}
+                  @class={{if btn.class btn.class "mt--10px mb--8px"}}
+                >
+                  {{~btn.text~}}
+                </UiButton>
+              {{/each}}
 
-      </header>
-    {{else if this.hasHeading}}
-      <header class="panel-heading {{this.headingClass}}">
-        <UiHeading @class="panel-title" @level="{{this.headingLevel}}">{{this.heading}}</UiHeading>
+              {{#if this.isCollapsible}}
+                <UiPanel::Toggle
+                  @isCollapsed={{this.collapsed}}
+                  @ariaControls={{this.collapseTargetId}}
+                  @onClick={{this.toggleCollapsedState}}
+                />
+              {{/if}}
+            </div>
+          {{/if}}
+        </div>
       </header>
     {{/if}}
 
