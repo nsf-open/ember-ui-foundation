@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.5.0...v1.5.1) (2022-03-09)
+
+
+### Bug Fixes
+
+* breadcrumbs work inside of engine routes ([012691c](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/012691cca1861b3a1bc62c0ab2bec999d9c1a3a1))
+
 ## [1.5.0](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.4.4...v1.5.0) (2022-03-09)
 
 
