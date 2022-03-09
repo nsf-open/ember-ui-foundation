@@ -10,6 +10,14 @@ import template from './template';
 
 type FullBreadCrumb = Required<Exclude<BreadCrumb, string>>;
 
+type EngineInfo = {
+  fullName: string;
+  instanceId: number;
+  localFullName: string;
+  mountPoint: string;
+  name: string;
+};
+
 /**
  * The UiBreadCrumbs component will generate a breadcrumb trail of hyperlinks by
  * walking upwards from the current route to the topmost application route,
@@ -139,10 +147,6 @@ export default class UiBreadCrumbs extends Component {
     return crumbs;
   }
 
-  lookupController(name: string): IBreadCrumbController | null {
-    return getOwner(this).lookup(`controller:${name}`);
-  }
-
   buildSingleCrumb(crumb: BreadCrumb, routeInfo: RouteInfo): FullBreadCrumb {
     const result = typeof crumb === 'string' ? { label: crumb } : crumb;
 
@@ -153,5 +157,32 @@ export default class UiBreadCrumbs extends Component {
       isCurrent: false,
       ...result,
     };
+  }
+
+  lookupController(name: string): IBreadCrumbController | null {
+    const controller = getOwner(this).lookup(`controller:${name}`);
+
+    if (controller) {
+      return controller;
+    }
+
+    const engineRouteInfo = this.lookupEngineInfoByRoute(name);
+
+    if (engineRouteInfo) {
+      const instance = this.lookupEngineInstance(engineRouteInfo);
+      return instance?.lookup(`controller:${engineRouteInfo.localFullName}`);
+    }
+
+    return null;
+  }
+
+  lookupEngineInfoByRoute(name: string) {
+    // @ts-expect-error - gasp, a private API. Needed for in-engine lookups.
+    return this.router._router._engineInfoByRoute?.[name] as EngineInfo | undefined;
+  }
+
+  lookupEngineInstance(info: EngineInfo) {
+    // @ts-expect-error - gasp, a private API. Needed for in-engine lookups.
+    return this.router._router._engineInstances?.[info.name]?.[info.instanceId.toString()];
   }
 }
