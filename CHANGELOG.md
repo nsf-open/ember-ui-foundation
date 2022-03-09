@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.4.4...v1.5.0) (2022-03-09)
+
+
+### Features
+
+* future-proofing breadcrumbs past Ember 4.0 ([8b46bda](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/8b46bda91f71de56f42f5210276cdb1feb35a9a3))
+* ui-bread-crumbs component and test ([ae4d723](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/ae4d723ed3a3460bd2597a7d77f3b9f2856f7ebe))
+* ui-panel supports headerButtons array to render button elements in the panel header ([fa25a77](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/fa25a770154068b6bc37561a4248c351589e402c))
+
+
+### Bug Fixes
+
+* updated ui-bread-crumbs LinkTo usage to support Ember 3.8 ([8ba872f](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/8ba872f770b0c6bb04a39056911be85448034399))
+* updated ui-bread-crumbs LinkTo usage to support Ember 3.8 ([27bd493](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/27bd49364bd56bf76a3fba6bd714205de2ecac68))
+
 ### [1.4.4](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.4.3...v1.4.4) (2022-02-28)
 
 ### [1.4.3](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.4.2...v1.4.3) (2022-02-08)
