@@ -1,3 +1,5 @@
+import type { AlertLevel, AlertGroupDefinition } from '@nsf/ui-foundation/constants';
+
 import Component from '@ember/component';
 import { layout, classNames, className, attribute } from '@ember-decorators/component';
 import { computed } from '@ember/object';
@@ -80,6 +82,14 @@ export default class UiAlert extends Component {
   @listenTo('defaultTestId')
   public testId?: string;
 
+  /**
+   * An object whose keys are AlertLevel strings and corresponding value is an object
+   * which can contain `icon`, `singular` and `plural` strings and will be used to
+   * create the alert heading. Levels that are not defined here will fall back to the
+   * defaults.
+   */
+  public alertGroups?: Record<AlertLevel, AlertGroupDefinition>;
+
   @computed('variant')
   protected get defaultTestId() {
     return `context-message-${this.variant}`;
@@ -106,8 +116,12 @@ export default class UiAlert extends Component {
     return getCorrectedAlertLevel(this.variant || '');
   }
 
-  @computed('correctVariant')
+  @computed('correctVariant', 'alertGroups')
   protected get groupOptions() {
-    return this.correctVariant ? AlertGroups[this.correctVariant] : {};
+    if (this.correctVariant) {
+      return this.alertGroups?.[this.correctVariant] ?? AlertGroups[this.correctVariant];
+    }
+
+    return {};
   }
 }

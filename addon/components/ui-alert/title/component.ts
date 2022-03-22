@@ -1,6 +1,7 @@
+import type { AlertGroupDefinition } from '@nsf/ui-foundation/constants';
+
 import Component from '@ember/component';
 import { layout, tagName } from '@ember-decorators/component';
-import { AlertGroups } from '@nsf/ui-foundation/constants';
 import template from './template';
 
 /**
@@ -17,5 +18,5 @@ export default class UiAlertTitle extends Component {
   /**
    * Provided by the implementing UiAlert instance.
    */
-  protected groupOptions!: typeof AlertGroups[keyof typeof AlertGroups];
+  protected groupOptions!: AlertGroupDefinition;
 }

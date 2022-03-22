@@ -52,6 +52,26 @@ module('Integration | Component | ui-alert', function (hooks) {
     assert.strictEqual(AlertLevel.INFO, getCorrectedAlertLevel('informationals'));
   });
 
+  test('it allows the default title text and iconography to be customized', async function (assert) {
+    this.set('variant', 'success');
+    this.set('alertGroups', { [AlertLevel.WARNING]: { singular: 'DANGER WILL ROBINSON:' } });
+
+    // language=handlebars
+    await render(hbs`
+        <UiAlert
+          @variant={{this.variant}}
+          @alertGroups={{this.alertGroups}}
+          @content="Lorem Ipsum"
+        />
+    `);
+
+    assert.dom('[data-test-id="label"]').hasText('SUCCESS:');
+
+    this.set('variant', 'warning');
+
+    assert.dom('[data-test-id="label"]').hasText('DANGER WILL ROBINSON:');
+  });
+
   test('it renders a single string message', async function (assert) {
     await render(hbs`{{ui-alert "error" "This is an error message"}}`);
 
