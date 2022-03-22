@@ -10,6 +10,7 @@ export type BreadCrumb =
       model?: unknown | unknown[];
       linkable?: boolean;
       isCurrent?: boolean;
+      rewind?: number;
     };
 
 export interface IBreadCrumbController extends Controller {

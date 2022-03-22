@@ -5,12 +5,12 @@ import { visit } from '@ember/test-helpers';
 module('Acceptance | Component | ui-bread-crumbs', function (hooks) {
   setupApplicationTest(hooks);
 
+  function nthCrumb(idx: number, anchor = false) {
+    return `.breadcrumb li:nth-child(${idx})${anchor ? ' a' : ''}`;
+  }
+
   test('it generates hyperlinks based on controller configuration', async function (assert) {
     await visit('/');
-
-    function nthCrumb(idx: number, anchor = false) {
-      return `.breadcrumb li:nth-child(${idx})${anchor ? ' a' : ''}`;
-    }
 
     assert.dom('.breadcrumb').exists();
     assert.dom(nthCrumb(1)).hasText('Home');
@@ -36,5 +36,27 @@ module('Acceptance | Component | ui-bread-crumbs', function (hooks) {
     assert.dom(nthCrumb(4, true)).hasAttribute('href', '/artists/queen/discography');
     assert.dom(nthCrumb(5)).hasText('A Night At The Opera');
     assert.dom(nthCrumb(5, true)).doesNotExist();
+  });
+
+  test('it does not render an empty ordered list', async function (assert) {
+    this.owner.lookup('controller:application').breadCrumb = undefined;
+    await visit('/');
+    assert.dom('.breadcrumb').doesNotExist();
+  });
+
+  test('it supports a breadcrumb being able to "rewind", to remove, prior crumbs', async function (assert) {
+    this.owner.lookup('controller:playground').breadCrumb = { label: 'Foobar', rewind: 1 };
+
+    await visit('/playground');
+
+    assert.dom(nthCrumb(1)).hasText('Foobar');
+    assert.dom(nthCrumb(2)).doesNotExist();
+
+    this.owner.lookup('controller:artists.artist').breadCrumb = { label: 'Baz', rewind: -1 };
+
+    await visit('/artists/queen');
+
+    assert.dom(nthCrumb(1)).hasText('Baz');
+    assert.dom(nthCrumb(2)).doesNotExist();
   });
 });

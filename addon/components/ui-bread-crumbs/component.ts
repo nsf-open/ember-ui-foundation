@@ -142,6 +142,30 @@ export default class UiBreadCrumbs extends Component {
 
     if (crumbs.length > 0) {
       crumbs[crumbs.length - 1].isCurrent = true;
+
+      // To explain: the `rewind` property on a crumb definition describes the
+      // number of crumbs that come prior to it that should be removed from the
+      // list. It is a niche need, but there are situations where it comes in
+      // handy. The loop below is managed so as when it sees a rewind value it
+      // splices the values out and then updates the loop's sentinel as though
+      // they were never there.
+
+      let rewindIdx = 0;
+
+      for (rewindIdx; rewindIdx < crumbs.length; rewindIdx += 1) {
+        const crumb = crumbs[rewindIdx];
+
+        if (typeof crumb.rewind === 'number' && crumb.rewind !== 0) {
+          const count = crumb.rewind === -1 ? rewindIdx : crumb.rewind;
+
+          let start = rewindIdx - count;
+          start = start < 0 ? 0 : start;
+
+          crumbs.splice(start, count);
+
+          rewindIdx = start;
+        }
+      }
     }
 
     return crumbs;
@@ -155,6 +179,7 @@ export default class UiBreadCrumbs extends Component {
       model: undefined,
       linkable: true,
       isCurrent: false,
+      rewind: 0,
       ...result,
     };
   }

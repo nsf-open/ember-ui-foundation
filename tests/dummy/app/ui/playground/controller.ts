@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import { set } from '@ember/object';
 
 export default class PlaygroundController extends Controller {
-  readonly breadCrumb = 'Playground';
+  readonly breadCrumb = { label: 'Component Playground', rewind: 1 };
 
   public shrinkJumbotron = false;
 
