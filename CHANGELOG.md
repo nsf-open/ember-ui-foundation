@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.5.2...v1.6.0) (2022-03-22)
+
+
+### Features
+
+* breadcrumbs can remove predecessors via the rewind property ([bf279cf](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/bf279cf1455227df1ed9b8fde62aa35de8253984))
+* breadcrumbs ordered list will not render if it is empty ([952d001](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/952d00192b9f05bb4cd84f05306ead44d5bdf7bb))
+
 ### [1.5.2](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.5.1...v1.5.2) (2022-03-09)
 
 
