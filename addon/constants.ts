@@ -5,7 +5,7 @@ export type DirectionsX = Directions.Left | Directions.Right;
 export type BreadCrumb =
   | string
   | {
-      label: string;
+      label?: string;
       path?: string;
       model?: unknown | unknown[];
       linkable?: boolean;

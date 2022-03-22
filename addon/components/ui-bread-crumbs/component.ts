@@ -168,13 +168,16 @@ export default class UiBreadCrumbs extends Component {
       }
     }
 
-    return crumbs;
+    return crumbs.filter((crumb) => {
+      return typeof crumb.label === 'string' && crumb.label.trim().length;
+    });
   }
 
   buildSingleCrumb(crumb: BreadCrumb, routeInfo: RouteInfo): FullBreadCrumb {
     const result = typeof crumb === 'string' ? { label: crumb } : crumb;
 
     return {
+      label: '',
       path: routeInfo.name,
       model: undefined,
       linkable: true,

@@ -44,6 +44,15 @@ module('Acceptance | Component | ui-bread-crumbs', function (hooks) {
     assert.dom('.breadcrumb').doesNotExist();
   });
 
+  test('it filters out breadcrumbs with no label text', async function (assert) {
+    this.owner.lookup('controller:playground').breadCrumb = { label: '' };
+
+    await visit('/playground');
+
+    assert.dom(nthCrumb(1)).hasText('Home');
+    assert.dom(nthCrumb(2)).doesNotExist();
+  });
+
   test('it supports a breadcrumb being able to "rewind", to remove, prior crumbs', async function (assert) {
     this.owner.lookup('controller:playground').breadCrumb = { label: 'Foobar', rewind: 1 };
 
