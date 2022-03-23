@@ -55,8 +55,6 @@ class UiContextContainerInState extends EmberObject {
  * A base class for associating "reference" and "overlay" DOM elements with each other, as
  * would be needed for tooltips, popovers, floating menus, etc. Used in close coordination with
  * UiContextualElement, and UiPopper.
- *
- * @class UiContextualContainer
  */
 @tagName('')
 @layout(template)
@@ -66,39 +64,22 @@ export default class UiContextualContainer extends Component {
   /**
    * Placement of the positioned element, relative to its reference element.
    * One of ['top', 'right', 'bottom', 'left'].
-   *
-   * @argument placement
-   * @type {string}
-   * @default "top"
    */
   public placement = 'top';
 
   /**
    * If true, the positioned element will change its position automatically based
    * on available space.
-   *
-   * @argument autoPlacement
-   * @type {boolean}
-   * @default true
    */
   public autoPlacement = true;
 
   /**
-   * Whether or not the component is accepting any interactions.
-   *
-   * @argument enabled
-   * @type {boolean}
-   * @default true
+   * Whether the component is accepting any interactions.
    */
   public enabled = true;
 
   /**
-   * Whether or not the positioned element is in view.
-   *
-   * @argument visible
-   * @type {boolean}
-   * @default false
-   * @public
+   * Whether the positioned element is in view.
    */
   public visible = false;
 
@@ -107,11 +88,6 @@ export default class UiContextualContainer extends Component {
    * and the positioned element being shown or hidden. This value is applied
    * equally to both show and hide events. See `delayShow` and `delayHide` to
    * control each value independently.
-   *
-   * @argument delay
-   * @type {number}
-   * @default 0
-   * @public
    */
   public delay = 0;
 
@@ -119,11 +95,6 @@ export default class UiContextualContainer extends Component {
    * The amount of time, in milliseconds, between the trigger event occurring
    * and the positioned element being shown. If not explicitly set, this
    * will be equal to the value of `delay`.
-   *
-   * @argument delayShow
-   * @type {number}
-   * @default 0
-   * @public
    */
   @reads('delay')
   public delayShow!: number;
@@ -132,11 +103,6 @@ export default class UiContextualContainer extends Component {
    * The amount of time, in milliseconds, between the trigger event occurring
    * and the positioned element being hidden. If not explicitly set, this
    * will be equal to the value of `delay`.
-   *
-   * @argument delayHide
-   * @type {number}
-   * @default 0
-   * @public
    */
   @reads('delay')
   public delayHide!: number;
@@ -145,11 +111,6 @@ export default class UiContextualContainer extends Component {
    * A query selector for the container describing the area that the positioned
    * element will be checked for overflow relative to.
    * https://popper.js.org/docs/v2/modifiers/prevent-overflow/#boundary
-   *
-   * @argument viewportSelector
-   * @type {string}
-   * @default "body"
-   * @public
    */
   public viewportSelector = 'body';
 
@@ -157,21 +118,13 @@ export default class UiContextualContainer extends Component {
    * Virtual "padding" for the PopperJS preventOverflow modifier.
    * https://popper.js.org/docs/v2/modifiers/prevent-overflow/#padding
    *
-   * @argument viewportPadding
    * @type {number|{ top?: number, left?: number, right?: number, bottom?: number }}
-   * @default 0
-   * @public
    */
   public viewportPadding = 0;
 
   /**
    * An offset, in pixels, for the PopperJS offset modifier.
    * https://popper.js.org/docs/v2/modifiers/offset/#distance
-   *
-   * @argument distance
-   * @type {number}
-   * @default 0
-   * @public
    */
   public distance = 0;
 
@@ -179,11 +132,6 @@ export default class UiContextualContainer extends Component {
    * If true, the element will be displayed and positioned within its parent element.
    * When false, the element will be moved to a higher position in the DOM. Use this
    * to mitigate z-index and other layout issues.
-   *
-   * @argument renderInPlace
-   * @type {boolean}
-   * @default false
-   * @public
    */
   public renderInPlace = false;
 
@@ -192,10 +140,7 @@ export default class UiContextualContainer extends Component {
    * shown/hidden. Possible values are "hover", "focus", and "click". These can be
    * provided as an array, or a single string with a space between each option.
    *
-   * @argument triggerEvents
-   * @type {TriggerEvents | TriggerEvents[]}
-   * @default ["hover", "focus"]
-   * @public
+   * @hidden
    */
   public triggerEvents: TriggerEvents | TriggerEvents[] = [
     TriggerEvents.HOVER,
@@ -209,11 +154,6 @@ export default class UiContextualContainer extends Component {
    * - "self":       The root element created by this component if a tagName is given.
    * - "parent":     The DOM element that this component is created inside of.
    * - "parentView": The Ember Component instance that this component is created inside of.
-   *
-   * @argument triggerSelector
-   * @type {SelectorStrategies|string}
-   * @default "parent"
-   * @public
    */
   public triggerSelector = SelectorStrategies.PARENT;
 
@@ -230,33 +170,18 @@ export default class UiContextualContainer extends Component {
    * - "trigger":    The DOM "trigger" element.
    *
    * Set as null/undefined if no such support is desired.
-   *
-   * @argument ariaSelector
-   * @type {SelectorStrategies|string}
-   * @default "trigger"
-   * @public
    */
   public ariaSelector?: string = 'trigger';
 
   /**
    * The ARIA attribute that will be used to associate the positioned element with the
    * `ariaSelector` element.
-   *
-   * @argument ariaAttachAs
-   * @type {string}
-   * @default "aria-describedby"
-   * @public
    */
   public ariaAttachAs = 'aria-describedby';
 
   /**
-   * Whether or not to use a fade transition on the positioned element as it is being
+   * Whether to use a fade transition on the positioned element as it is being
    * shown/hidden.
-   *
-   * @argument fade
-   * @type {boolean}
-   * @default true
-   * @public
    */
   public fade = true;
 
@@ -265,10 +190,7 @@ export default class UiContextualContainer extends Component {
    * a backup just in case "transitionEnd" is not supported and shouldn't ever need
    * to be fiddled with.
    *
-   * @argument animationDuration
-   * @type {number}
-   * @default 150
-   * @public
+   * @hidden
    */
   public animationDuration = 150;
 
@@ -276,22 +198,12 @@ export default class UiContextualContainer extends Component {
    * A method that will execute when the positioned element first begins to
    * visibly appear onscreen. Returning a boolean false from this method will
    * prevent the positioned element from being shown.
-   *
-   * @argument onShow
-   * @type {(instance: UiContextualContainer) => void | boolean}
-   * @default undefined
-   * @public
    */
   public onShow?: (instance: UiContextualContainer) => void | boolean;
 
   /**
    * A method that will execute when the positioned element is visible onscreen.
    * This will be after all transitions have finished.
-   *
-   * @argument onShown
-   * @type {(instance: UiContextualContainer) => void}
-   * @default undefined
-   * @public
    */
   public onShown?: (instance: UiContextualContainer) => void;
 
@@ -299,53 +211,28 @@ export default class UiContextualContainer extends Component {
    * A method that will execute when the positioned element first begins to
    * disappear offscreen. Returning a boolean false from this method will
    * prevent the positioned element from being removed.
-   *
-   * @argument onHide
-   * @type {(instance: UiContextualContainer) => void | boolean}
-   * @default undefined
-   * @public
    */
   public onHide?: (instance: UiContextualContainer) => void | boolean;
 
   /**
    * A method this will execute when the positioned element has disappeared
    * offscreen. This will be after all transitions have finished.
-   *
-   * @argument onHidden
-   * @type {(instance: UiContextualContainer) => void}
-   * @default undefined
-   * @public
    */
   public onHidden?: (instance: UiContextualContainer) => void;
 
   /**
    * A unique ID for the positioned element.
-   *
-   * @argument overlayId
-   * @type {string}
-   * @default undefined
-   * @public
    */
   public overlayId?: string;
 
   /**
    * An optional value for the CSS max-width property of the positioned element.
-   *
-   * @argument maxWidth
-   * @type {string | number}
-   * @default undefined
-   * @public
    */
   public maxWidth?: string | number;
 
   /**
    * The name of the component that will be rendered as the positioned element.
    * It should always be something that extends UiContextElement.
-   *
-   * @argument overlayComponent
-   * @type {string}
-   * @default "ui-contextual/element"
-   * @public
    */
   public overlayComponent = 'ui-contextual/element';
 
@@ -353,11 +240,6 @@ export default class UiContextualContainer extends Component {
    * Text that will put in the body of the rendered `overlayComponent` if not yielding
    * block content. This is a pretty simple convenience that allows UiContextContainer
    * to be quickly used inline.
-   *
-   * @argument textContent
-   * @type {string}
-   * @default undefined
-   * @public
    */
   public textContent?: string;
 
@@ -371,15 +253,11 @@ export default class UiContextualContainer extends Component {
    * that the element should be rendered. Once rendered, _showOverlay is toggled `true`
    * as well, which causes the CSS transition in to begin. Hiding is simply the reverse.
    *
-   * @argument _isHidden
-   * @type {boolean}
    * @private
    */
   _isHidden = true;
 
   /**
-   * @argument _showOverlay
-   * @type {boolean}
    * @private
    */
   @reads('visible')
@@ -388,11 +266,7 @@ export default class UiContextualContainer extends Component {
   /**
    * Boolean indicating whether or not a show delay has been set.
    *
-   * @argument hasDelayShow
-   * @type {boolean}
-   * @default false
    * @protected
-   * @readonly
    */
   @gt('delayShow', 0)
   protected readonly hasDelayShow!: boolean;
@@ -400,11 +274,7 @@ export default class UiContextualContainer extends Component {
   /**
    * Boolean indicating whether or not a hide delay has been set.
    *
-   * @argument hasDelayHide
-   * @type {boolean}
-   * @default false
    * @protected
-   * @readonly
    */
   @gt('delayHide', 0)
   protected readonly hasDelayHide!: boolean;
@@ -413,18 +283,14 @@ export default class UiContextualContainer extends Component {
    * The run loop timer ID for the delayShow and delayHide pauses between when
    * an interaction occurs and the positioned element beings being transitioned.
    *
-   * @argument timer
-   * @type {EmberRunTimer}
    * @private
    */
   private timer?: EmberRunTimer;
 
   /**
-   * A state management flag used to help marshall show/hide of the positioned
+   * A state management flag used to help marshall show/hide the positioned
    * element for mouseover and focus events.
    *
-   * @argument hoverState
-   * @type {HoverState}
    * @private
    */
   private hoverState?: HoverState;
@@ -432,8 +298,6 @@ export default class UiContextualContainer extends Component {
   /**
    * The EventListener that is set up to handle mouseover and focus events.
    *
-   * @argument handleEnter
-   * @type {EventListener}
    * @protected
    */
   protected handleEnter!: EventListener;
@@ -441,8 +305,6 @@ export default class UiContextualContainer extends Component {
   /**
    * The EventListener that is set up to handle mouseleave and blur events.
    *
-   * @argument handleLeave
-   * @type {EventListener}
    * @protected
    */
   protected handleLeave!: EventListener;
@@ -450,8 +312,6 @@ export default class UiContextualContainer extends Component {
   /**
    * The EventListener that is set up to handle click events.
    *
-   * @argument handleToggle
-   * @type {EventListener}
    * @protected
    */
   protected handleToggle!: EventListener;
@@ -461,8 +321,6 @@ export default class UiContextualContainer extends Component {
    * contains "click". This listener is responsible for closing the overlay
    * when an outside click occurs.
    *
-   * @argument handleOutsideClick
-   * @type {EventListener}
    * @protected
    */
   protected handleOutsideClick?: EventListener;
@@ -471,8 +329,6 @@ export default class UiContextualContainer extends Component {
    * A Text node inserted into the template to find the parent element of
    * this component when it itself is tagless.
    *
-   * @argument parentFinder
-   * @type {Text}
    * @private
    */
   private parentFinder!: Text;
@@ -481,8 +337,6 @@ export default class UiContextualContainer extends Component {
    * The unique ID of the positioned element which will be generated
    * if not provided via `overlayId`.
    *
-   * @argument overlayElementId
-   * @type {string}
    * @protected
    */
   @computed('overlayId')
@@ -495,8 +349,6 @@ export default class UiContextualContainer extends Component {
    * is false. This container is provided by the addon itself, injected into
    * the application's index.html at build time.
    *
-   * @argument overlayDestinationElement
-   * @type {Element|null}
    * @protected
    */
   @computed()
@@ -510,8 +362,6 @@ export default class UiContextualContainer extends Component {
    * keys - once set the trigger should not change for a single
    * component instance.
    *
-   * @argument triggerElement
-   * @type {HTMLElement | null}
    * @protected
    */
   @computed('triggerSelector')
@@ -524,8 +374,6 @@ export default class UiContextualContainer extends Component {
    * also takes into account whether or not there is a destination container
    * to worm-hole the positioned element out to.
    *
-   * @argument actuallyRenderInPlace
-   * @type {boolean}
    * @protected
    */
   @computed('overlayDestinationElement', 'renderInPlace')
@@ -536,8 +384,6 @@ export default class UiContextualContainer extends Component {
   /**
    * The HTMLElement result of querying for the value of `viewportSelector`.
    *
-   * @argument viewportElement
-   * @type {Element|null}
    * @protected
    */
   @computed('viewportSelector')
@@ -548,8 +394,6 @@ export default class UiContextualContainer extends Component {
   /**
    * Yet another state management doodad.
    *
-   * @argument inState
-   * @type {UiContextContainerInState}
    * @protected
    */
   @computed()
@@ -560,10 +404,7 @@ export default class UiContextualContainer extends Component {
   /**
    * An array of provided `triggerEvents`.
    *
-   * @argument triggerEventsArray
-   * @type {TriggerEvents[]}
    * @protected
-   * @readonly
    */
   @computed('triggerEvents.[]')
   protected get triggerEventsArray() {
@@ -574,7 +415,6 @@ export default class UiContextualContainer extends Component {
   }
 
   /**
-   * @method init
    * @protected
    * */
   // eslint-disable-next-line ember/classic-decorator-hooks
@@ -593,7 +433,6 @@ export default class UiContextualContainer extends Component {
   }
 
   /**
-   * @method didInsertElement
    * @protected
    */
   // eslint-disable-next-line ember/no-component-lifecycle-hooks
@@ -611,7 +450,6 @@ export default class UiContextualContainer extends Component {
   }
 
   /**
-   * @method willDestroyElement
    * @protected
    * */
   // eslint-disable-next-line ember/no-component-lifecycle-hooks
@@ -625,7 +463,6 @@ export default class UiContextualContainer extends Component {
    * The overlay element is the "attached" thing - e.g. the DOM
    * of the tooltip, flyout, menu, etc.
    *
-   * @method getOverlayElement
    * @protected
    */
   protected getOverlayElement() {
@@ -636,7 +473,6 @@ export default class UiContextualContainer extends Component {
    * The ARIA element is some additional DOM node to be specially
    * annotated for increased accessibility.
    *
-   * @method getAriaElement
    * @protected
    */
   protected getAriaElement() {
@@ -654,7 +490,6 @@ export default class UiContextualContainer extends Component {
    * happen from within the overlay. Not doing this could cause weird things to happen if the
    * overlay is being rendered in-place as a child of the trigger.
    *
-   * @method handleTriggerEvent
    * @protected
    */
   protected handleTriggerEvent(handler: (event: Event) => void, e: Event) {
@@ -669,9 +504,6 @@ export default class UiContextualContainer extends Component {
    * trigger element during component setup, and for the positional element
    * when it is shown.
    *
-   * @method attachTriggerEventListeners
-   * @param {HTMLElement|null} target
-   * @param {TriggerEvents[]} triggers
    * @protected
    */
   protected attachTriggerEventListeners(target: HTMLElement | null, triggers: TriggerEvents[]) {
@@ -696,7 +528,6 @@ export default class UiContextualContainer extends Component {
    * trigger element during component teardown, and for the positional element
    * when it is hidden.
    *
-   * @method removeTriggerEventListeners
    * @protected
    */
   protected removeTriggerEventListeners(target: HTMLElement | null, triggers: TriggerEvents[]) {
@@ -719,7 +550,6 @@ export default class UiContextualContainer extends Component {
   /**
    * Manages the state change of the overlay from hidden to visible.
    *
-   * @method show
    * @protected
    */
   protected show() {
@@ -746,8 +576,6 @@ export default class UiContextualContainer extends Component {
   /**
    * Queued into the run loop by show(), this does the actual transition work.
    *
-   * @method _show
-   * @param {boolean} [skipAnimation=false]
    * @protected
    */
   protected _show(skipAnimation = false) {
@@ -814,8 +642,6 @@ export default class UiContextualContainer extends Component {
   /**
    * Manages the state change of the overlay from visible to hidden.
    *
-   * @method hide
-   * @param {boolean} [skipAnimation=false]
    * @protected
    */
   protected hide(skipAnimation = false) {
@@ -885,8 +711,6 @@ export default class UiContextualContainer extends Component {
    * Internal state management used by the hover + focus trigger event scheme
    * to make the overlay visible if it is not already.
    *
-   * @method enter
-   * @param {Event} [event]
    * @protected
    */
   protected enter(event?: Event) {
@@ -926,8 +750,6 @@ export default class UiContextualContainer extends Component {
    * Internal state management used by the hover + focus trigger event scheme
    * to make the overlay hidden if it is not already.
    *
-   * @method leave
-   * @param {Event} [event]
    * @protected
    */
   protected leave(event?: Event) {
@@ -966,8 +788,6 @@ export default class UiContextualContainer extends Component {
    * Internal state management used by the click trigger event scheme to
    * toggle the visibility of the overlay.
    *
-   * @method toggler
-   * @param {Event} [event]
    * @protected
    */
   protected toggle(event?: Event) {
@@ -982,7 +802,6 @@ export default class UiContextualContainer extends Component {
   /**
    * Yielded action to programmatically close from within the tooltip/flyout/whatever.
    *
-   * @method close
    * @protected
    */
   protected close() {
@@ -992,7 +811,6 @@ export default class UiContextualContainer extends Component {
   /**
    * Adds the ARIA property to the target element.
    *
-   * @method attachAriaDescriptor
    * @protected
    */
   protected attachAriaDescriptor() {
@@ -1006,7 +824,6 @@ export default class UiContextualContainer extends Component {
   /**
    * Cleans the ARIA property of the target element.
    *
-   * @method removeAriaDescriptor
    * @protected
    */
   protected removeAriaDescriptor() {
@@ -1021,8 +838,6 @@ export default class UiContextualContainer extends Component {
    * Convenience method to check whether or not we should continue to do...
    * pretty much anything with this component instance.
    *
-   * @method checkDestruction
-   * @return {boolean}
    * @protected
    */
   protected checkDestruction() {
@@ -1032,7 +847,6 @@ export default class UiContextualContainer extends Component {
   /**
    * Observer change handler of the "visible" property.
    *
-   * @method onVisiblePropertyChange
    * @protected
    */
   protected onVisiblePropertyChange() {
@@ -1042,7 +856,6 @@ export default class UiContextualContainer extends Component {
   /**
    * Observer change handler of the "enabled" property.
    *
-   * @method onEnabledPropertyChange
    * @protected
    */
   protected onEnabledPropertyChange() {
@@ -1061,9 +874,6 @@ export default class UiContextualContainer extends Component {
    * Looks up an HTMLElement in a variety of ways. Used by this component, for example,
    * to find the trigger element, the ARIA target element, etc.
    *
-   * @method findElementWithSelectorStrategy
-   * @param {SelectorStrategies | string} strategy
-   * @return {HTMLElement | null}
    * @protected
    */
   protected findElementWithSelectorStrategy(

@@ -47,9 +47,13 @@ export function buildComponentArgumentsTable(
     );
   });
 
+  const accessors = findChildrenByKind(component, ReflectionKind.Accessor).filter(function (prop) {
+    return !(prop.flags.isPrivate || prop.flags.isProtected || !('setSignature' in prop));
+  });
+
   return Object.assign(
     buildYieldsEntriesForComponent(component),
-    buildArgumentEntriesObject(project, properties, true, 'Properties')
+    buildArgumentEntriesObject(project, [...properties, ...accessors], true, 'Properties')
   );
 }
 

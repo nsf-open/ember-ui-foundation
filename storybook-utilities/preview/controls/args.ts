@@ -51,8 +51,12 @@ export function buildArgumentEntry(
   category?: string
 ): ArgsEntry {
   const isMethod = isKindOf(property, ReflectionKind.Method);
+  const isAccessor = isKindOf(property, ReflectionKind.Accessor);
+
   const typeString = isMethod
     ? toDeclarationString(property.signatures?.[0], project)
+    : isAccessor
+    ? toTypeString(property.getSignature?.[0]?.type, project)
     : toTypeString(property.type, project);
 
   return {

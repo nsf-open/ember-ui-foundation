@@ -21,9 +21,7 @@ export function stripEscapedOuterQuotes(value: any) {
  * text as available.
  */
 export function getFullCommentText(reflection: Reflection): string {
-  const { shortText, text } = reflection.comment ?? { shortText: null, text: null };
-
-  // Not sure if this is a bug or not.
+  // Not sure if this is a bug.
   if (isKindOf(reflection, ReflectionKind.Method)) {
     const firstSignature = reflection.signatures?.[0];
 
@@ -31,6 +29,26 @@ export function getFullCommentText(reflection: Reflection): string {
       return getFullCommentText(firstSignature);
     }
   }
+
+  if (isKindOf(reflection, ReflectionKind.Accessor)) {
+    const firstSignature = reflection.getSignature?.[0];
+
+    if (firstSignature) {
+      return getFullCommentText(firstSignature);
+    }
+  }
+
+  if (isKindOf(reflection, ReflectionKind.Property)) {
+    if (reflection.type && 'declaration' in reflection.type) {
+      const firstSignature = reflection.type.declaration?.signatures?.[0];
+
+      if (firstSignature) {
+        return getFullCommentText(firstSignature);
+      }
+    }
+  }
+
+  const { shortText, text } = reflection.comment ?? { shortText: null, text: null };
 
   return [shortText, text]
     .map((text) => (typeof text === 'string' ? text.trim() : text))
@@ -56,12 +74,16 @@ export function toDeclarationString(
   let type = declaration.type ? toTypeString(declaration.type, project) : 'unknown';
 
   // Function signature
-  if ('parameters' in declaration) {
-    const params = declaration.parameters
-      ?.map((item) => toDeclarationString(item, project))
-      .join(', ');
+  if (isKindOf(declaration, ReflectionKind.CallSignature)) {
+    if ('parameters' in declaration) {
+      const params = declaration.parameters
+        ?.map((item) => toDeclarationString(item, project))
+        .join(', ');
 
-    type = `(${params}) => ${type}`;
+      type = `(${params}) => ${type}`;
+    } else {
+      type = `() => ${type}`;
+    }
   }
 
   return showName ? `${name}${optional}: ${type}` : type;

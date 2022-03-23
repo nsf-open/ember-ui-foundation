@@ -66,6 +66,8 @@ export type KindOf<K extends ReflectionKind> = K extends ReflectionKind.Project
   ? TypeParameterReflection
   : K extends ReflectionKind.EnumMember
   ? EnumerationMemberReflection
+  : K extends ReflectionKind.Accessor
+  ? DeclarationReflection
   : Reflection;
 
 /**

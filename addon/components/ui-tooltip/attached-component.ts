@@ -4,49 +4,54 @@ import UiContextualContainer, {
 
 /**
  * The UiTooltipAttachment component is a specialized version of UiTooltip that does
- * not provide any of its own UI (typically, a circled question mark icon) but instead
- * attaches its triggers to whatever parent element it is contained within.
+ * not provide any of its own UI (typically, an icon of some sort) but instead
+ * associates itself with whatever parent element it is contained within.
  *
- * @class UiAttachedTooltipContextualContainer
- * @extends UiContextualContainer
+ * ```handlebars
+ * <button onclick={{this.handleButtonClick}}>
+ *  Click Here <UiIcon @name="question-circle" />
+ *
+ *  <UiTooltipAttachment>
+ *    Here is some more information about what happens when you click this button.
+ *    The tooltip created is properly associated with the button via ARIA attributes.
+ *  </UiTooltipAttachment>
+ * </button>
+ * ```
+ *
+ * By default, the ARIA attribute used is `aria-labelledby`, which may or may not make
+ * sense for your specific application. If you need to change it you can do so using the
+ * `ariaAttachAs` attribute.
+ *
+ * ```handlebars
+ * <button onclick={{this.handleButtonClick}}>
+ *  Click Here <UiIcon @name="question-circle" />
+ *
+ *  <UiTooltipAttachment @ariaAttachAs="aria-describedby">
+ *    Here is some more information about what happens when you click this button.
+ *  </UiTooltipAttachment>
+ * </button>
+ * ```
  */
 export default class UiAttachedTooltipContextualContainer extends UiContextualContainer {
   /**
    * The amount of time, in milliseconds, between the triggering interaction
    * and when the tooltip is displayed.
-   *
-   * @argument delay
-   * @type {number}
-   * @default 200
-   * @public
    */
   public delay = 200;
 
   /**
    * The ARIA attribute that will be used to associate the tooltip
    * with the `ariaSelector` element.
-   *
-   * @argument ariaAttachAs
-   * @type {string}
-   * @default "aria-labelledby"
-   * @public
    */
   public ariaAttachAs = 'aria-labelledby';
 
   /**
-   * @argument triggerSelector
-   * @type {SelectorStrategies}
-   * @default "self"
-   * @public
+   * @hidden
    */
   public triggerSelector = SelectorStrategies.PARENT;
 
   /**
-   * @argument overlayComponent
-   * @type {string}
-   * @default "ui-tooltip/element"
-   * @public
-   * @readonly
+   * @hidden
    */
   public readonly overlayComponent = 'ui-tooltip/element';
 }
