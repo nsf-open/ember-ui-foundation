@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.6.0...v1.7.0) (2022-03-24)
+
+
+### Features
+
+* introduce in-array helper ([bde27e6](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/bde27e69c4705b60ea91ad5a3f15961a2564848a))
+* ui-alert heading content can be customized ([3e61dc2](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/3e61dc2d6ac97631354d93c4da30f5d77d2887d3))
+
+
+### Bug Fixes
+
+* disable in-array below ember 3.12 ([8b4dc14](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/8b4dc14d0195683e169d8f8641960cdbc3ba23a6))
+* do not display breadcrumbs that lack label text ([3fefc55](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/3fefc55b7eacdaa94c87d392ed8f2c4387917f7b))
+
 ## [1.6.0](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.5.2...v1.6.0) (2022-03-22)
 
 
