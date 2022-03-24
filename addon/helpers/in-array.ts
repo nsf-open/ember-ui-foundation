@@ -7,6 +7,8 @@ import { addObserver, removeObserver } from '@ember/object/observers';
  * Provides a way to check whether a value resides within an array. The helper
  * will recompute as needed when items are added to / removed from the array.
  *
+ * > __NOTE:__ This does not work properly in Ember < 3.12 and should be avoided.
+ *
  * ```ts
  *
  * const locations = ['District of Columbia', 'Maryland', 'Virginia'];
