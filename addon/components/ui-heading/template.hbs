@@ -1,3 +1,22 @@
-{{#let (element this.level) as |Heading|}}
-  <Heading class={{this.class}}>{{#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if}}</Heading>
-{{/let}}
+{{!--
+   Oh boy is it ugly. Compat with older Ember versions is going to be short lived.
+   --}}
+{{#if (-ember-octane)}}
+  {{#let (element this.level) as |Heading|}}
+    <Heading class={{this.class}}>{{#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if}}</Heading>
+  {{/let}}
+{{else}}
+  {{#if (eq this.level HeadingLevels.H1)}}
+    <h1 class={{this.class}}>{{#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if}}</h1>
+  {{else if (eq this.level HeadingLevels.H2)}}
+    <h2 class={{this.class}}>{{#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if}}</h2>
+  {{else if (eq this.level HeadingLevels.H3)}}
+    <h3 class={{this.class}}>{{#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if}}</h3>
+  {{else if (eq this.level HeadingLevels.H4)}}
+    <h4 class={{this.class}}>{{#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if}}</h4>
+  {{else if (eq this.level HeadingLevels.H5)}}
+    <h5 class={{this.class}}>{{#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if}}</h5>
+  {{else if (eq this.level HeadingLevels.H6)}}
+    <h6 class={{this.class}}>{{#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if}}</h6>
+  {{/if}}
+{{/if}}
