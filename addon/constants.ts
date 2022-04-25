@@ -148,3 +148,18 @@ export const AlertGroups: Record<AlertLevel, AlertGroupDefinition> = {
   },
   [AlertLevel.MUTED]: {},
 };
+
+/**
+ * Common KeyCodes used for keyboard navigation and selection.
+ */
+export enum KeyCodes {
+  Enter = 'Enter',
+  ArrowUp = 'ArrowUp',
+  ArrowRight = 'ArrowRight',
+  ArrowDown = 'ArrowDown',
+  ArrowLeft = 'ArrowLeft',
+  Home = 'Home',
+  End = 'End',
+  Space = 'Space',
+  Escape = 'Escape',
+}

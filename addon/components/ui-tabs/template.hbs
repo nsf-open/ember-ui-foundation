@@ -1,7 +1,17 @@
-{{yield (hash
-  Option = (component 'ui-tabs/option'
-    selectedValue   = this.currentSelection
-    headingLevel    = this.level
-    handleTabSelect = (action this.handleTabSelect)
-  )
-)}}
+<ul
+  id={{this.id}}
+  class="nav nav-tabs"
+  role={{this.role}}
+  aria-label={{this.ariaLabel}}
+  data-test-id={{this.testId}}
+  onkeyup={{this.handleKeyUp}}
+  ...attributes
+>
+  {{yield (hash
+    Option = (component "ui-tabs/option"
+      selectedValue   = this.currentSelection
+      handleTabSelect = this.handleTabSelect
+      isTabList       = (eq this.role "tablist")
+    )
+  )}}
+</ul>

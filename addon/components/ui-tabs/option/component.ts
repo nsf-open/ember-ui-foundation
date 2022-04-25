@@ -1,15 +1,14 @@
 import Component from '@ember/component';
-import { layout, tagName, attribute, className } from '@ember-decorators/component';
-import { computed } from '@ember/object';
+import { layout, tagName } from '@ember-decorators/component';
+import { computed, action, set } from '@ember/object';
 import { reads } from '@ember/object/computed';
+import { guidFor } from '@ember/object/internals';
 import template from './template';
 
 /**
  * A single tab option. See UiTabs for implementation details.
- *
- * @class UiTabsOption
  */
-@tagName('li')
+@tagName('')
 @layout(template)
 export default class UiTabsOption extends Component {
   static readonly positionalParams = ['text', 'value'];
@@ -30,30 +29,61 @@ export default class UiTabsOption extends Component {
   @reads('text')
   declare value: unknown;
 
-  /** If disabled, the tab cannot be interacted with. */
-  @className
+  /**
+   * If disabled, the tab cannot be interacted with.
+   */
   public disabled = false;
 
   /**
    * Value of the `data-test-id` attribute of the tab, if needed.
    */
-  @attribute('data-test-id')
   public testId = 'tabs-option';
 
-  @attribute('aria-role')
-  public ariaRole = 'presentation';
+  /**
+   * The `role` of the element. If the parent UiTabs component has a role of
+   * `tablist` (the default), then this will always be "presentation".
+   */
+  public role = 'presentation';
 
-  /** @private */
-  headingLevel = null;
+  /**
+   *
+   */
+  public ariaControls?: string;
 
-  /** @private */
+  /**
+   *
+   */
+  public declare id: string;
+
+  /**
+   * @private
+   */
   selectedValue: unknown;
 
-  /** @private */
-  handleTabSelect?: (value: unknown) => void;
+  /**
+   * @private
+   */
+  isTabList = true;
 
+  /**
+   * @private
+   */
+  handleTabSelect?: (value: unknown, tabId: string) => void;
+
+  // eslint-disable-next-line ember/classic-decorator-hooks
+  init() {
+    super.init();
+
+    if (!this.id) {
+      set(this, 'id', guidFor(this));
+    }
+  }
+
+  /**
+   * A thorough check of whether this tab is the active tab.
+   */
   @computed('value', 'selectedValue')
-  get isActiveTab() {
+  protected get isActiveTab() {
     return (
       this.selectedValue !== null &&
       this.selectedValue !== undefined &&
@@ -61,8 +91,15 @@ export default class UiTabsOption extends Component {
     );
   }
 
-  handleAnchorClick(event: Event) {
+  /**
+   * Click event listener for the anchor acting as the tab.
+   */
+  @action
+  protected handleAnchorClick(event: Event) {
     event.preventDefault();
-    this.handleTabSelect?.(this.value);
+
+    if (!this.disabled) {
+      this.handleTabSelect?.(this.value, this.id);
+    }
   }
 }

@@ -1,14 +1,26 @@
-<a
-	href="#"
-	role="tab"
-	class="btn-tab {{if this.isActiveTab "active"}}"
-	onclick={{action this.handleAnchorClick}}
+<li
+  data-test-id={{this.testId}}
+  role={{if this.isTabList "presentation" this.role}}
+  class="{{if this.isActiveTab "active"}}{{if this.disabled " disabled"}}"
 >
-	{{~#if (and this.headingLevel this.isActiveTab)~}}
-		<span role="heading" aria-level="{{this.headingLevel}}">
-      {{#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if}}
-    </span>
-	{{~else~}}
-    {{#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if}}
-	{{~/if~}}
-</a>
+  {{#if this.isTabList}}
+    <a
+      id="{{this.id}}"
+      href="#"
+      role="{{if this.disabled "presentation" "tab"}}"
+      class="btn-tab{{if this.isActiveTab " active"}}"
+      onclick={{this.handleAnchorClick}}
+      aria-selected={{if this.isActiveTab "true" "false"}}
+      aria-controls={{this.ariaControls}}
+      tabindex={{if (or this.disabled this.isActiveTab) "0" "-1"}}
+    >
+      {{~#if (has-block)~}}
+        {{yield (hash isActive=this.isActiveTab)}}
+      {{~else~}}
+        {{this.text}}
+      {{~/if~}}
+    </a>
+  {{else}}
+    {{yield}}
+  {{/if}}
+</li>

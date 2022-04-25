@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find, click } from '@ember/test-helpers';
+import { render, find, click, triggerKeyEvent, focus } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | ui-tabs', function (hooks) {
@@ -99,5 +99,31 @@ module('Integration | Component | ui-tabs', function (hooks) {
     this.set('selected', 'A');
 
     assert.verifySteps(['B', 'A']);
+  });
+
+  test('the active tab can be changed via keyboard', async function (assert) {
+    // language=Handlebars
+    await render(hbs`
+      <UiTabs data-test-tabs @selected="A" as |tabs|>
+        <tabs.Option @value="A">Tab A</tabs.Option>
+        <tabs.Option @value="B">Tab B</tabs.Option>
+        <tabs.Option @value="C">Tab C</tabs.Option>
+      </UiTabs>
+    `);
+
+    assert.dom('li:nth-child(1) a').hasClass('active');
+
+    await focus('li:nth-child(1) a');
+    await triggerKeyEvent('[data-test-tabs]', 'keyup', 'ArrowRight');
+
+    assert.dom('li:nth-child(2) a').isFocused();
+
+    await triggerKeyEvent('[data-test-tabs]', 'keyup', 'ArrowRight');
+
+    assert.dom('li:nth-child(3) a').isFocused();
+
+    await click('li:nth-child(3) a');
+
+    assert.dom('li:nth-child(3) a').hasClass('active');
   });
 });
