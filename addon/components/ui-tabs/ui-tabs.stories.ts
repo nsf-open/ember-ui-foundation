@@ -30,7 +30,9 @@ export const Default = (context: unknown) => ({
       @role={{this.role}}
       @testId={{this.testId}}
       @selected={{this.selected}}
-      @onChange={{action this.onChange}}
+      @fullAriaSupport={{this.fullAriaSupport}}
+      @onChange={{this.onChange}}
+      @onReady={{this.onReady}}
     as |Tabs|>
       <Tabs.Option @value="A">Tab A</Tabs.Option>
       <Tabs.Option @value="B">Tab B</Tabs.Option>

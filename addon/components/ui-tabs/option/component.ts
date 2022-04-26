@@ -46,14 +46,33 @@ export default class UiTabsOption extends Component {
   public role = 'presentation';
 
   /**
-   *
+   * Value of the tab's `aria-controls` attribute. If set, it should equal the
+   * id the of the `role="tabpanel"` element whose content it makes visible.
    */
   public ariaControls?: string;
 
   /**
-   *
+   * If true, then the tab's `aria-controls` attribute will be automatically
+   * set. Its value will be made available via the `onReady` and `onChange`
+   * callbacks and will need to be set as the `id` of the `role="tabpanel"`
+   * element whose content it is controlling.
+   */
+  public fullAriaSupport = false;
+
+  /**
+   * Value of the tab's `id` attribute. If not provided, one will be generated.
    */
   public declare id: string;
+
+  /**
+   * Called when the tab has rendered and is ready for interaction.
+   */
+  public onReady?: (value: unknown, tabId: string, controlsId?: string) => void;
+
+  /**
+   * Called when the tab is made active.
+   */
+  public onSelect?: (value: unknown, tabId: string, controlsId?: string) => void;
 
   /**
    * @private
@@ -68,7 +87,7 @@ export default class UiTabsOption extends Component {
   /**
    * @private
    */
-  handleTabSelect?: (value: unknown, tabId: string) => void;
+  declare handleTabSelect: (value: unknown, tabId: string, controlsId?: string) => void;
 
   // eslint-disable-next-line ember/classic-decorator-hooks
   init() {
@@ -77,6 +96,16 @@ export default class UiTabsOption extends Component {
     if (!this.id) {
       set(this, 'id', guidFor(this));
     }
+
+    if (this.fullAriaSupport) {
+      set(this, 'ariaControls', `${this.id}-panel`);
+    }
+  }
+
+  // eslint-disable-next-line ember/no-component-lifecycle-hooks
+  public didInsertElement() {
+    super.didInsertElement();
+    this.onReady?.(this.value, this.id, this.ariaControls);
   }
 
   /**
@@ -98,8 +127,9 @@ export default class UiTabsOption extends Component {
   protected handleAnchorClick(event: Event) {
     event.preventDefault();
 
-    if (!this.disabled) {
-      this.handleTabSelect?.(this.value, this.id);
+    if (!(this.disabled || this.isActiveTab)) {
+      this.handleTabSelect(this.value, this.id, this.ariaControls);
+      this.onSelect?.(this.value, this.id, this.ariaControls);
     }
   }
 }

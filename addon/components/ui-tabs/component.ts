@@ -75,12 +75,19 @@ export default class UiTabs extends Component {
   public role = 'tablist';
 
   /**
-   *
+   * Callback which executes whenever the active tab changes.
    */
-  public onChange?: (newTabValue: unknown, tabId?: string) => void;
+  public onChange?: (newTabValue: unknown, tabId?: string, controlsId?: string) => void;
 
   /**
-   *
+   * Callback which executes when the component has finished rendering and
+   * is ready for interaction. Argument values are provided for the active
+   * tab.
+   */
+  public onReady?: (tabValue: unknown, tabId?: string, controlsId?: string) => void;
+
+  /**
+   * The value of the currently selected tab.
    */
   public selected?: unknown;
 
@@ -93,6 +100,14 @@ export default class UiTabs extends Component {
    * The value of the `aria-label` attribute.
    */
   public ariaLabel?: string;
+
+  /**
+   * If true, then each tab's `aria-controls` attribute will be automatically
+   * set. Its value will be made available via the `onReady` and `onChange`
+   * callbacks and will need to be set as the `id` of the `role="tabpanel"`
+   * element whose content the tab is controlling.
+   */
+  public fullAriaSupport = false;
 
   /**
    * The value of the `value` property of the currently selected tab.
@@ -125,6 +140,14 @@ export default class UiTabs extends Component {
   }
 
   // eslint-disable-next-line ember/no-component-lifecycle-hooks
+  public didInsertElement() {
+    super.didInsertElement();
+
+    const { tabId, controlsId } = this.getActiveTabInfo();
+    this.onReady?.(this.currentSelection, tabId, controlsId);
+  }
+
+  // eslint-disable-next-line ember/no-component-lifecycle-hooks
   didUpdateAttrs() {
     super.didUpdateAttrs();
 
@@ -135,23 +158,40 @@ export default class UiTabs extends Component {
       set(this, 'previousSelection', this.currentSelection);
       set(this, 'currentSelection', this.selected);
 
-      this.maybeTriggerOnChange();
+      const { tabId, controlsId } = this.getActiveTabInfo();
+      this.maybeTriggerOnChange(tabId, controlsId);
     }
   }
 
+  protected maybeTriggerOnChange(tabId?: string, controlsId?: string) {
+    if (this.currentSelection !== this.previousSelection) {
+      this.onChange?.(this.currentSelection, tabId, controlsId);
+    }
+  }
+
+  protected getActiveTabInfo() {
+    const results: Partial<{
+      tabId: string;
+      controlsId: string;
+    }> = { tabId: undefined, controlsId: undefined };
+
+    const tabAnchor = document.querySelector(`#${this.id} li a.active`);
+
+    if (tabAnchor) {
+      results.tabId = tabAnchor.id;
+      results.controlsId = tabAnchor.getAttribute('aria-controls') ?? undefined;
+    }
+
+    return results;
+  }
+
   @action
-  protected handleTabSelect(selectedTabValue: unknown, tabId?: string) {
+  protected handleTabSelect(selectedTabValue: unknown, tabId?: string, controlsId?: string) {
     set(this, 'previousSelection', this.currentSelection);
     set(this, 'currentSelection', selectedTabValue);
     set(this, 'selected', selectedTabValue);
 
-    this.maybeTriggerOnChange(tabId);
-  }
-
-  protected maybeTriggerOnChange(tabId?: string) {
-    if (this.currentSelection !== this.previousSelection) {
-      this.onChange?.(this.currentSelection, tabId);
-    }
+    this.maybeTriggerOnChange(tabId, controlsId);
   }
 
   @action
