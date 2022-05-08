@@ -1,0 +1,16 @@
+{{!--
+  Supplying the "navigation" role to the parent of the ul is important
+  for proper ARIA semantics.
+--}}
+<div role={{if (eq this.role "navigation") "navigation"}} aria-label={{this.ariaLabel}} ...attributes>
+  <UiTabs
+    @onChange={{this.onChange}}
+    @onReady={{this.onReady}}
+    @role={{if (eq this.role "navigation") "" this.role}}
+    @selected={{this.selected}}
+    @testId={{this.testId}}
+    @fullAriaSupport={{eq this.role "tablist"}}
+  as |Tabs|>
+    {{yield Tabs}}
+  </UiTabs>
+</div>

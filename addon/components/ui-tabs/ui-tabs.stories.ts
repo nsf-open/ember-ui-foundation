@@ -9,7 +9,7 @@ export default {
   parameters: {
     docs: {
       iframeHeight: 150,
-    }
+    },
   },
   args: {
     selected: 'B',
@@ -40,9 +40,9 @@ export const Default = (context: unknown) => ({
       <Tabs.Option @value="D">Tab D</Tabs.Option>
     </UiTabs>
 
-    <div class="panel">
+    <div class="panel panel-default" style="border-radius: 0; margin-top: -1px;">
       <div class="panel-body">
-        <p>The currently selected value is: {{this.selected}}</p>
+        The currently selected value is: {{this.selected}}
       </div>
     </div>
 `,

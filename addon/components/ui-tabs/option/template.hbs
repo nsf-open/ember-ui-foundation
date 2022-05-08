@@ -1,7 +1,8 @@
 <li
   data-test-id={{this.testId}}
   role={{if this.isTabList "presentation" this.role}}
-  class="{{if this.isActiveTab "active"}}{{if this.disabled " disabled"}}"
+  class="{{this.class}}{{if this.isActiveTab " active"}}{{if this.disabled " disabled"}}"
+  onclick={{this.handleAnchorClick}}
 >
   {{#if this.isTabList}}
     <a
@@ -9,7 +10,6 @@
       href="#"
       role="{{if this.disabled "presentation" "tab"}}"
       class="btn-tab{{if this.isActiveTab " active"}}"
-      onclick={{this.handleAnchorClick}}
       aria-selected={{if this.isActiveTab "true" "false"}}
       aria-controls={{this.ariaControls}}
       tabindex={{if (or this.disabled this.isActiveTab) "0" "-1"}}

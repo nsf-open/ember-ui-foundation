@@ -1,0 +1,15 @@
+<div ...attributes>
+  {{yield (hash
+    TabList  = (component "ui-tab-panel/tab-list"
+      role     = this.role
+      selected = this.selected
+      onChange = this.handleTabChange
+      onReady  = this.handleTabsReady
+    )
+
+    TabPanel = (component "ui-tab-panel/tab-panel"
+      selected = this.selected
+      id       = this.tabPanelId
+    )
+  )}}
+</div>

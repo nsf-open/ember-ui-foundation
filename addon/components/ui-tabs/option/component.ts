@@ -43,7 +43,7 @@ export default class UiTabsOption extends Component {
    * The `role` of the element. If the parent UiTabs component has a role of
    * `tablist` (the default), then this will always be "presentation".
    */
-  public role = 'presentation';
+  public role?: string;
 
   /**
    * Value of the tab's `aria-controls` attribute. If set, it should equal the
@@ -97,6 +97,10 @@ export default class UiTabsOption extends Component {
       set(this, 'id', guidFor(this));
     }
 
+    if (!this.value) {
+      set(this, 'value', this.id);
+    }
+
     if (this.fullAriaSupport) {
       set(this, 'ariaControls', `${this.id}-panel`);
     }
@@ -125,7 +129,10 @@ export default class UiTabsOption extends Component {
    */
   @action
   protected handleAnchorClick(event: Event) {
-    event.preventDefault();
+    // Only preventDefault for tab anchors
+    if ((event.target as HTMLElement).getAttribute('role') === 'tab') {
+      event.preventDefault();
+    }
 
     if (!(this.disabled || this.isActiveTab)) {
       this.handleTabSelect(this.value, this.id, this.ariaControls);

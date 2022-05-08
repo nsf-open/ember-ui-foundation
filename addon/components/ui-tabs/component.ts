@@ -49,18 +49,21 @@ import template from './template';
  * that looks like a tablist but is not semantically such. For example:
  *
  * ```handlebars
- * <UiTabs @role="navigation" as |Tabs|>
- *   <Tabs.Option>
- *     <LinkTo @route="index">Home</LinkTo>
- *   </Tabs.Option>
+ * <nav>
+ *   <UiTabs @role="" as |Tabs|>
+ *     <Tabs.Option>
+ *       <LinkTo @route="index">Home</LinkTo>
+ *     </Tabs.Option>
  *
- *   <Tabs.Option>
- *     <LinkTo @route="about">About Us</LinkTo>
- *   </Tabs.Option>
- * </UiTabs>
+ *     <Tabs.Option>
+ *       <LinkTo @route="about">About Us</LinkTo>
+ *     </Tabs.Option>
+ *   </UiTabs>
+ * </nav>
+ *
  * ```
  *
- * With the component's role set as "navigation" it is up to the developer to fill in the content of each
+ * When the component's role is changed, it is up to the developer to fill in the content of each
  * tab. This is less difficult than it seems, as anchor elements are being used in both cases, as is the
  * "active" class name which the Ember `LinkTo` element also provides (almost as though it were planned...).
  *
