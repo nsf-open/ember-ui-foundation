@@ -41,10 +41,9 @@ import template from './template';
  *
  * The default rules of a tablist are pretty specific, and all other things being equal this component
  * tries to cater to those requirements as much as possible. Many times, however, there is a want for
- * some UI to look like a list of tabs, but not actually behave like a tablist - that is where this section
- * comes in.
+ * some UI to look like a list of tabs, but not actually behave like a tablist.
  *
- * In any case, if you want to disable the tablist behavior then you want to set the `role` of the component
+ * If you want to disable the tablist behavior then you want to set the `role` of the component
  * to something other than "tablist". By far, the most common alternate usage is to create a navigation bar
  * that looks like a tablist but is not semantically such. For example:
  *
