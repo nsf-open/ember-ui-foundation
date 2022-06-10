@@ -7,9 +7,14 @@
         <li>
           {{~#if crumb.linkable~}}
             {{!---------------------}}
+            {{!-- Generic Anchor  --}}
+            {{!---------------------}}
+            {{~#if crumb.href~}}
+              <a href="{{crumb.href}}" target="{{crumb.target}}" rel="noopener noreferrer">{{crumb.label}}</a>
+            {{!---------------------}}
             {{!-- Ember >= 3.16   --}}
             {{!---------------------}}
-            {{#if (-ember-octane)}}
+            {{else if (-ember-octane)}}
               {{~#if crumb.model~}}
                 {{~#if (is-array crumb.model)~}}
                   <LinkTo @route={{crumb.path}} @models={{crumb.model}}>{{crumb.label}}</LinkTo>

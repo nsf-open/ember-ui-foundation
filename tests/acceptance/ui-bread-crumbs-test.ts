@@ -68,4 +68,32 @@ module('Acceptance | Component | ui-bread-crumbs', function (hooks) {
     assert.dom(nthCrumb(1)).hasText('Baz');
     assert.dom(nthCrumb(2)).doesNotExist();
   });
+
+  test('it support a breadcrumb with fully custom href and target', async function (assert) {
+    this.owner.lookup('controller:playground').breadCrumb = undefined;
+    this.owner.lookup('controller:playground').breadCrumbs = [
+      { label: 'Search', href: 'https://www.google.com' },
+      { label: 'Playground' },
+    ];
+
+    await visit('/playground');
+
+    assert.dom(nthCrumb(2)).hasText('Search');
+    assert.dom(nthCrumb(2, true)).hasAttribute('href', 'https://www.google.com');
+    assert.dom(nthCrumb(2, true)).hasAttribute('target', '_self');
+    assert.dom(nthCrumb(4)).doesNotExist();
+
+    this.owner.lookup('controller:artists').breadCrumb = {
+      label: 'Search More',
+      href: 'https://www.bing.com',
+      target: '_blank',
+    };
+
+    await visit('/artists/queen');
+
+    assert.dom(nthCrumb(2)).hasText('Search More');
+    assert.dom(nthCrumb(2, true)).hasAttribute('href', 'https://www.bing.com');
+    assert.dom(nthCrumb(2, true)).hasAttribute('target', '_blank');
+    assert.dom(nthCrumb(4)).doesNotExist();
+  });
 });

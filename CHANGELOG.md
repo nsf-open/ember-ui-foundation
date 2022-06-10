@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.7.0...v1.8.0) (2022-06-10)
+
+
+### Features
+
+* ui-bread-crumbs accepts href value to create generic anchor ([0e19c15](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/commit/0e19c15a234bd3b527ed6e97fcab012bf840b869))
+
 ## [1.7.0](https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse/compare/v1.6.0...v1.7.0) (2022-03-24)
 
 

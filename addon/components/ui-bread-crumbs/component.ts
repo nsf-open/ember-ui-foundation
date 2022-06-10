@@ -108,6 +108,26 @@ type EngineInfo = {
  *     ];
  *   };
  * ```
+ *
+ * In some even more rare circumstances a breadcrumb segment will need to link to a completely
+ * custom URL that might not be part of the application at all. When an `href` value is provided
+ * it will be provided as-is to the anchor. An optional `target` (default "_self") can be provided
+ * as well.
+ *
+ * ```typescript
+ * export default class UserController extends Controller {
+ *   readonly model: UserRouteModel;
+ *
+ *   @computed('model.{id,username}')
+ *   get breadCrumb() {
+ *     return {
+ *       label:  this.model.username,
+ *       href:   'https://site.noexist/users/${this.model.id}',
+ *       target: '_blank',
+ *     };
+ *   };
+ * }
+ * ```
  */
 @tagName('')
 @layout(template)
@@ -183,6 +203,8 @@ export default class UiBreadCrumbs extends Component {
       linkable: true,
       isCurrent: false,
       rewind: 0,
+      href: '',
+      target: '_self',
       ...result,
     };
   }
