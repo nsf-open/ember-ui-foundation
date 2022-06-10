@@ -11,6 +11,8 @@ export type BreadCrumb =
       linkable?: boolean;
       isCurrent?: boolean;
       rewind?: number;
+      href?: string;
+      target?: '_self' | '_top' | '_blank' | '_parent';
     };
 
 export interface IBreadCrumbController extends Controller {
