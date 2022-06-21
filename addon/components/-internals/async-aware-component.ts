@@ -3,7 +3,7 @@ import Component from '@ember/component';
 import { reads } from '@ember/object/computed';
 import { dropTask } from 'ember-concurrency';
 import { perform } from 'ember-concurrency-ts';
-import { isPromiseLike } from '@nsf/general-utils';
+import { isPromiseLike } from '@nsf-open/ember-general-utils';
 
 /**
  * The AsyncAwareComponent is a low-level component that other components can extend

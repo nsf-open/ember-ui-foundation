@@ -4,7 +4,7 @@ import Component from '@ember/component';
 import { computed, set, action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { layout, tagName } from '@ember-decorators/component';
-import { isPromiseLike } from '@nsf/general-utils';
+import { isPromiseLike } from '@nsf-open/ember-general-utils';
 import { HeadingLevels, PanelVariants } from '../../constants';
 import template from './template';
 import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component';
