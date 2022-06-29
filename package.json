@@ -5,7 +5,7 @@
   "keywords": [
     "ember-addon"
   ],
-  "repository": "https://bitbucket.nsf.gov/projects/NSF-FE/repos/ui-foundation/browse",
+  "repository": "https://github.com/nsf-open/ember-ui-foundation",
   "license": "MIT",
   "author": "",
   "directories": {
