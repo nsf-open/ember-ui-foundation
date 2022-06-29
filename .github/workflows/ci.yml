@@ -18,7 +18,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          npm install
+          npm install --no-audit
           npm run test:coverage
       - name: Coveralls
         uses: coverallsapp/github-action@master
