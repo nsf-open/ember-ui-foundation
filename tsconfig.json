@@ -29,22 +29,22 @@
         "tests/dummy/app/*",
         "app/*"
       ],
-      "@nsf/ui-foundation": [
+      "@nsf-open/ember-ui-foundation": [
         "addon"
       ],
-      "@nsf/ui-foundation/storybook-utilities": [
+      "@nsf-open/ember-ui-foundation/storybook-utilities": [
         "storybook-utilities"
       ],
-      "@nsf/ui-foundation/storybook-utilities/*": [
+      "@nsf-open/ember-ui-foundation/storybook-utilities/*": [
         "storybook-utilities/*"
       ],
-      "@nsf/ui-foundation/*": [
+      "@nsf-open/ember-ui-foundation/*": [
         "addon/*"
       ],
-      "@nsf/ui-foundation/test-support": [
+      "@nsf-open/ember-ui-foundation/test-support": [
         "addon-test-support"
       ],
-      "@nsf/ui-foundation/test-support/*": [
+      "@nsf-open/ember-ui-foundation/test-support/*": [
         "addon-test-support/*"
       ],
       "*": [

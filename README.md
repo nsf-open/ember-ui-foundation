@@ -1,4 +1,4 @@
-@nsf/ui-foundation
+@nsf-open/ember-ui-foundation
 ==============================================================================
 
 The NSF UI Foundation library is the starting point for Ember Application user interfaces 
@@ -17,7 +17,7 @@ Installation
 ------------------------------------------------------------------------------
 
 ```
-npm install @nsf/ui-foundation
+npm install @nsf-open/ember-ui-foundation
 ```
 
 
@@ -56,7 +56,7 @@ Now comes the configuration.
 // Webpack's config to make it aware of ui-foundation's own story files and other
 // assets.
 
-const foundations = require('@nsf/ui-foundation/.storybook/utils/main');
+const foundations = require('@nsf-open/ember-ui-foundation/.storybook/utils/main');
 
 module.exports = foundations({
   stories: [
@@ -79,7 +79,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism-light';
 import storybookPreviewPreset, {
   addHtmlBarHighlighting,
   trimStorySource,
-} from '@nsf/ui-foundation/.storybook/utils/preview';
+} from '@nsf-open/ember-ui-foundation/.storybook/utils/preview';
 
 // Load the reflection info created by Typedoc. This is the failure friendly 
 // version, you can also use import.

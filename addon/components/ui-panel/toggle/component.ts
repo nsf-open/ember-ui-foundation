@@ -1,6 +1,6 @@
-import UiButton from '@nsf/ui-foundation/components/ui-button/component';
+import UiButton from '@nsf-open/ember-ui-foundation/components/ui-button/component';
 import { setProperties } from '@ember/object';
-import { ButtonVariants, Directions, DirectionsX } from '@nsf/ui-foundation/constants';
+import { ButtonVariants, Directions, DirectionsX } from '@nsf-open/ember-ui-foundation/constants';
 
 /**
  * The UiPanelToggleButton is the default button used by the UiPanel to toggle between

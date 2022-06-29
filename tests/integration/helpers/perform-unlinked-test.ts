@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { settled } from '@ember/test-helpers';
-import { performUnlinkedHelper } from '@nsf/ui-foundation/helpers/perform-unlinked';
+import { performUnlinkedHelper } from '@nsf-open/ember-ui-foundation/helpers/perform-unlinked';
 import { task, timeout } from 'ember-concurrency';
 import { taskFor } from 'ember-concurrency-ts';
 

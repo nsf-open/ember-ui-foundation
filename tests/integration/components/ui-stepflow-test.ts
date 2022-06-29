@@ -1,5 +1,5 @@
-import type UiStepFlow from '@nsf/ui-foundation/components/ui-stepflow/component';
-import type { IProgressComponent } from '@nsf/ui-foundation/lib/ProgressComponent';
+import type UiStepFlow from '@nsf-open/ember-ui-foundation/components/ui-stepflow/component';
+import type { IProgressComponent } from '@nsf-open/ember-ui-foundation/lib/ProgressComponent';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click, settled } from '@ember/test-helpers';

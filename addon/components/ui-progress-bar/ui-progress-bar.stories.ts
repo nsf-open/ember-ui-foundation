@@ -1,8 +1,8 @@
-import type { progressManager as managerDecorator } from '@nsf/ui-foundation/lib/ProgressManager';
+import type { progressManager as managerDecorator } from '@nsf-open/ember-ui-foundation/lib/ProgressManager';
 import { hbs } from 'ember-cli-htmlbars';
 
 // @ts-expect-error - The method exists globally at runtime
-const { progressManager } = requirejs('@nsf/ui-foundation/lib/ProgressManager') as {
+const { progressManager } = requirejs('@nsf-open/ember-ui-foundation/lib/ProgressManager') as {
   progressManager: typeof managerDecorator;
 };
 

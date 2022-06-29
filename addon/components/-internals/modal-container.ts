@@ -1,5 +1,5 @@
-import type ModalService from '@nsf/ui-foundation/services/modal';
-import type BackdropService from '@nsf/ui-foundation/services/backdrop';
+import type ModalService from '@nsf-open/ember-ui-foundation/services/modal';
+import type BackdropService from '@nsf-open/ember-ui-foundation/services/backdrop';
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { set, setProperties } from '@ember/object';
@@ -7,8 +7,8 @@ import { guidFor } from '@ember/object/internals';
 import { schedule, bind, next } from '@ember/runloop';
 import { Promise, resolve } from 'rsvp';
 import { tagName } from '@ember-decorators/component';
-import { getRootElement, waitForTransitionEnd } from '@nsf/ui-foundation/utils';
-import { ModalEvents } from '@nsf/ui-foundation/services/modal';
+import { getRootElement, waitForTransitionEnd } from '@nsf-open/ember-ui-foundation/utils';
+import { ModalEvents } from '@nsf-open/ember-ui-foundation/services/modal';
 
 /**
  * @class UiModalContainer

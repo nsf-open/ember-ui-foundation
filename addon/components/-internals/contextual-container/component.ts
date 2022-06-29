@@ -15,7 +15,7 @@ import {
   createOutsideClickListener,
   removeOutsideClickListener,
   getRootElement,
-} from '@nsf/ui-foundation/utils';
+} from '@nsf-open/ember-ui-foundation/utils';
 import template from './template';
 
 export enum SelectorStrategies {

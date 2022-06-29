@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { click, render, settled } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import ProgressManager from '@nsf/ui-foundation/lib/ProgressManager';
+import ProgressManager from '@nsf-open/ember-ui-foundation/lib/ProgressManager';
 
 module('Integration | Component | ui-progress-bar', function (hooks) {
   setupRenderingTest(hooks);

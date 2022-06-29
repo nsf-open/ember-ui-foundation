@@ -1,1 +1,1 @@
-export { default } from '@nsf/ui-foundation/components/ui-tab-panel/tab-list/component';
+export { default } from '@nsf-open/ember-ui-foundation/components/ui-tab-panel/tab-list/component';

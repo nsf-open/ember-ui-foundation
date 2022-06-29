@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { set, action } from '@ember/object';
 import { layout, tagName } from '@ember-decorators/component';
 import { guidFor } from '@ember/object/internals';
-import { keyNavigator } from '@nsf/ui-foundation/utils';
+import { keyNavigator } from '@nsf-open/ember-ui-foundation/utils';
 import template from './template';
 
 /**

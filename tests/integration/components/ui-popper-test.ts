@@ -1,4 +1,4 @@
-import type UiPopper from '@nsf/ui-foundation/components/ui-popper/component';
+import type UiPopper from '@nsf-open/ember-ui-foundation/components/ui-popper/component';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, find, settled, scrollTo, getRootElement } from '@ember/test-helpers';

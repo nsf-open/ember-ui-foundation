@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { HeadingLevels } from '@nsf/ui-foundation/constants';
+import { HeadingLevels } from '@nsf-open/ember-ui-foundation/constants';
 
 module('Integration | Component | ui-heading', function (hooks) {
   setupRenderingTest(hooks);

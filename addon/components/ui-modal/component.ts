@@ -5,9 +5,9 @@ import { set } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { layout } from '@ember-decorators/component';
 import template from './template';
-import { AlertLevel, SizeVariants } from '@nsf/ui-foundation/constants';
-import { extractErrorMessages } from '@nsf/ui-foundation/utils';
-import MessageManager from '@nsf/ui-foundation/lib/MessageManager';
+import { AlertLevel, SizeVariants } from '@nsf-open/ember-ui-foundation/constants';
+import { extractErrorMessages } from '@nsf-open/ember-ui-foundation/utils';
+import MessageManager from '@nsf-open/ember-ui-foundation/lib/MessageManager';
 
 /**
  * The UiModal component creates a "modal window" or captive overlay on top of the application.
@@ -57,7 +57,7 @@ import MessageManager from '@nsf/ui-foundation/lib/MessageManager';
  * </UiModal>
  * ```
  * ```ts
- * import type { ModalService } from '@nsf/ui-foundation/services';
+ * import type { ModalService } from '@nsf-open/ember-ui-foundation/services';
  * import { inject as service } from '@ember/service';
  * // ...
  * @service declare readonly modal: ModalService;
@@ -137,8 +137,8 @@ import MessageManager from '@nsf/ui-foundation/lib/MessageManager';
  * ```
  *
  * ```ts
- * import type { MessageManager } from '@nsf/ui-foundation';
- * import { messageManager } from '@nsf/ui-foundation';
+ * import type { MessageManager } from '@nsf-open/ember-ui-foundation';
+ * import { messageManager } from '@nsf-open/ember-ui-foundation';
  * // ...
  * @messageManager()
  * declare readonly modalMessages: MessageManager;

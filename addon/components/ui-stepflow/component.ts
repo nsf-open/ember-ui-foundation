@@ -1,10 +1,10 @@
-import type { ProgressItemDescriptor } from '@nsf/ui-foundation/lib/ProgressItem';
+import type { ProgressItemDescriptor } from '@nsf-open/ember-ui-foundation/lib/ProgressItem';
 import Component from '@ember/component';
-import ProgressManager from '@nsf/ui-foundation/lib/ProgressManager';
+import ProgressManager from '@nsf-open/ember-ui-foundation/lib/ProgressManager';
 import { computed, action } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { layout } from '@ember-decorators/component';
-import { PanelVariants } from '@nsf/ui-foundation/constants';
+import { PanelVariants } from '@nsf-open/ember-ui-foundation/constants';
 import template from './template';
 
 /**
@@ -71,7 +71,7 @@ import template from './template';
  * as well.
  *
  * ```typescript
- * import ProgressComponent from "@nsf/ui-foundation/lib/ProgressComponent";
+ * import ProgressComponent from "@nsf-open/ember-ui-foundation/lib/ProgressComponent";
  *
  * export default class SelectMovieStep extends ProgressComponent<MovieWorkflowData> {
  *    public updateMovie(movie: Movie) {

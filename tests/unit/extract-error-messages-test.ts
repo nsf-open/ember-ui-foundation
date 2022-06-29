@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { extractErrorMessages } from '@nsf/ui-foundation/utils';
+import { extractErrorMessages } from '@nsf-open/ember-ui-foundation/utils';
 import { htmlSafe, isHTMLSafe } from '@ember/template';
 
 module('Unit | Util | extract-error-messages', function () {

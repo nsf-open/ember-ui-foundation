@@ -1,7 +1,7 @@
 import { hbs } from 'ember-cli-htmlbars';
 
 // @ts-expect-error - requirejs exists at runtime
-const MessageManager = requirejs('@nsf/ui-foundation/lib/MessageManager').default;
+const MessageManager = requirejs('@nsf-open/ember-ui-foundation/lib/MessageManager').default;
 
 export default {
   title: 'Elements/ui-alert-block',

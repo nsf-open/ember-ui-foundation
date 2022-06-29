@@ -1,4 +1,4 @@
-import { KeyCodes } from '@nsf/ui-foundation/constants';
+import { KeyCodes } from '@nsf-open/ember-ui-foundation/constants';
 
 /**
  * Describes the possible types of value that can be used to figure out a "starting point" for what

@@ -2,9 +2,9 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, find, findAll } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { keyNavigator } from '@nsf/ui-foundation/utils';
-import { KeyCodes } from '@nsf/ui-foundation/constants';
-import { getCurrentElement, shouldInclude } from '@nsf/ui-foundation/utils/key-navigator';
+import { keyNavigator } from '@nsf-open/ember-ui-foundation/utils';
+import { KeyCodes } from '@nsf-open/ember-ui-foundation/constants';
+import { getCurrentElement, shouldInclude } from '@nsf-open/ember-ui-foundation/utils/key-navigator';
 
 module('Unit | Util | key-navigator', function (hooks) {
   setupRenderingTest(hooks);

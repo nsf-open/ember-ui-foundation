@@ -1,4 +1,4 @@
-import type ProgressManager from '@nsf/ui-foundation/lib/ProgressManager';
+import type ProgressManager from '@nsf-open/ember-ui-foundation/lib/ProgressManager';
 import Component from '@ember/component';
 import { layout, tagName } from '@ember-decorators/component';
 import template from './template';
@@ -13,8 +13,8 @@ import template from './template';
  * To use, all it needs is a ProgressManager instance.
  *
  * ```typescript
- * import type { ProgressManager } from '@nsf/ui-foundation';
- * import { progressManager } from '@nsf/ui-foundation';
+ * import type { ProgressManager } from '@nsf-open/ember-ui-foundation';
+ * import { progressManager } from '@nsf-open/ember-ui-foundation';
  * // ...
  * @progressManager([{ label: 'Step A', component: 'steps/step-a' }])
  * public declare manager: ProgressManager;

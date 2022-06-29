@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import Service, { inject as service } from '@ember/service';
-import { optionalService } from '@nsf/ui-foundation/utils';
+import { optionalService } from '@nsf-open/ember-ui-foundation/utils';
 
 module('Unit | Util | optionalService', function (hooks) {
   setupTest(hooks);

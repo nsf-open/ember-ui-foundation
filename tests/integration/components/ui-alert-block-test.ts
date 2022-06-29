@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import MessageManager from '@nsf/ui-foundation/lib/MessageManager';
+import MessageManager from '@nsf-open/ember-ui-foundation/lib/MessageManager';
 
 module('Integration | Component | ui-alert-block', function (hooks) {
   setupRenderingTest(hooks);

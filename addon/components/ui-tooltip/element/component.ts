@@ -1,4 +1,4 @@
-import UiContextualElement from '@nsf/ui-foundation/components/-internals/contextual-container/element/component';
+import UiContextualElement from '@nsf-open/ember-ui-foundation/components/-internals/contextual-container/element/component';
 import { computed } from '@ember/object';
 
 export default class UiTooltipContextElement extends UiContextualElement {

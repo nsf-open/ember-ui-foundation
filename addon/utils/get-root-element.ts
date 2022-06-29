@@ -36,7 +36,7 @@ export default function getRootElement(context: unknown) {
     }
 
     warn(`No destination element was found.`, !!root, {
-      id: '@nsf/ui-foundation.no-destination-element',
+      id: '@nsf-open/ember-ui-foundation.no-destination-element',
     });
   });
 

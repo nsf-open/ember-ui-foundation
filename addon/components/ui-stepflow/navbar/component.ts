@@ -1,4 +1,4 @@
-import type ProgressManager from '@nsf/ui-foundation/lib/ProgressManager';
+import type ProgressManager from '@nsf-open/ember-ui-foundation/lib/ProgressManager';
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
 import { layout, tagName } from '@ember-decorators/component';

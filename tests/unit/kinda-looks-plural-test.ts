@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { kindaLooksPlural } from '@nsf/ui-foundation/utils';
+import { kindaLooksPlural } from '@nsf-open/ember-ui-foundation/utils';
 
 module('Unit | Util | kindaLooksPlural', function () {
   test('it identifies things that might need to be pluralized in the english language', function (assert) {

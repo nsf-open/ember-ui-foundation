@@ -1,1 +1,1 @@
-export { default } from '@nsf/ui-foundation/services/backdrop';
+export { default } from '@nsf-open/ember-ui-foundation/services/backdrop';

@@ -1,1 +1,1 @@
-export { default } from '@nsf/ui-foundation/components/ui-stepflow/navbar/component';
+export { default } from '@nsf-open/ember-ui-foundation/components/ui-stepflow/navbar/component';

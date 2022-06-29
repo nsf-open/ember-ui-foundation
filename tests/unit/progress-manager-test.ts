@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
-import ProgressManager, { progressManager } from '@nsf/ui-foundation/lib/ProgressManager';
-import ProgressItem from '@nsf/ui-foundation/lib/ProgressItem';
+import ProgressManager, { progressManager } from '@nsf-open/ember-ui-foundation/lib/ProgressManager';
+import ProgressItem from '@nsf-open/ember-ui-foundation/lib/ProgressItem';
 
 class TestClass {
   @progressManager([{ label: 'Step A', component: 'test-component-a' }])

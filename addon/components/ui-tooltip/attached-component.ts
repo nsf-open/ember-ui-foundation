@@ -1,6 +1,6 @@
 import UiContextualContainer, {
   SelectorStrategies,
-} from '@nsf/ui-foundation/components/-internals/contextual-container/component';
+} from '@nsf-open/ember-ui-foundation/components/-internals/contextual-container/component';
 
 /**
  * The UiTooltipAttachment component is a specialized version of UiTooltip that does

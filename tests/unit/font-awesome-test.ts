@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { buildFaClassNameString } from '@nsf/ui-foundation/utils';
+import { buildFaClassNameString } from '@nsf-open/ember-ui-foundation/utils';
 
 module('Unit | Util | font-awesome', function () {
   test('it applies the "fa-" prefix to one or more strings as required', function (assert) {

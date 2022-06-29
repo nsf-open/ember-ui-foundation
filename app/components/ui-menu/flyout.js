@@ -1,1 +1,1 @@
-export { default } from '@nsf/ui-foundation/components/ui-menu/flyout/component';
+export { default } from '@nsf-open/ember-ui-foundation/components/ui-menu/flyout/component';

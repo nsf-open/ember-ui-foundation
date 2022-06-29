@@ -3,7 +3,7 @@
 ## Installation
 
 * `git clone <repository-url>`
-* `cd @nsf/ui-foundation`
+* `cd @nsf-open/ember-ui-foundation`
 * `npm install`
 
 ## Linting

@@ -2,7 +2,7 @@ import Service from '@ember/service';
 import { guidFor } from '@ember/object/internals';
 import { next } from '@ember/runloop';
 import { Promise } from 'rsvp';
-import { getRootElement, waitForTransitionEnd } from '@nsf/ui-foundation/utils';
+import { getRootElement, waitForTransitionEnd } from '@nsf-open/ember-ui-foundation/utils';
 
 const BODY_CLASS = 'modal-open';
 const FADE_CLASS = 'fade';
@@ -50,7 +50,7 @@ function calculateScrollbarWidth() {
  * exists though.
  *
  * ```ts
- * import type { BackdropService } from '@nsf/ui-foundation/services';
+ * import type { BackdropService } from '@nsf-open/ember-ui-foundation/services';
  * import { inject as service } from '@ember/service';
  * // ...
  * @service

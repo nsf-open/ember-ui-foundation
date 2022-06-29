@@ -1,11 +1,11 @@
-import type MessageManager from '@nsf/ui-foundation/lib/MessageManager';
-import type { MessageGroup } from '@nsf/ui-foundation/lib/MessageManager';
+import type MessageManager from '@nsf-open/ember-ui-foundation/lib/MessageManager';
+import type { MessageGroup } from '@nsf-open/ember-ui-foundation/lib/MessageManager';
 import Component from '@ember/component';
 import { layout, attribute } from '@ember-decorators/component';
 import { computed } from '@ember/object';
 import { addListener, removeListener } from '@ember/object/events';
-import { MessageEvents, getCorrectedAlertLevel } from '@nsf/ui-foundation/lib/MessageManager';
-import { AlertLevelOrdering } from '@nsf/ui-foundation/constants';
+import { MessageEvents, getCorrectedAlertLevel } from '@nsf-open/ember-ui-foundation/lib/MessageManager';
+import { AlertLevelOrdering } from '@nsf-open/ember-ui-foundation/constants';
 import template from './template';
 
 /**
@@ -18,8 +18,8 @@ import template from './template';
  * ```
  *
  * ```ts
- * import type { MessageManager } from '@nsf/ui-foundation';
- * import { messageManager } from '@nsf/ui-foundation';
+ * import type { MessageManager } from '@nsf-open/ember-ui-foundation';
+ * import { messageManager } from '@nsf-open/ember-ui-foundation';
  * // ...
  * @messageManager()
  * declare readonly messages: MessageManager;

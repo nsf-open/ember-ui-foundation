@@ -1,4 +1,4 @@
-import type MessageManager from '@nsf/ui-foundation/lib/MessageManager';
+import type MessageManager from '@nsf-open/ember-ui-foundation/lib/MessageManager';
 import type { ButtonVariants } from '../../constants';
 import Component from '@ember/component';
 import { computed, set, action } from '@ember/object';
@@ -7,7 +7,7 @@ import { layout, tagName } from '@ember-decorators/component';
 import { isPromiseLike } from '@nsf-open/ember-general-utils';
 import { HeadingLevels, PanelVariants } from '../../constants';
 import template from './template';
-import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component';
+import UiAsyncBlock from '@nsf-open/ember-ui-foundation/components/ui-async-block/component';
 
 /**
  * Panels are stylized content blocks with a heading and associated content.
@@ -59,7 +59,7 @@ import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component
  * earlier versions, you'll need to supply the string name of the component instead.
  *
  * ```typescript
- * import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component';
+ * import UiAsyncBlock from '@nsf-open/ember-ui-foundation/components/ui-async-block/component';
  *
  * class SomeCustomAsyncBlockClass extends UiAsyncBlock {
  *   pendingMessage = () => {
@@ -92,8 +92,8 @@ import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component
  * ```
  *
  * ```ts
- * import type { MessageManager } from '@nsf/ui-foundation';
- * import { messageManager } from '@nsf/ui-foundation';
+ * import type { MessageManager } from '@nsf-open/ember-ui-foundation';
+ * import { messageManager } from '@nsf-open/ember-ui-foundation';
  * // ...
  * @messageManager()
  * declare readonly panelMessages: MessageManager;

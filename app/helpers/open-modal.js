@@ -1,1 +1,1 @@
-export { default } from '@nsf/ui-foundation/helpers/open-modal';
+export { default } from '@nsf-open/ember-ui-foundation/helpers/open-modal';

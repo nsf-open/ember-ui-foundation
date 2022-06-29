@@ -1,4 +1,4 @@
-import type ModalService from '@nsf/ui-foundation/services/modal';
+import type ModalService from '@nsf-open/ember-ui-foundation/services/modal';
 import Helper from '@ember/component/helper';
 import { inject as service } from '@ember/service';
 

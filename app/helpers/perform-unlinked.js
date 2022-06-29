@@ -1,1 +1,1 @@
-export { default } from '@nsf/ui-foundation/helpers/perform-unlinked';
+export { default } from '@nsf-open/ember-ui-foundation/helpers/perform-unlinked';

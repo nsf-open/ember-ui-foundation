@@ -1,6 +1,6 @@
 import type Component from '@ember/component';
 import type { TaskForTaskFunction, TaskFunction } from 'ember-concurrency';
-import AsyncAwareComponent from '@nsf/ui-foundation/components/-internals/async-aware-component';
+import AsyncAwareComponent from '@nsf-open/ember-ui-foundation/components/-internals/async-aware-component';
 import { layout, tagName } from '@ember-decorators/component';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';

@@ -1,1 +1,1 @@
-export { default } from '@nsf/ui-foundation/components/ui-progress-bar/component';
+export { default } from '@nsf-open/ember-ui-foundation/components/ui-progress-bar/component';

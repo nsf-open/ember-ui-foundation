@@ -1,5 +1,5 @@
-import type BackdropService from '@nsf/ui-foundation/services/backdrop';
-import type ModalContainer from '@nsf/ui-foundation/components/-internals/modal-container';
+import type BackdropService from '@nsf-open/ember-ui-foundation/services/backdrop';
+import type ModalContainer from '@nsf-open/ember-ui-foundation/components/-internals/modal-container';
 import Service, { inject as service } from '@ember/service';
 import Evented from '@ember/object/evented';
 
@@ -17,7 +17,7 @@ const EventedService = Service.extend(Evented);
  * instead of having to set up a boolean flag in your controller/template or component.
  *
  * ```ts
- * import type { ModalService } from '@nsf/ui-foundation/services';
+ * import type { ModalService } from '@nsf-open/ember-ui-foundation/services';
  * import { inject as service } from '@ember/service';
  * // ...
  * @service

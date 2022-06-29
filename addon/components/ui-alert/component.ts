@@ -1,12 +1,12 @@
-import type { AlertLevel, AlertGroupDefinition } from '@nsf/ui-foundation/constants';
+import type { AlertLevel, AlertGroupDefinition } from '@nsf-open/ember-ui-foundation/constants';
 
 import Component from '@ember/component';
 import { layout, classNames, className, attribute } from '@ember-decorators/component';
 import { computed } from '@ember/object';
 import { isArray } from '@ember/array';
-import { AlertGroups, AlertLevelKeys } from '@nsf/ui-foundation/constants';
-import { getCorrectedAlertLevel } from '@nsf/ui-foundation/lib/MessageManager';
-import { listenTo } from '@nsf/ui-foundation/utils';
+import { AlertGroups, AlertLevelKeys } from '@nsf-open/ember-ui-foundation/constants';
+import { getCorrectedAlertLevel } from '@nsf-open/ember-ui-foundation/lib/MessageManager';
+import { listenTo } from '@nsf-open/ember-ui-foundation/utils';
 import template from './template';
 
 /**

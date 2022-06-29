@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { hbs } from 'ember-cli-htmlbars';
-import { IProgressComponent } from '@nsf/ui-foundation/lib/ProgressComponent';
+import { IProgressComponent } from '@nsf-open/ember-ui-foundation/lib/ProgressComponent';
 
 export default {
   title: 'Elements/ui-stepflow',

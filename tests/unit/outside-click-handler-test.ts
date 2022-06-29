@@ -5,7 +5,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import {
   createOutsideClickListener,
   removeOutsideClickListener,
-} from '@nsf/ui-foundation/utils/outside-click';
+} from '@nsf-open/ember-ui-foundation/utils/outside-click';
 
 module('Unit | Util | outside-click-handler', function (hooks) {
   setupRenderingTest(hooks);

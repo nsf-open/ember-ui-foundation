@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { set } from '@ember/object';
-import { listenTo } from '@nsf/ui-foundation/utils';
+import { listenTo } from '@nsf-open/ember-ui-foundation/utils';
 
 class TestClass {
   @listenTo('sourceValue', 'A Default Value')

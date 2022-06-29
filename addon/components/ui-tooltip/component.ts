@@ -1,6 +1,6 @@
 import { computed } from '@ember/object';
 import { attribute, className, classNames, tagName } from '@ember-decorators/component';
-import { buildFaClassNameString } from '@nsf/ui-foundation/utils';
+import { buildFaClassNameString } from '@nsf-open/ember-ui-foundation/utils';
 import UiContextualContainer, {
   SelectorStrategies,
 } from '../-internals/contextual-container/component';

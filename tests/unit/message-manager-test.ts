@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import MessageManager, { messageManager } from '@nsf/ui-foundation/lib/MessageManager';
-import { AlertLevel } from '@nsf/ui-foundation/constants';
+import MessageManager, { messageManager } from '@nsf-open/ember-ui-foundation/lib/MessageManager';
+import { AlertLevel } from '@nsf-open/ember-ui-foundation/constants';
 
 class TestClass {
   @messageManager()

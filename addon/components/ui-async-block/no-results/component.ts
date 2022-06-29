@@ -3,7 +3,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { layout, tagName } from '@ember-decorators/component';
-import { kindaLooksPlural } from '@nsf/ui-foundation/utils';
+import { kindaLooksPlural } from '@nsf-open/ember-ui-foundation/utils';
 import template from './template';
 
 /**

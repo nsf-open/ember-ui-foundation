@@ -3,7 +3,7 @@ import {
   getAriaAttributeValues,
   addAriaAttribute,
   removeAriaAttribute,
-} from '@nsf/ui-foundation/utils/aria';
+} from '@nsf-open/ember-ui-foundation/utils/aria';
 
 module('Unit | Util | ARIA Attributes', function () {
   test('it can add, retrieve the value of, and remove attributes from an HTMLElement', function (assert) {

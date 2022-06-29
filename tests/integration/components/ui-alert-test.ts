@@ -2,8 +2,8 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { getCorrectedAlertLevel } from '@nsf/ui-foundation/lib/MessageManager';
-import { AlertLevel, AlertGroups } from '@nsf/ui-foundation/constants';
+import { getCorrectedAlertLevel } from '@nsf-open/ember-ui-foundation/lib/MessageManager';
+import { AlertLevel, AlertGroups } from '@nsf-open/ember-ui-foundation/constants';
 
 module('Integration | Component | ui-alert', function (hooks) {
   setupRenderingTest(hooks);

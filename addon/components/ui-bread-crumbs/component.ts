@@ -1,6 +1,6 @@
 import type RouterService from '@ember/routing/router-service';
 import type RouteInfo from '@ember/routing/-private/route-info';
-import type { IBreadCrumbController, BreadCrumb } from '@nsf/ui-foundation/constants';
+import type { IBreadCrumbController, BreadCrumb } from '@nsf-open/ember-ui-foundation/constants';
 import Component from '@ember/component';
 import { layout, tagName } from '@ember-decorators/component';
 import { inject as service } from '@ember/service';

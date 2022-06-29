@@ -1,4 +1,4 @@
-import type ModalService from '@nsf/ui-foundation/services/modal';
+import type ModalService from '@nsf-open/ember-ui-foundation/services/modal';
 
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
@@ -16,7 +16,7 @@ import {
   triggerKeyEvent,
   focus,
 } from '@ember/test-helpers';
-import MessageManager from '@nsf/ui-foundation/lib/MessageManager';
+import MessageManager from '@nsf-open/ember-ui-foundation/lib/MessageManager';
 
 module('Integration | Component | ui-modal', function (hooks) {
   setupRenderingTest(hooks);

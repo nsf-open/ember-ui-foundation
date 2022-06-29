@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { layout, tagName } from '@ember-decorators/component';
-import { HeadingLevels } from '@nsf/ui-foundation/constants';
+import { HeadingLevels } from '@nsf-open/ember-ui-foundation/constants';
 import template from './template';
 
 /**

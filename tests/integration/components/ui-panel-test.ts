@@ -3,8 +3,8 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'dummy/tests/helpers/wait';
-import UiAsyncBlock from '@nsf/ui-foundation/components/ui-async-block/component';
-import MessageManager from '@nsf/ui-foundation/lib/MessageManager';
+import UiAsyncBlock from '@nsf-open/ember-ui-foundation/components/ui-async-block/component';
+import MessageManager from '@nsf-open/ember-ui-foundation/lib/MessageManager';
 
 module('Integration | Component | ui-panel', function (hooks) {
   setupRenderingTest(hooks);

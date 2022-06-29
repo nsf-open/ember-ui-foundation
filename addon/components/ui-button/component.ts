@@ -1,9 +1,9 @@
-import type { DirectionsX } from '@nsf/ui-foundation/constants';
-import AsyncAwareComponent from '@nsf/ui-foundation/components/-internals/async-aware-component';
+import type { DirectionsX } from '@nsf-open/ember-ui-foundation/constants';
+import AsyncAwareComponent from '@nsf-open/ember-ui-foundation/components/-internals/async-aware-component';
 import { computed, set } from '@ember/object';
 import { not, or, reads } from '@ember/object/computed';
 import { attribute, className, layout, tagName } from '@ember-decorators/component';
-import { ButtonVariants, Directions, SizeVariants } from '@nsf/ui-foundation/constants';
+import { ButtonVariants, Directions, SizeVariants } from '@nsf-open/ember-ui-foundation/constants';
 import template from './template';
 
 /**

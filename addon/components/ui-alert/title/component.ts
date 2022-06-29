@@ -1,4 +1,4 @@
-import type { AlertGroupDefinition } from '@nsf/ui-foundation/constants';
+import type { AlertGroupDefinition } from '@nsf-open/ember-ui-foundation/constants';
 
 import Component from '@ember/component';
 import { layout, tagName } from '@ember-decorators/component';

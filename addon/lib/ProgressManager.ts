@@ -9,8 +9,8 @@ import ProgressItem from './ProgressItem';
  * Decorator to create a new ProgressManager instance.
  *
  * ```typescript
- * import type { ProgressManager } from '@nsf/ui-foundation';
- * import { progressManager } from '@nsf/ui-foundation';
+ * import type { ProgressManager } from '@nsf-open/ember-ui-foundation';
+ * import { progressManager } from '@nsf-open/ember-ui-foundation';
  * // ...
  * @progressManager([{ label: 'Step A', component: 'steps/step-a' }])
  * public declare manager: ProgressManager;
@@ -29,8 +29,8 @@ export function progressManager<Data = Record<string, unknown>>(
  * the UiStepflow, and supporting components like UiProgressBar.
  *
  * ```typescript
- * import type { ProgressManager } from '@nsf/ui-foundation';
- * import { progressManager } from '@nsf/ui-foundation';
+ * import type { ProgressManager } from '@nsf-open/ember-ui-foundation';
+ * import { progressManager } from '@nsf-open/ember-ui-foundation';
  * // ...
  * @progressManager([{ label: 'Step A', component: 'steps/step-a' }])
  * public declare manager: ProgressManager;

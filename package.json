@@ -1,5 +1,5 @@
 {
-  "name": "@nsf/ui-foundation",
+  "name": "@nsf-open/ember-ui-foundation",
   "version": "1.8.0",
   "description": "The starting point for Ember Application UI libraries at NSF.",
   "keywords": [

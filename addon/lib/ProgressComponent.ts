@@ -1,5 +1,5 @@
-import type ProgressManager from '@nsf/ui-foundation/lib/ProgressManager';
-import type ProgressItem from '@nsf/ui-foundation/lib/ProgressItem';
+import type ProgressManager from '@nsf-open/ember-ui-foundation/lib/ProgressManager';
+import type ProgressItem from '@nsf-open/ember-ui-foundation/lib/ProgressItem';
 import Component from '@ember/component';
 
 /**
