@@ -25,6 +25,7 @@
     "test:all": "npm-run-all lint test:*",
     "test": "ember test",
     "test:ember-compatibility": "ember try:each",
+    "test:coverage": "COVERAGE=true ember test",
     "prepack": "ember ts:precompile",
     "postpack": "ember ts:clean",
     "release": "standard-version",
@@ -147,5 +148,9 @@
         }
       ]
     ]
+  },
+  "volta": {
+    "node": "14.19.3",
+    "npm": "8.11.0"
   }
 }
