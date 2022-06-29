@@ -1,11 +1,14 @@
 # compiled output
 /dist/
 /tmp/
+/docs/
 
 # dependencies
 /bower_components/
 
 # misc
+/**/*.stories.ts
+/**/*.stories.mdx
 /.bowerrc
 /.editorconfig
 /.ember-cli
@@ -30,7 +33,6 @@
 /yarn.lock
 .gitkeep
 /storybook-static
-/.scannerwork
 
 # ember-try
 /.node_modules.ember-try/

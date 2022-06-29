@@ -29,7 +29,7 @@
     "prepack": "ember ts:precompile",
     "postpack": "ember ts:clean",
     "release": "standard-version",
-    "storybook:build": "STORYBOOK=true ember build && build-storybook",
+    "storybook:build": "STORYBOOK=true ember build && build-storybook -o ./docs",
     "storybook:start": "sleep 30s && start-storybook -p 6006 --ci"
   },
   "dependencies": {
