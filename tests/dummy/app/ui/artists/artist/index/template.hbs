@@ -1,9 +1,5 @@
 <ul>
   <li>
-    {{#if (-ember-octane)}}
-      <LinkTo @route="artists.artist.discography" @model={{this.model.id}}>Discography</LinkTo>
-    {{else}}
-      <LinkTo @params={{array "artists.artist.discography" this.model.id}}>Discography</LinkTo>
-    {{/if}}
+    <LinkTo @route="artists.artist.discography" @model={{this.model.id}}>Discography</LinkTo>
   </li>
 </ul>

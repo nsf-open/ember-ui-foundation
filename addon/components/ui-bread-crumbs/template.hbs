@@ -6,37 +6,17 @@
       {{~else~}}
         <li>
           {{~#if crumb.linkable~}}
-            {{!---------------------}}
-            {{!-- Generic Anchor  --}}
-            {{!---------------------}}
             {{~#if crumb.href~}}
               <a href="{{crumb.href}}" target="{{crumb.target}}" rel="noopener noreferrer">{{crumb.label}}</a>
-            {{!---------------------}}
-            {{!-- Ember >= 3.16   --}}
-            {{!---------------------}}
-            {{else if (-ember-octane)}}
-              {{~#if crumb.model~}}
-                {{~#if (is-array crumb.model)~}}
-                  <LinkTo @route={{crumb.path}} @models={{crumb.model}}>{{crumb.label}}</LinkTo>
-                  {{~else~}}
-                  <LinkTo @route={{crumb.path}} @model={{crumb.model}}>{{crumb.label}}</LinkTo>
-                {{~/if~}}
-                {{~else~}}
-                <LinkTo @route={{crumb.path}}>{{crumb.label}}</LinkTo>
-              {{~/if~}}
-            {{!---------------------}}
-            {{!-- Ember < 3.16    --}}
-            {{!---------------------}}
             {{else}}
               {{~#if crumb.model~}}
                 {{~#if (is-array crumb.model)~}}
-                {{!-- This isn't going to work in Ember 3.8 --}}
-                  <LinkTo @params={{array crumb.path}} @models={{crumb.model}}>{{crumb.label}}</LinkTo>
-                  {{~else~}}
-                  <LinkTo @params={{array crumb.path crumb.model}}>{{crumb.label}}</LinkTo>
-                {{~/if~}}
+                  <LinkTo @route={{crumb.path}} @models={{crumb.model}}>{{crumb.label}}</LinkTo>
                 {{~else~}}
-                <LinkTo @params={{array crumb.path}}>{{crumb.label}}</LinkTo>
+                  <LinkTo @route={{crumb.path}} @model={{crumb.model}}>{{crumb.label}}</LinkTo>
+                {{~/if~}}
+              {{~else~}}
+                <LinkTo @route={{crumb.path}}>{{crumb.label}}</LinkTo>
               {{~/if~}}
             {{/if}}
           {{~else~}}

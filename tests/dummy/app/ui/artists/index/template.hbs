@@ -3,11 +3,7 @@
 <ol>
   {{#each this.model as |artist|}}
     <li>
-      {{#if (-ember-octane)}}
-        <LinkTo @route="artists.artist" @model={{artist.id}}>{{artist.name}}</LinkTo>
-      {{else}}
-        <LinkTo @params={{array "artists.artist" artist.id}}>{{artist.name}}</LinkTo>
-      {{/if}}
+      <LinkTo @route="artists.artist" @model={{artist.id}}>{{artist.name}}</LinkTo>
     </li>
   {{/each}}
 </ol>

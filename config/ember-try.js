@@ -39,24 +39,9 @@ function makeScenario(name, emberSourceVersion, hash = undefined) {
 module.exports = async function () {
   return {
     scenarios: [
-      makeScenario('ember-lts-3.8', '~3.8.1', {
-        npm: {
-          ember: {
-            edition: 'classic',
-          },
-        },
-      }),
-
-      makeScenario('ember-lts-3.12', '~3.12.4', {
-        npm: {
-          ember: {
-            edition: 'classic',
-          },
-        },
-      }),
-
       makeScenario('ember-lts-3.16', '~3.16.3'),
       makeScenario('ember-lts-3.20', '~3.20.7'),
+      makeScenario('ember-lts-3.24', '~3.24.0'),
 
       makeScenario('ember-current-lts', 'lts', {
         npm: {
