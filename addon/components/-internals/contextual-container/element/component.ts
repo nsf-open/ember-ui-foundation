@@ -317,7 +317,7 @@ export default class UiContextualElement extends Component {
    * @return {Modifier[]}
    * @protected
    */
-  protected getPopperModifiers(): Modifier<unknown, unknown>[] {
+  protected getPopperModifiers(): Modifier<unknown, Record<string, unknown>>[] {
     return [
       { ...arrow, enabled: this.showArrow, options: { padding: 8 } },
       { ...hide, enabled: this.autoPlacement },

@@ -24,7 +24,7 @@ export default {
   },
 };
 
-export const Default = (context: unknown) => ({
+export const Default = (context: Record<string, unknown>) => ({
   context: Object.assign(context, {}),
 
   // language=handlebars
@@ -49,7 +49,7 @@ export const Default = (context: unknown) => ({
 `,
 });
 
-export const Links = (context: unknown) => ({
+export const Links = (context: Record<string, unknown>) => ({
   context: Object.assign(context, {}),
 
   // language=handlebars

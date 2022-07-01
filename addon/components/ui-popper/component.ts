@@ -64,7 +64,7 @@ export default class UiPopper extends Component {
    * @type {Modifier[]}
    * @default undefined
    */
-  public modifiers?: Modifier<unknown, unknown>[];
+  public modifiers?: Modifier<unknown, Record<string, unknown>>[];
 
   /**
    * Default placement of the positioned element relative to what it is anchoring to.
