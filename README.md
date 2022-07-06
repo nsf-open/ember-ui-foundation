@@ -23,10 +23,9 @@ it. To name just a few:
 Compatibility
 ------------------------------------------------------------------------------
 
-* Ember.js v3.8 or above
-* Ember CLI v3.8 or above
+* Ember.js v3.16 or above
 * Node.js v12 or above
-
+* ember-auto-import >= 2
 
 Installation
 ------------------------------------------------------------------------------
