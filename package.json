@@ -35,7 +35,7 @@
   "dependencies": {
     "@ember-decorators/component": "6.1.1",
     "@nsf-open/ember-general-utils": "2.0.1",
-    "@popperjs/core": "2.11.0",
+    "@popperjs/core": "2.11.5",
     "broccoli-funnel": "3.0.8",
     "ember-auto-import": "2.4.2",
     "ember-cli-babel": "7.26.11",
