@@ -9,18 +9,56 @@ on:
 
 jobs:
   test:
-    name: Test
+    timeout-minutes: 10
+    name: Tests
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - uses: volta-cli/action@v1
-
       - name: Run Tests
         run: |
-          npm install --no-audit
+          npm ci --no-audit
           npm run test:coverage
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  floating-dependencies:
+    timeout-minutes: 10
+    name: Floating Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: volta-cli/action@v1
+      - name: Run Tests
+        run: |
+          npm install --no-audit --package-lock=false
+          npm run test
+
+  try-scenarios:
+    timeout-minutes: 10
+    name: "Try: ${{ matrix.ember-try-scenario }}"
+    runs-on: ubuntu-latest
+    needs: test
+
+    strategy:
+      fail-fast: false
+      matrix:
+        ember-try-scenario:
+          - ember-lts-3.16
+          - ember-lts-3.20
+          - ember-lts-3.24
+          - ember-lts-3.28
+          - ember-release
+          - ember-classic
+          - ember-default-with-jquery
+          - embroider-safe
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: volta-cli/action@v1
+      - name: install dependencies
+        run: npm ci --no-audit
+      - name: test
+        run: node_modules/.bin/ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
