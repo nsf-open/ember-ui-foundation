@@ -215,7 +215,7 @@ export default class UiButton extends AsyncAwareComponent {
   }
 
   /**
-   * A private method for use by the MyNSF component libraries so that this button
+   * A private method for use by component libraries so that this button
    * component may be reused as needed without effecting how the consumer uses it.
    *
    * @private

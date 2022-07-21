@@ -28,9 +28,10 @@ export default function getRootElement(context: unknown) {
         }
       }
 
-      root = id
-        ? document.getElementById(id)
-        : document.querySelector('#ember-testing > .ember-view');
+      root =
+        (id
+          ? document.getElementById(id)
+          : document.querySelector('#ember-testing > .ember-view')) ?? root;
 
       return;
     }
