@@ -1,0 +1,47 @@
+{{#if this.filters}}
+  <span class="input-group-btn">
+    <UiMenu
+      @buttonText="Filters"
+      @variant="default"
+      @disabled={{this.disabled}}
+    as |Menu|>
+      {{#each this.filters as |filter|}}
+        <Menu.Item
+          @text={{filter.label}}
+          @onClick={{action this.handleQuerySelection filter.value}}
+        />
+      {{/each}}
+    </UiMenu>
+  </span>
+{{/if}}
+
+<input
+  type="text"
+  value="{{this.value}}"
+  class="form-control"
+  placeholder={{this.placeholder}}
+  disabled={{this.disabled}}
+  aria-label="{{this.label}}"
+  oninput={{this.handleInputChange}}
+>
+
+{{#if this.showClearButton}}
+  <span class="input-group-btn">
+    <UiButton
+      @variant="{{if this.showErrorMessage "danger" "default"}}"
+      @ariaLabel="{{concat "Reset " this.label}}"
+      @title="{{concat "Reset " this.label}}"
+      @disabled={{or this.disabled this.noValue}}
+      @onClick={{this.handleInputReset}}
+      @icon="times"
+    />
+  </span>
+{{/if}}
+
+<UiTooltipAttachment
+  @textContent={{this.errorMessage}}
+  @triggerEvents={{null}}
+  @visible={{this.showErrorMessage}}
+  @class="tooltip-danger"
+  @maxWidth={{400}}
+/>

@@ -15,3 +15,9 @@ nice with other libraries/tools. */
 
 .tooltip.menu .tooltip-inner { padding: 0; border: none; }
 .tooltip.menu .btn { text-align: left; }
+
+.input-group > input + .input-group-btn > .btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 0;
+}

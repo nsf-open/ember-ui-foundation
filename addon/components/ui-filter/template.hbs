@@ -1,0 +1,10 @@
+{{yield (hash
+  filteredRecords = this.filteredRecords
+
+  Input = (component "ui-filter/input"
+    value            = (readonly this.filterValue)
+    errorMessage     = (readonly this.lastErrorMessage)
+    showErrorMessage = (readonly this.showErrorMessage)
+    onValueChange    = this.handleFilterValueChange
+  )
+)}}

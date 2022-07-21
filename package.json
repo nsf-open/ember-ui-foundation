@@ -30,7 +30,7 @@
     "postpack": "ember ts:clean",
     "release": "standard-version",
     "storybook:build": "STORYBOOK=true ember build && build-storybook -o ./docs",
-    "storybook:start": "sleep 30s && start-storybook -p 6006 --ci"
+    "storybook:start": "sleep 30 && start-storybook -p 6006 --ci"
   },
   "dependencies": {
     "@ember-decorators/component": "6.1.1",
@@ -54,6 +54,7 @@
     "@ember/optional-features": "2.0.0",
     "@ember/test-helpers": "2.8.1",
     "@embroider/test-setup": "0.50.2",
+    "@faker-js/faker": "^7.3.0",
     "@glimmer/component": "1.0.4",
     "@glimmer/tracking": "1.0.4",
     "@storybook/addon-a11y": "6.5.9",
