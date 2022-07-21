@@ -1,0 +1,80 @@
+<nav aria-label={{this.ariaLabel}}>
+  <ul class="pagination">
+    <li class={{if this.disablePrevButtons "disabled"}}>
+      <a
+        href="#"
+        role="button"
+        class="page-item"
+        title="Go to first page"
+        aria-label="Go to first page"
+        aria-disabled="{{this.disablePrevButtons}}"
+        aria-current="false"
+        onclick={{action this.handleNavigation "first"}}
+      >
+        <UiIcon @name="angle-double-left" />
+      </a>
+    </li>
+
+    <li class={{if this.disablePrevButtons "disabled"}}>
+      <a
+        href="#"
+        role="button"
+        class="page-item"
+        title="Go to previous page"
+        aria-label="Go to previous page"
+        aria-disabled="{{this.disablePrevButtons}}"
+        aria-current="false"
+        onclick={{action this.handleNavigation "prev"}}
+      >
+        <UiIcon @name="angle-left" />
+      </a>
+    </li>
+
+    {{#each this.pageNumbers as |item|}}
+      <li class="{{if this.disabled "disabled"}}{{if item.isCurrent " active"}}">
+        <a
+          href="#"
+          role="button"
+          class="page-item{{if this.responsive " hidden-xs hidden-sm"}}"
+          title="{{if item.isCurrent (concat "Current page, page " item.idx) (concat "Go to page " item.idx)}}"
+          aria-label="{{if item.isCurrent (concat "Current page, page " item.idx) (concat "Go to page " item.idx)}}"
+          aria-current="{{if item.isCurrent "page" "false"}}"
+          aria-disabled="{{this.disabled}}"
+          onclick={{action this.handleNavigation item.idx}}
+        >
+          {{if this.showPageLinkRangeLabels item.range item.idx}}
+        </a>
+      </li>
+    {{/each}}
+
+    <li class={{if this.disableNextButtons "disabled"}}>
+      <a
+        href="#"
+        role="button"
+        class="page-item"
+        title="Go to next page"
+        aria-label="Go to next page"
+        aria-disabled="{{this.disableNextButtons}}"
+        aria-current="false"
+        onclick={{action this.handleNavigation "next"}}
+      >
+        <UiIcon @name="angle-right" />
+      </a>
+    </li>
+
+    <li class={{if this.disableNextButtons "disabled"}}>
+      <a
+        href="#"
+        role="button"
+        class="page-item{{if this.disableNextButtons ' disabled'}}"
+        title="Go to last page"
+        aria-label="Go to last page"
+        aria-disabled="{{this.disableNextButtons}}"
+        aria-current="false"
+        onclick={{action this.handleNavigation "last"}}
+      >
+        <UiIcon @name="angle-double-right" />
+      </a>
+    </li>
+  </ul>
+</nav>

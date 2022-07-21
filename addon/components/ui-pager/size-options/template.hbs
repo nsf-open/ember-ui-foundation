@@ -1,0 +1,16 @@
+<select
+  class="form-control"
+  disabled={{this.disabled}}
+  aria-label={{this.ariaLabel}}
+  aria-controls={{this.ariaControls}}
+  data-test-id={{this.testId}}
+  oninput={{this.handleInput}}
+  ...attributes
+>
+  {{#each this.options as |opt|}}
+    <option
+      value="{{opt.value}}"
+      selected={{eq opt.value this.stringSelected}}
+    >{{opt.label}}</option>
+  {{/each}}
+</select>

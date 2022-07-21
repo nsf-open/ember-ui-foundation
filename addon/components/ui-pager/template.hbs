@@ -1,0 +1,33 @@
+{{yield (hash
+	start         = (readonly this.startIndex)
+	end           = (readonly this.endIndex)
+	total         = (readonly this.recordCount)
+	pageSize      = (readonly this.intPageSize)
+	currentPage   = (readonly this.intCurrentPage)
+	isPaged       = (readonly this.isPaged)
+	pageRecords   = (readonly this.pageRecords)
+	description   = (readonly this.description)
+
+	Navbar = (component "ui-pager/navbar"
+		recordCount   = this.recordCount
+		pageSize      = this.intPageSize
+		currentPage   = this.intCurrentPage
+		pageCount     = this.pageCount
+		hasPrevPage   = this.hasPrevPage
+		hasNextPage   = this.hasNextPage
+		disabled      = this.disabled
+		goToPage      = this.goToPage
+		goToFirstPage = this.goToFirstPage
+		goToPrevPage  = this.goToPrevPage
+		goToNextPage  = this.goToNextPage
+		goToLastPage  = this.goToLastPage
+	)
+
+	SizeOptions = (component "ui-pager/size-options"
+		id          = this.sizeOptionsId
+		options     = this.pageSizes
+		selected    = this.intPageSize
+		disabled    = this.disabled
+		onSelection = this.changePageSize
+	)
+)}}
