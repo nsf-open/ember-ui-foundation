@@ -3,8 +3,14 @@ name: CI
 on:
   push:
     branches: [ 'main', 'v*', 'renovate/*' ]
+    paths-ignore:
+      - '**/*.stories.ts'
+      - '**/*.stories.mdx'
+      - './storybook'
+      - './storybook/utilities'
+      - './blueprints/**'
   pull_request:
-  workflow_call:
+    branches: [ 'main' ]
   workflow_dispatch:
 
 jobs:

@@ -3,8 +3,9 @@ name: GitHub Pages
 on:
   push:
     branches: [ 'main' ]
+    paths: [ './addon', './storybook', './storybook-utilities' ]
   workflow_call:
-  
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -28,4 +29,4 @@ jobs:
           destination_dir: ./docs
           force_orphan: true
           publish_branch: gh-pages
-    
+

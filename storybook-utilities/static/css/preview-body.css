@@ -3,7 +3,7 @@ pre.sbdocs > div {
 }
 
 pre.sbdocs + .sbdocs-h2,
-pre.sbdocs + .sbdocs-h2 {
+pre.sbdocs + .sbdocs-h3 {
   margin-top: 20px !important;
 }
 
