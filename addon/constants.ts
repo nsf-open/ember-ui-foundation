@@ -165,3 +165,9 @@ export enum KeyCodes {
   Space = 'Space',
   Escape = 'Escape',
 }
+
+export enum SortOrder {
+  ASC = 'ascending',
+  DESC = 'descending',
+  NONE = 'none',
+}

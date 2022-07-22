@@ -3,6 +3,8 @@ export { default as optionalService } from './optional-service';
 export { default as getRootElement } from './get-root-element';
 export { default as extractErrorMessages } from './extract-error-messages';
 export { default as keyNavigator } from './key-navigator';
+export { default as maybeSplitString } from './maybe-split-string';
+export { default as sortArrayWithRules } from './sort-array-with-rules';
 export { buildFaClassNameString } from './font-awesome';
 export { waitForTransitionEnd } from './transition-end';
 export { addAriaAttribute, removeAriaAttribute, getAriaAttributeValues } from './aria';

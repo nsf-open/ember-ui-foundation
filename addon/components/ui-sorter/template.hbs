@@ -1,0 +1,5 @@
+{{yield (hash
+  sortedRecords = (readonly this.sortedRecords)
+  description   = (readonly this.description)
+  Criterion     = (component "ui-sorter/criterion" onUpdate=this.handleRuleUpdated)
+)}}
