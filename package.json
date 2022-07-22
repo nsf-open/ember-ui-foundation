@@ -39,11 +39,11 @@
     "broccoli-funnel": "3.0.8",
     "ember-auto-import": "2.4.2",
     "ember-cli-babel": "7.26.11",
-    "ember-cli-htmlbars": "6.0.1",
+    "ember-cli-htmlbars": "6.1.0",
     "ember-cli-typescript": "4.2.1",
     "ember-concurrency": "2.2.1",
     "ember-concurrency-ts": "0.3.1",
-    "ember-element-helper": "0.5.5",
+    "ember-element-helper": "0.6.1",
     "ember-in-element-polyfill": "1.0.1",
     "ember-truth-helpers": "3.0.0",
     "font-awesome": "4.7.0"
@@ -53,10 +53,10 @@
     "@babel/eslint-plugin": "7.17.7",
     "@ember/optional-features": "2.0.0",
     "@ember/test-helpers": "2.8.1",
-    "@embroider/test-setup": "0.50.2",
+    "@embroider/test-setup": "1.8.3",
     "@faker-js/faker": "^7.3.0",
-    "@glimmer/component": "1.0.4",
-    "@glimmer/tracking": "1.0.4",
+    "@glimmer/component": "1.1.2",
+    "@glimmer/tracking": "1.1.2",
     "@storybook/addon-a11y": "6.5.9",
     "@storybook/addon-cssresources": "6.2.9",
     "@storybook/addon-essentials": "6.5.9",
@@ -152,6 +152,6 @@
   },
   "volta": {
     "node": "14.19.3",
-    "npm": "8.11.0"
+    "npm": "8.15.0"
   }
 }
