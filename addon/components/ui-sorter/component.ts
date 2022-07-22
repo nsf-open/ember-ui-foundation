@@ -137,11 +137,6 @@ export default class UiSorter extends Component {
 
   protected ruleSet: NativeArray<SortRule> = A([]);
 
-  @computed('ruleSet.[]', 'ruleSet.@each.{displayName,direction}')
-  protected get description() {
-    return this.createDescription(this.ruleSet);
-  }
-
   @computed(
     'records.[]',
     'ruleSet.[]',
@@ -149,6 +144,11 @@ export default class UiSorter extends Component {
   )
   protected get sortedRecords() {
     return isArray(this.records) ? sortArrayWithRules(this.records, this.ruleSet) : [];
+  }
+
+  @computed('ruleSet', 'sortedRecords.[]')
+  protected get description() {
+    return this.createDescription(this.ruleSet);
   }
 
   // eslint-disable-next-line ember/classic-decorator-hooks
