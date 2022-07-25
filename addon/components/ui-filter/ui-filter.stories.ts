@@ -13,10 +13,10 @@ export default {
 
   args: {
     filterRules: [
-      { propertyKey: 'name', startsWith: true },
-      { propertyKey: 'email' },
-      { propertyKey: 'phone' },
-      { propertyKey: 'address' },
+      { propertyName: 'name', startsWith: true },
+      { propertyName: 'email' },
+      { propertyName: 'phone' },
+      { propertyName: 'address' },
     ],
 
     filters: [{ label: "Where's Bob", value: 'QUERY name INCLUDES "Bob"' }],

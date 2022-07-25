@@ -14,12 +14,12 @@ type FilterRecord = Record<string, unknown>;
  * A FilterRule describes how to compare the current filter value to a candidate
  * property of each object in the record set being filtered.
  */
-type FilterRule = {
+export type FilterRule = {
   /**
    * The name of the property to compare. This can be a dot.separated.string to
    * reach into nested objects.
    */
-  propertyKey: string;
+  propertyName: string;
 
   /**
    * It is common to convert boolean values into friendly strings for display,
@@ -330,7 +330,7 @@ export default class UiFilter<R extends FilterRecord = FilterRecord> extends Com
   protected get normalizedFilterRules(): FilterRule[] {
     if (isArray(this.filterRules)) {
       return this.filterRules.map((rule) =>
-        typeof rule === 'string' ? { propertyKey: rule } : rule
+        typeof rule === 'string' ? { propertyName: rule } : rule
       );
     }
 
@@ -379,7 +379,7 @@ export default class UiFilter<R extends FilterRecord = FilterRecord> extends Com
         const rule = rules[i];
         const casedFilterValue = rule.caseSensitive ? filterValue : filterValue.toLowerCase();
 
-        let testValue = get(record, rule.propertyKey) as unknown;
+        let testValue = get(record, rule.propertyName) as unknown;
 
         if (typeof testValue === 'number') {
           testValue = testValue.toString();

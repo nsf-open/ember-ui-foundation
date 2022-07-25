@@ -166,9 +166,9 @@ module('Integration | Component | ui-filter', function (hooks) {
   test('it filters an array using object filter rules', async function (assert) {
     this.set('recordSet', recordSet);
     this.set('filterRules', [
-      { propertyKey: 'name', startsWith: true, caseSensitive: true },
-      { propertyKey: 'email', exactMatch: true },
-      { propertyKey: 'isAdmin', exactMatch: true, booleanMap: ['Admin', 'Non-Admin'] },
+      { propertyName: 'name', startsWith: true, caseSensitive: true },
+      { propertyName: 'email', exactMatch: true },
+      { propertyName: 'isAdmin', exactMatch: true, booleanMap: ['Admin', 'Non-Admin'] },
       'age',
     ]);
 
