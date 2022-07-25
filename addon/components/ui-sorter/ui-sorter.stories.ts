@@ -5,6 +5,10 @@ export default {
   title: 'Elements/ui-sorter',
   component: 'components/ui-sorter/component',
 
+  subcomponents: {
+    'Sorter.Criterion': 'components/ui-sorter/criterion/component',
+  },
+
   parameters: {
     docs: {
       iframeHeight: 450,
