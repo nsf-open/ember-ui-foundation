@@ -249,26 +249,26 @@ module('Integration | Component | ui-pager', function (hooks) {
       </UiPager>
     `);
 
-    assert.dom('[data-test-desc]').hasText('Showing 1 - 10 of 99');
+    assert.dom('[data-test-desc]').hasText('1 - 10 of 99');
 
     // Clicks on last
     await click(getNavbarButtonSelector('9').a);
 
-    assert.dom('[data-test-desc]').hasText('Showing 91 - 99 of 99');
+    assert.dom('[data-test-desc]').hasText('91 - 99 of 99');
 
     // It still works with a recordset that is smaller than the page size
     this.set('records', generateRecordSet(3));
 
-    assert.dom('[data-test-desc]').hasText('Showing 1 - 3 of 3');
+    assert.dom('[data-test-desc]').hasText('1 - 3 of 3');
 
     // Make sure it does not break when no recordset is provided
     this.set('records', []);
 
-    assert.dom('[data-test-desc]').hasText('Showing 0 - 0 of 0');
+    assert.dom('[data-test-desc]').hasText('0 - 0 of 0');
 
     this.set('records', undefined);
 
-    assert.dom('[data-test-desc]').hasText('Showing 0 - 0 of 0');
+    assert.dom('[data-test-desc]').hasText('0 - 0 of 0');
 
     this.set('records', generateRecordSet());
 

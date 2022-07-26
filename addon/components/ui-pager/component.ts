@@ -39,7 +39,7 @@ import template from './template';
  * @yields {unknown[]} pageRecords - The slice of the full recordset that constitutes the
  *                                   current page.
  * @yields {string} description    - The generated description of the pager state, by
- *                                   default it will read _"Showing {start index} - {end index}
+ *                                   default it will read _"{start index} - {end index}
  *                                   of {total record count}"_.
  */
 @tagName('')
@@ -93,7 +93,7 @@ export default class UiPager extends Component {
 
   /**
    * The method used to create the pager's state description. By default, the created
-   * string reads _"Showing {start index} - {end index} of {total record count}"_.
+   * string reads _"{start index} - {end index} of {total record count}"_.
    */
   public createDescription = function defaultPagerDescription(
     _page: number,
@@ -101,7 +101,7 @@ export default class UiPager extends Component {
     end: number,
     total: number
   ) {
-    return `Showing ${start} - ${end} of ${total}`;
+    return `${start} - ${end} of ${total}`;
   };
 
   /**
