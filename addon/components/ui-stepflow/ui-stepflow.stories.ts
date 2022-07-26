@@ -4,7 +4,7 @@ import { IProgressComponent } from '@nsf-open/ember-ui-foundation/lib/ProgressCo
 
 export default {
   title: 'Elements/ui-stepflow',
-  component: 'components/ui-step-flow/component',
+  component: 'components/ui-stepflow/component',
 
   parameters: {
     docs: {
