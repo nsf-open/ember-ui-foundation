@@ -1,0 +1,18 @@
+<div class="row control-bar" ...attributes>
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-xs-4">
+        <this.PagerSizeOptions />
+      </div>
+
+      <div class="col-xs-8">
+        <this.FilterInput @filter={{this.filters}} @showClearButton={{this.showFilterClearButton}} />
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 page-select-block">
+    <p class="page-description">{{this.pagerDescription}}</p>
+    <this.PagerNavbar @responsive={{false}} @pageLinkCount={{3}} />
+  </div>
+</div>

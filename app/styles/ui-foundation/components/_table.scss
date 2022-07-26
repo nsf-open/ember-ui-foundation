@@ -1,0 +1,82 @@
+$-header-padding: 8px;
+$-header-bg: #ffffff;
+
+/**
+ * Configuration for the table module.
+ */
+@mixin configure() {}
+
+/**
+ * Table Styling.
+ */
+@mixin style() {
+  .ui-table {
+    .control-bar {
+      > [class*="col-"] {
+        margin-bottom: 1rem;
+
+        > .row > [class*="col-"] {
+          &:not(:first-child) {
+            padding-left: 5px;
+          }
+
+          &:not(:last-child) {
+            padding-right: 5px;
+          }
+        }
+      }
+
+      .page-select-block {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 10px;
+
+        .page-description {
+          margin-bottom: 8px;
+        }
+
+        .pagination {
+          margin: 0;
+        }
+      }
+    }
+
+    table {
+      table-layout: fixed;
+
+      thead tr th {
+        position: sticky;
+        top: 0;
+        background: $-header-bg;
+        padding: 0;
+        vertical-align: middle;
+
+        > div {
+          display: flex;
+          align-content: center;
+        }
+
+        .text {
+          padding: $-header-padding;
+        }
+
+        button {
+          all: unset;
+          cursor: pointer;
+          text-align: center;
+          padding: 0 $-header-padding;
+
+          &:hover {
+            background: #eee;
+          }
+        }
+      }
+
+      tbody tr {
+        content-visibility: auto;
+        contain-intrinsic-size: 30px;
+      }
+    }
+  }
+}

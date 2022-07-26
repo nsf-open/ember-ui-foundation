@@ -1,0 +1,41 @@
+<this.SortCriterion
+  @sortOn={{this.sortOn}}
+  @name={{this.label}}
+  as |sort|
+>
+  <th
+    colspan="{{this.colspan}}"
+    class="{{if this.isSortable "sortable"}} {{if sort.index "is-sorted"}}"
+    aria-sort="{{if (and this.isSortable sort.enabled) sort.direction}}"
+  >
+    <div>
+      <span class="text">
+        {{~#if (has-block "default")}}{{yield}}{{else}}{{this.label}}{{/if~}}
+      </span>
+
+      {{#if this.description}}
+        <UiTooltip @ariaAttachAs="aria-describedby">
+          {{~this.description~}}
+        </UiTooltip>
+      {{/if}}
+
+      {{#if this.isSortable}}
+        {{#let
+          (if sort.enabled (concat " currently sorted " sort.direction " with priority " sort.index ".") " not currently sorted.")
+          (if (eq sort.nextDirection "none") " Click to remove sort." (concat " Click to sort " sort.nextDirection "."))
+        as |current next|}}
+          <button
+            type="button"
+            class="sort-control"
+            onclick={{sort.cycleDirection}}
+            aria-label="{{concat "This column is" current next}}"
+            title="{{concat "This column is" current next}}"
+          >
+            {{!--<span class="priority">{{if sort.index sort.index}}</span>--}}
+            <span class="icon"><UiIcon @name={{sort.iconClass}} @fw={{true}} /></span>
+          </button>
+        {{/let}}
+      {{/if}}
+    </div>
+  </th>
+</this.SortCriterion>

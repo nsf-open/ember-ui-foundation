@@ -20,6 +20,21 @@ export interface IBreadCrumbController extends Controller {
   breadCrumbs?: BreadCrumb[];
 }
 
+export interface ITableColumn {
+  propertyName?: string;
+  label?: string;
+  description?: string;
+  colSpan?: number;
+  sortOn?: string;
+  sortDirection?: string;
+  subSortOn?: string;
+  subSortDirection?: string;
+  filterExactMatch?: boolean;
+  filterStartsWith?: boolean;
+  filterCaseSensitive?: boolean;
+  filterBooleanMap?: [string, string];
+}
+
 export enum Directions {
   Left = 'left',
   Right = 'right',
