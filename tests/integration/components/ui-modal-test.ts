@@ -106,7 +106,7 @@ module('Integration | Component | ui-modal', function (hooks) {
   });
 
   test('it can be opened and closed via the modal service', async function (assert) {
-    const modal: ModalService = this.owner.lookup('service:modal');
+    const modal = this.owner.lookup('service:modal') as ModalService;
 
     // language=handlebars
     await render(hbs`
@@ -132,7 +132,7 @@ module('Integration | Component | ui-modal', function (hooks) {
   });
 
   test('it can be dynamically passed data and a title via the modal service', async function (assert) {
-    const modal: ModalService = this.owner.lookup('service:modal');
+    const modal = this.owner.lookup('service:modal') as ModalService;
 
     // language=handlebars
     await render(hbs`
@@ -149,7 +149,7 @@ module('Integration | Component | ui-modal', function (hooks) {
   });
 
   test('it will close one modal when another is requested to be opened', async function (assert) {
-    const modal: ModalService = this.owner.lookup('service:modal');
+    const modal = this.owner.lookup('service:modal') as ModalService;
 
     // language=handlebars
     await render(hbs`
@@ -196,7 +196,7 @@ module('Integration | Component | ui-modal', function (hooks) {
   });
 
   test('it allows an open modal to cancel the opening of a new modal', async function (assert) {
-    const modal: ModalService = this.owner.lookup('service:modal');
+    const modal = this.owner.lookup('service:modal') as ModalService;
 
     this.set('canHideModal', function () {
       assert.step('blocking');

@@ -9,5 +9,6 @@ export default function lookupComponent<C extends Component = Component>(
   context: TestContext,
   id: string
 ): C {
-  return context.owner.lookup('-view-registry:main')[id];
+  const registry = context.owner.lookup('-view-registry:main') as Record<string, C>;
+  return registry[id];
 }

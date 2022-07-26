@@ -62,8 +62,6 @@ export default class UiAlertBlock extends Component {
   // eslint-disable-next-line ember/classic-decorator-hooks
   init() {
     super.init();
-
-    // @ts-expect-error this helper is weirdly typed, it describes the event and as a key of the source object?
     addListener(this.manager, MessageEvents.MESSAGE_ADDED, this, this.onMessageAdded);
   }
 
@@ -72,7 +70,6 @@ export default class UiAlertBlock extends Component {
    */
   // eslint-disable-next-line ember/no-component-lifecycle-hooks
   willDestroyElement() {
-    // @ts-expect-error this helper is weirdly typed, it describes the event and as a key of the source object?
     removeListener(this.manager, MessageEvents.MESSAGE_ADDED, this, this.onMessageAdded);
     super.willDestroyElement();
   }

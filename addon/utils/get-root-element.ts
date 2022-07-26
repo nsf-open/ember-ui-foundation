@@ -1,5 +1,5 @@
+import getOwner from './get-owner';
 import { runInDebug, warn } from '@ember/debug';
-import { getOwner } from '@ember/application';
 
 const RootID = 'ui-positioning-root';
 
@@ -11,7 +11,9 @@ export default function getRootElement(context: unknown) {
   let root: HTMLElement | null = document.getElementById(RootID) || document.body;
 
   runInDebug(() => {
-    const config = getOwner(context)?.resolveRegistration('config:environment');
+    const config = getOwner(context)?.resolveRegistration<{ environment: string } | undefined>(
+      'config:environment'
+    );
     const isTest = config?.environment === 'test';
 
     if (isTest) {

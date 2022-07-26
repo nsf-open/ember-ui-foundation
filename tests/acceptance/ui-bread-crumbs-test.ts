@@ -1,9 +1,16 @@
+import type { IBreadCrumbController } from '@nsf-open/ember-ui-foundation/constants';
+import type { TestContext } from '@ember/test-helpers';
+
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { visit } from '@ember/test-helpers';
 
 module('Acceptance | Component | ui-bread-crumbs', function (hooks) {
   setupApplicationTest(hooks);
+
+  function lookupController(owner: TestContext['owner'], fullName: string): IBreadCrumbController {
+    return owner.lookup(fullName) as IBreadCrumbController;
+  }
 
   function nthCrumb(idx: number, anchor = false) {
     return `.breadcrumb li:nth-child(${idx})${anchor ? ' a' : ''}`;
@@ -39,13 +46,13 @@ module('Acceptance | Component | ui-bread-crumbs', function (hooks) {
   });
 
   test('it does not render an empty ordered list', async function (assert) {
-    this.owner.lookup('controller:application').breadCrumb = undefined;
+    lookupController(this.owner, 'controller:application').breadCrumb = undefined;
     await visit('/');
     assert.dom('.breadcrumb').doesNotExist();
   });
 
   test('it filters out breadcrumbs with no label text', async function (assert) {
-    this.owner.lookup('controller:playground').breadCrumb = { label: '' };
+    lookupController(this.owner, 'controller:playground').breadCrumb = { label: '' };
 
     await visit('/playground');
 
@@ -54,14 +61,20 @@ module('Acceptance | Component | ui-bread-crumbs', function (hooks) {
   });
 
   test('it supports a breadcrumb being able to "rewind", to remove, prior crumbs', async function (assert) {
-    this.owner.lookup('controller:playground').breadCrumb = { label: 'Foobar', rewind: 1 };
+    lookupController(this.owner, 'controller:playground').breadCrumb = {
+      label: 'Foobar',
+      rewind: 1,
+    };
 
     await visit('/playground');
 
     assert.dom(nthCrumb(1)).hasText('Foobar');
     assert.dom(nthCrumb(2)).doesNotExist();
 
-    this.owner.lookup('controller:artists.artist').breadCrumb = { label: 'Baz', rewind: -1 };
+    lookupController(this.owner, 'controller:artists.artist').breadCrumb = {
+      label: 'Baz',
+      rewind: -1,
+    };
 
     await visit('/artists/queen');
 
@@ -70,8 +83,8 @@ module('Acceptance | Component | ui-bread-crumbs', function (hooks) {
   });
 
   test('it support a breadcrumb with fully custom href and target', async function (assert) {
-    this.owner.lookup('controller:playground').breadCrumb = undefined;
-    this.owner.lookup('controller:playground').breadCrumbs = [
+    lookupController(this.owner, 'controller:playground').breadCrumb = undefined;
+    lookupController(this.owner, 'controller:playground').breadCrumbs = [
       { label: 'Search', href: 'https://www.google.com' },
       { label: 'Playground' },
     ];
@@ -83,7 +96,7 @@ module('Acceptance | Component | ui-bread-crumbs', function (hooks) {
     assert.dom(nthCrumb(2, true)).hasAttribute('target', '_self');
     assert.dom(nthCrumb(4)).doesNotExist();
 
-    this.owner.lookup('controller:artists').breadCrumb = {
+    lookupController(this.owner, 'controller:artists').breadCrumb = {
       label: 'Search More',
       href: 'https://www.bing.com',
       target: '_blank',

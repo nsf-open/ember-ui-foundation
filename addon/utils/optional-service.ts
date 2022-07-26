@@ -1,7 +1,7 @@
 import type ComputedProperty from '@ember/object/computed';
 import type Service from '@ember/service';
+import getOwner from './get-owner';
 import { computed } from '@ember/object';
-import { getOwner } from '@ember/application';
 
 /**
  * A computed macro that can be used to lazily inject a service and
@@ -10,7 +10,7 @@ import { getOwner } from '@ember/application';
 export default function optionalService(name?: string): ComputedProperty<Service | undefined> {
   return computed({
     get(this: unknown, propertyName: string) {
-      return getOwner(this).lookup(`service:${name || propertyName}`);
+      return getOwner(this)?.lookup<Service | undefined>(`service:${name || propertyName}`);
     },
   });
 }

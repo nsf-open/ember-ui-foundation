@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, find, settled, scrollTo, getRootElement } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import lookupComponent from '../../helpers/lookup-component';
 
 module('Integration | Component | ui-popper', function (hooks) {
   setupRenderingTest(hooks);
@@ -78,8 +79,7 @@ module('Integration | Component | ui-popper', function (hooks) {
     `);
 
     const popperId = find('.test-popper')?.getAttribute('id')?.replace('-popper', '') as string;
-    const registry = this.owner.lookup('-view-registry:main');
-    const instance = registry[popperId] as UiPopper;
+    const instance = lookupComponent<UiPopper>(this, popperId);
 
     assert.strictEqual(instance.realPopperTarget, find('#target-btn'));
 

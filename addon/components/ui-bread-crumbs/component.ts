@@ -5,7 +5,7 @@ import Component from '@ember/component';
 import { layout, tagName } from '@ember-decorators/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
-import { getOwner } from '@ember/application';
+import { getOwner } from '@nsf-open/ember-ui-foundation/utils';
 import template from './template';
 
 type FullBreadCrumb = Required<Exclude<BreadCrumb, string>>;
@@ -210,7 +210,7 @@ export default class UiBreadCrumbs extends Component {
   }
 
   lookupController(name: string): IBreadCrumbController | null {
-    const controller = getOwner(this).lookup(`controller:${name}`);
+    const controller = getOwner(this)?.lookup<IBreadCrumbController>(`controller:${name}`);
 
     if (controller) {
       return controller;
