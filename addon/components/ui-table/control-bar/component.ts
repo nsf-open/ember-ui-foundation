@@ -16,4 +16,12 @@ export default class UiTableControlBar extends Component {
   declare FilterInput: UiFilterInput;
 
   declare pagerDescription: string;
+
+  public showPagerSizeOptions = true;
+
+  public showPagerNavbar = true;
+
+  public showFilterInput = true;
+
+  public showPagerDescription = true;
 }

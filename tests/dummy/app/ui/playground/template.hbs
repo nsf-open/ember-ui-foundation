@@ -28,3 +28,12 @@
 <UiModal @title="I'm a modal window!" @name="test-modal">
   <p>Hello World!</p>
 </UiModal>
+
+<UiTable
+  @records={{this.recordSet}}
+  @columns={{array
+    (hash propertyName="name" sortOn="name")
+    (hash propertyName="email" sortOn="email")
+    (hash propertyName="phone")
+  }}
+/>

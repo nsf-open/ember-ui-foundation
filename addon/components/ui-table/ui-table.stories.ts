@@ -4,11 +4,35 @@ import { faker } from '@faker-js/faker';
 export default {
   title: 'Elements/ui-table',
   component: 'components/ui-table/component',
+
+  args: {
+    filters: [{ label: 'Hotmail Addresses', value: 'QUERY: email ENDS WITH "@hotmail.com"' }],
+
+    columns: [
+      { propertyName: 'name', sortOn: 'name' },
+      { propertyName: 'email', sortOn: 'email' },
+      { propertyName: 'phone' },
+    ],
+  },
+
+  argTypes: {
+    filters: {
+      control: { type: 'array' },
+    },
+
+    filterRules: {
+      control: { type: 'array' },
+    },
+
+    columns: {
+      control: { type: 'array' },
+    },
+  },
 };
 
-const Template = (context: unknown) => ({
-  context: Object.assign(
-    {
+export const Default = (context: unknown) => {
+  return {
+    context: Object.assign({}, context, {
       get recordSet() {
         const records = [];
 
@@ -23,21 +47,21 @@ const Template = (context: unknown) => ({
 
         return records;
       },
-    },
-    context
-  ),
+    }),
 
-  // language=hbs
-  template: hbs`
-    <UiTable
-      @records={{this.recordSet}}
-      @columns={{array
-        (hash propertyName="name" sortOn="name")
-        (hash propertyName="email" sortOn="email")
-        (hash propertyName="phone")
-      }}
-    />
-  `,
-});
-
-export const Default = Template.bind({});
+    // language=handlebars
+    template: hbs`
+      <UiTable
+        @records={{this.recordSet}}
+        @columns={{this.columns}}
+        @filters={{this.filters}}
+        @filterRules={{this.filterRules}}
+        @showFilterClearButton={{this.showFilterClearButton}}
+        @filterPlaceholder={{this.filterPlaceholder}}
+        @pagingEnabled={{this.pagingEnabled}}
+        @filterEnabled={{this.filterEnabled}}
+      />
+    `,
+  };
+};
+Default.storyName = 'ui-table';

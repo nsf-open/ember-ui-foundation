@@ -1,18 +1,38 @@
-<div class="row control-bar" ...attributes>
-  <div class="col-md-6">
-    <div class="row">
-      <div class="col-xs-4">
-        <this.PagerSizeOptions />
-      </div>
+{{#let
+  (or this.showPagerSizeOptions this.showFilterInput)
+  (or this.showPagerDescription this.showPagerNavbar)
+as |showLeftSideControls showRightSideControls|}}
+  {{#if (or showLeftSideControls showRightSideControls)}}
+    <div class="row control-bar" ...attributes>
+      {{#if showLeftSideControls}}
+        <div class="col-md-7">
+          <div class="row">
+            {{#if this.showPagerSizeOptions}}
+              <div class="col-xs-3">
+                <this.PagerSizeOptions />
+              </div>
+            {{/if}}
 
-      <div class="col-xs-8">
-        <this.FilterInput @filter={{this.filters}} @showClearButton={{this.showFilterClearButton}} />
-      </div>
+            {{#if this.showFilterInput}}
+              <div class="col-xs-9">
+                <this.FilterInput />
+              </div>
+            {{/if}}
+          </div>
+        </div>
+      {{/if}}
+
+      {{#if showRightSideControls}}
+        <div class="col-md-5 {{unless showLeftSideControls "col-md-offset-7"}} page-select-block">
+          {{#if this.showPagerDescription}}
+            <p class="page-description">{{this.pagerDescription}}</p>
+          {{/if}}
+
+          {{#if this.showPagerNavbar}}
+            <this.PagerNavbar />
+          {{/if}}
+        </div>
+      {{/if}}
     </div>
-  </div>
-
-  <div class="col-md-6 page-select-block">
-    <p class="page-description">{{this.pagerDescription}}</p>
-    <this.PagerNavbar @responsive={{false}} @pageLinkCount={{3}} />
-  </div>
-</div>
+  {{/if}}
+{{/let}}

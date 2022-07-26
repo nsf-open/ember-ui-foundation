@@ -1,5 +1,5 @@
 {{!--
-The UiTable is designed as a layer-cake of controls whose output is fed as the
+The UiTable is designed as a layer-cake of controls whose output is fed to the
 input of the next tier down.
 --}}
 <div
@@ -14,20 +14,52 @@ input of the next tier down.
       @filterMethod={{this.filterMethod}}
     as |Filter|>
       <UiPager @records={{Filter.filteredRecords}} as |Pager|>
-        <UiTable::ControlBar
-          @PagerSizeOptions={{component Pager.SizeOptions}}
-          @PagerNavbar={{component Pager.Navbar responsive=false pageLinkCount=3}}
-          @FilterInput={{component Filter.Input filter=this.filters showClearButton=this.showFilterClearButton}}
-          @pagerDescription={{Pager.description}}
-        />
+        {{!--------------------------
+            Top Control Bar
+        ----------------------------}}
+        {{#let
+          (component Pager.SizeOptions)
+          (component Pager.Navbar
+            responsive    = false
+            pageLinkCount = 3
+          )
+          (component Filter.Input
+            filters         = this.filters
+            showClearButton = this.showFilterClearButton
+            placeholder     = this.filterPlaceholder
+          )
+        as |PagerSizeOptions PagerNavbar FilterInput|}}
+          {{#if (has-block "top-control-bar")}}
+            {{yield (hash
+              PagerSizeOptions  = PagerSizeOptions
+              PagerNavbar       = PagerNavbar
+              FilterInput       = FilterInput
+              pagerDescription  = Pager.description
+            ) to="top-control-bar"}}
+          {{else}}
+            <UiTable::ControlBar
+              @PagerSizeOptions={{PagerSizeOptions}}
+              @PagerNavbar={{PagerNavbar}}
+              @FilterInput={{FilterInput}}
+              @pagerDescription={{Pager.description}}
+              @showPagerSizeOptions={{this.pagingEnabled}}
+              @showFilterInput={{this.filterEnabled}}
+              @showPagerDescription={{this.pagingEnabled}}
+              @showPagerNavbar={{this.pagingEnabled}}
+            />
+          {{/if}}
+        {{/let}}
 
+        {{!--------------------------
+            Table Proper
+        ----------------------------}}
         <table class="table table-striped table-responsive" ...attributes id="{{this.tableGuid}}">
           <caption
             id="{{concat this.tableGuid '-caption'}}"
             class="sr-only"
             aria-live="polite"
           >
-            {{Pager.description}}
+            {{#if this.pagingEnabled}}{{Pager.description}}{{/if}}
             {{Sorter.description}}
             {{Filter.description}}
           </caption>
@@ -54,11 +86,11 @@ input of the next tier down.
 
           <tbody>
             {{#if (has-block "row")}}
-              {{#each Pager.pageRecords as |record|}}
+              {{#each (if this.pagingEnabled Pager.pageRecords Filter.filteredRecords) as |record|}}
                 {{yield record to="row"}}
               {{/each}}
             {{else if this.columns}}
-              {{#each Pager.pageRecords as |record|}}
+              {{#each (if this.pagingEnabled Pager.pageRecords Filter.filteredRecords) as |record|}}
                 <tr>
                   {{#each this.columns as |column|}}
                     <td>{{get record column.propertyName}}</td>
@@ -67,8 +99,43 @@ input of the next tier down.
               {{/each}}
             {{/if}}
           </tbody>
-
         </table>
+
+        {{!--------------------------
+            Top Control Bar
+        ----------------------------}}
+        {{#let
+          (component Pager.SizeOptions)
+          (component Pager.Navbar
+            responsive    = false
+            pageLinkCount = 3
+          )
+          (component Filter.Input
+            filters         = this.filters
+            showClearButton = this.showFilterClearButton
+            placeholder     = this.filterPlaceholder
+          )
+        as |PagerSizeOptions PagerNavbar FilterInput|}}
+          {{#if (has-block "bottom-control-bar")}}
+            {{yield (hash
+              PagerSizeOptions  = PagerSizeOptions
+              PagerNavbar       = PagerNavbar
+              FilterInput       = FilterInput
+              pagerDescription  = Pager.description
+            ) to="bottom-control-bar"}}
+          {{else}}
+            <UiTable::ControlBar
+              @PagerSizeOptions={{PagerSizeOptions}}
+              @PagerNavbar={{PagerNavbar}}
+              @FilterInput={{FilterInput}}
+              @pagerDescription={{Pager.description}}
+              @showPagerSizeOptions={{false}}
+              @showFilterInput={{false}}
+              @showPagerDescription={{this.pagingEnabled}}
+              @showPagerNavbar={{this.pagingEnabled}}
+            />
+          {{/if}}
+        {{/let}}
       </UiPager>
     </UiFilter>
   </UiSorter>
