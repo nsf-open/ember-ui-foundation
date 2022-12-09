@@ -2,13 +2,16 @@ import type UiSorterCriterion from '../../ui-sorter/criterion/component';
 
 import Component from '@ember/component';
 import { layout, tagName } from '@ember-decorators/component';
-import { computed } from '@ember/object';
+import { computed, get } from '@ember/object';
+import { humanize } from '@nsf-open/ember-general-utils';
 import template from './template';
 
 @tagName('')
 @layout(template)
 export default class UiTableTh extends Component {
   public label?: string;
+
+  public propertyName?: string;
 
   public sortOn?: string;
 
@@ -22,12 +25,32 @@ export default class UiTableTh extends Component {
 
   public colspan?: string | number;
 
-  protected declare SortCriterion: UiSorterCriterion;
+  public recordSet?: unknown[];
 
-  protected declare resizeObserver: ResizeObserver;
+  public showColumnFilter = true;
+
+  protected declare sortCriterion: UiSorterCriterion;
 
   @computed('sortOn')
   get isSortable() {
     return typeof this.sortOn === 'string';
+  }
+
+  @computed('label', 'propertyName')
+  get displayName() {
+    return (
+      this.label ?? (typeof this.propertyName === 'string' ? humanize(this.propertyName, true) : '')
+    );
+  }
+
+  @computed('recordSet.[]', 'propertyName', 'showColumnFilter')
+  get uniqueColumnValues() {
+    if (!(this.showColumnFilter && this.recordSet?.length && this.propertyName)) {
+      return undefined;
+    }
+
+    return new Set(
+      this.recordSet.map((item) => get(item, this.propertyName as keyof typeof item)).sort()
+    );
   }
 }

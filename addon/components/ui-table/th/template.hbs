@@ -1,6 +1,6 @@
-<this.SortCriterion
+<this.sortCriterion
   @sortOn={{this.sortOn}}
-  @name={{this.label}}
+  @name={{this.displayName}}
   as |sort|
 >
   <th
@@ -10,13 +10,21 @@
   >
     <div>
       <span class="text">
-        {{~#if (has-block "default")}}{{yield}}{{else}}{{this.label}}{{/if~}}
+        {{~#if (has-block)}}{{yield}}{{else}}{{this.displayName}}{{/if~}}
       </span>
 
       {{#if this.description}}
         <UiTooltip @ariaAttachAs="aria-describedby">
           {{~this.description~}}
         </UiTooltip>
+      {{/if}}
+
+      {{#if this.uniqueColumnValues}}
+        <UiMenu @icon="filter" @variant="" class="filter-control" as |Menu|>
+          {{#each this.uniqueColumnValues as |value|}}
+            <Menu.Item @text="{{value}}" />
+          {{/each}}
+        </UiMenu>
       {{/if}}
 
       {{#if this.isSortable}}
@@ -26,7 +34,7 @@
         as |current next|}}
           <button
             type="button"
-            class="sort-control"
+            class="btn sort-control"
             onclick={{sort.cycleDirection}}
             aria-label="{{concat "This column is" current next}}"
             title="{{concat "This column is" current next}}"
@@ -38,4 +46,4 @@
       {{/if}}
     </div>
   </th>
-</this.SortCriterion>
+</this.sortCriterion>

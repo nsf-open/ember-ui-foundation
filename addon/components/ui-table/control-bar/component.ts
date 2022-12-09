@@ -9,11 +9,11 @@ import template from './template';
 @tagName('')
 @layout(template)
 export default class UiTableControlBar extends Component {
-  declare PagerSizeOptions: UiPagerSizeOptions;
+  declare pagerSizeOptions: UiPagerSizeOptions;
 
-  declare PagerNavbar: UiPagerNavbar;
+  declare pagerNavbar: UiPagerNavbar;
 
-  declare FilterInput: UiFilterInput;
+  declare filterInput: UiFilterInput;
 
   declare pagerDescription: string;
 

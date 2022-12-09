@@ -29,18 +29,18 @@ input of the next tier down.
             placeholder     = this.filterPlaceholder
           )
         as |PagerSizeOptions PagerNavbar FilterInput|}}
-          {{#if (has-block "top-control-bar")}}
+          {{#if (has-block "topControlBar")}}
             {{yield (hash
               PagerSizeOptions  = PagerSizeOptions
               PagerNavbar       = PagerNavbar
               FilterInput       = FilterInput
               pagerDescription  = Pager.description
-            ) to="top-control-bar"}}
+            ) to="topControlBar"}}
           {{else}}
             <UiTable::ControlBar
-              @PagerSizeOptions={{PagerSizeOptions}}
-              @PagerNavbar={{PagerNavbar}}
-              @FilterInput={{FilterInput}}
+              @pagerSizeOptions={{PagerSizeOptions}}
+              @pagerNavbar={{PagerNavbar}}
+              @filterInput={{FilterInput}}
               @pagerDescription={{Pager.description}}
               @showPagerSizeOptions={{this.pagingEnabled}}
               @showFilterInput={{this.filterEnabled}}
@@ -71,13 +71,15 @@ input of the next tier down.
               <tr>
                 {{#each this.columns as |column|}}
                   <UiTable::Th
-                    @label={{or column.label (humanize-string column.propertyName titleCase=true)}}
+                    @label={{column.label}}
+                    @propertyName={{column.propertyName}}
                     @sortOn={{column.sortOn}}
                     @sortDirection={{column.sortDirection}}
                     @subSortOn={{column.subSortOn}}
                     @subSortDirection={{column.subSortDirection}}
-                    @SortCriterion={{Sorter.Criterion}}
                     @description={{column.description}}
+                    @recordSet={{Filter.filteredRecords}}
+                    @sortCriterion={{Sorter.Criterion}}
                   />
                 {{/each}}
               </tr>
@@ -102,7 +104,7 @@ input of the next tier down.
         </table>
 
         {{!--------------------------
-            Top Control Bar
+            Bottom Control Bar
         ----------------------------}}
         {{#let
           (component Pager.SizeOptions)
@@ -116,18 +118,18 @@ input of the next tier down.
             placeholder     = this.filterPlaceholder
           )
         as |PagerSizeOptions PagerNavbar FilterInput|}}
-          {{#if (has-block "bottom-control-bar")}}
+          {{#if (has-block "bottomControlBar")}}
             {{yield (hash
               PagerSizeOptions  = PagerSizeOptions
               PagerNavbar       = PagerNavbar
               FilterInput       = FilterInput
               pagerDescription  = Pager.description
-            ) to="bottom-control-bar"}}
+            ) to="bottomControlBar"}}
           {{else}}
             <UiTable::ControlBar
-              @PagerSizeOptions={{PagerSizeOptions}}
-              @PagerNavbar={{PagerNavbar}}
-              @FilterInput={{FilterInput}}
+              @pagerSizeOptions={{PagerSizeOptions}}
+              @pagerNavbar={{PagerNavbar}}
+              @filterInput={{FilterInput}}
               @pagerDescription={{Pager.description}}
               @showPagerSizeOptions={{false}}
               @showFilterInput={{false}}

@@ -9,13 +9,13 @@ as |showLeftSideControls showRightSideControls|}}
           <div class="row">
             {{#if this.showPagerSizeOptions}}
               <div class="col-xs-3">
-                <this.PagerSizeOptions />
+                <this.pagerSizeOptions />
               </div>
             {{/if}}
 
             {{#if this.showFilterInput}}
               <div class="col-xs-9">
-                <this.FilterInput />
+                <this.filterInput />
               </div>
             {{/if}}
           </div>
@@ -29,7 +29,7 @@ as |showLeftSideControls showRightSideControls|}}
           {{/if}}
 
           {{#if this.showPagerNavbar}}
-            <this.PagerNavbar />
+            <this.pagerNavbar />
           {{/if}}
         </div>
       {{/if}}
