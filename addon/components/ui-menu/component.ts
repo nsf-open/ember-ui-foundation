@@ -57,6 +57,11 @@ export default class UiMenu extends Component {
   public variant = ButtonVariants.Primary;
 
   /**
+   * The font-awesome icon displayed on the menu toggle button.
+   */
+  public icon = 'caret-down';
+
+  /**
    * The value of the element's `data-test-id` attribute, if required.
    */
   public testId?: string;

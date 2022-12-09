@@ -1,6 +1,6 @@
 <UiButton @text="{{this.buttonText}}"
   @variant="{{this.variant}}"
-  @icon="caret-down"
+  @icon="{{this.icon}}"
   @iconPlacement="right"
   @responsive={{false}}
   @testId={{this.testId}}
@@ -10,6 +10,7 @@
   aria-haspopup="true"
   aria-expanded="{{if this.visible "true" "false"}}"
   onkeyup={{action this.handleTriggerKeyEvents}}
+  ...attributes
 />
 
 {{#ui-internals/contextual-container
