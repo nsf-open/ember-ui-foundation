@@ -121,7 +121,7 @@
     "prettier": "2.7.1",
     "qunit": "2.19.1",
     "qunit-dom": "2.0.0",
-    "sass": "1.53.0",
+    "sass": "1.56.1",
     "standard-version": "9.5.0",
     "typescript": "4.7.4",
     "webpack": "5.75.0"
