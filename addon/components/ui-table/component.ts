@@ -24,6 +24,11 @@ export default class UiTable extends Component {
   public filterMethod?: <R>(term: string, records: R[]) => R[];
 
   /**
+   * Text that will be placed within the table's caption element.
+   */
+  public caption?: string;
+
+  /**
    * An array that will be used to populate a menu of options that can
    * be selected to auto-populate the filter text input.
    */
@@ -39,8 +44,17 @@ export default class UiTable extends Component {
    */
   public filterPlaceholder?: string;
 
+  /**
+   * Whether filtering of the table's contents is enabled. By default, this
+   * includes adding some UI to the top control bar such a text input to
+   * provide the filter term.
+   */
   public filterEnabled = true;
 
+  /**
+   * Whether the table's content is to be subdivided into multiple pages. This
+   * will also enable some UI elements like the page selector.
+   */
   public pagingEnabled = true;
 
   protected get tableGuid() {

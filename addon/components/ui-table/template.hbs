@@ -53,16 +53,19 @@ input of the next tier down.
         {{!--------------------------
             Table Proper
         ----------------------------}}
-        <table class="table table-striped table-responsive" ...attributes id="{{this.tableGuid}}">
-          <caption
-            id="{{concat this.tableGuid '-caption'}}"
-            class="sr-only"
-            aria-live="polite"
-          >
-            {{#if this.pagingEnabled}}{{Pager.description}}{{/if}}
-            {{Sorter.description}}
-            {{Filter.description}}
-          </caption>
+        <table
+          class="table table-striped table-responsive"
+          ...attributes
+          id="{{this.tableGuid}}"
+          aria-describedby="{{concat this.tableGuid "-description"}}"
+        >
+          {{#if (has-block "caption")}}
+            <caption>
+              {{yield to="caption"}}
+            </caption>
+          {{else if this.caption}}
+            <caption>{{this.caption}}</caption>
+          {{/if}}
 
           <thead>
             {{#if (has-block "thead")}}
@@ -102,6 +105,12 @@ input of the next tier down.
             {{/if}}
           </tbody>
         </table>
+
+        <div class="sr-only" aria-live="polite" id="{{concat this.tableGuid "-description"}}">
+          {{#if this.pagingEnabled}}{{Pager.description}}{{/if}}
+          {{Sorter.description}}
+          {{Filter.description}}
+        </div>
 
         {{!--------------------------
             Bottom Control Bar
