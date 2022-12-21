@@ -25,8 +25,8 @@
 
 	SizeOptions = (component "ui-pager/size-options"
 		id          = this.sizeOptionsId
-		options     = this.pageSizes
-		selected    = this.intPageSize
+		options     = this.availablePageSizes
+		selected    = this.selectedPageSize
 		disabled    = this.disabled
 		onSelection = this.changePageSize
 	)

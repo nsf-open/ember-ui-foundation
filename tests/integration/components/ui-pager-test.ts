@@ -387,4 +387,42 @@ module('Integration | Component | ui-pager', function (hooks) {
       .isDisabled()
       .hasValue('10');
   });
+
+  test('it can limit its page size options based on the length of the record set', async function (assert) {
+    this.set('records', generateRecordSet(25));
+    this.set('trimSizeOptions', false);
+    this.set('pageSize', '25');
+
+    this.set('pageSizes', [
+      { value: '20', label: '20 Records' },
+      { value: '25', label: '25 Records' },
+      { value: '75', label: '75 Records' },
+      { value: '-1', label: 'Show All' },
+    ]);
+
+    // language=handlebars
+    await render(hbs`
+      <UiPager
+        @records={{this.records}}
+        @pageSizes={{this.pageSizes}}
+        @pageSize={{this.pageSize}}
+        @trimSizeOptions={{this.trimSizeOptions}}
+      as |Pager|>
+        <Pager.SizeOptions />
+      </UiPager>
+    `);
+
+    assert.dom('select').hasValue('25');
+    assert.dom('select option').exists({ count: 4 });
+
+    this.set('trimSizeOptions', true);
+
+    assert.dom('select option').exists({ count: 2 });
+    assert.dom('select').hasValue('-1');
+
+    this.set('records', generateRecordSet(26));
+
+    assert.dom('select option').exists({ count: 3 });
+    assert.dom('select').hasValue('25');
+  });
 });

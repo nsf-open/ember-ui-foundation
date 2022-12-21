@@ -77,6 +77,15 @@ export default class UiPager extends Component {
   ];
 
   /**
+   * If true, then the page size options presented will not exceed the length
+   * of the record set. For example, if the `pageSizes` provided included 10,
+   * 20, 30, 40, and 50, but the provided `records` array only contained 35 items,
+   * then only the options for 10, 20, and 30 would be shown. An option with the
+   * "Show All" value of -1 is exempt from this.
+   */
+  public trimSizeOptions = true;
+
+  /**
    * Whether the page selector can be interacted with.
    */
   public disabled = false;
@@ -105,11 +114,47 @@ export default class UiPager extends Component {
   };
 
   /**
+   * The subset of pageSizes whose value is smaller than the length of the records array.
+   */
+  @computed('records.[]', 'pageSizes.{[],@each.value}', 'trimSizeOptions')
+  protected get availablePageSizes() {
+    if (!this.trimSizeOptions) {
+      return this.pageSizes;
+    }
+
+    return this.pageSizes.filter((option) => {
+      const intValue = parseInt(option.value);
+      return intValue === -1 || intValue < this.records.length;
+    });
+  }
+
+  /**
    * The value of `pageSize` always cast as an integer.
    */
   @computed('pageSize')
   protected get intPageSize() {
     return typeof this.pageSize === 'string' ? parseInt(this.pageSize, 10) : this.pageSize ?? 10;
+  }
+
+  /**
+   * Keeps from having the first option in the list confusingly "selected" if the
+   * number of records is changed to less than the page size value while `trimSizeOptions`
+   * is enabled.
+   *
+   * Without a value, select elements visibly display their first option which might give
+   * the wrong impression to the user. With `trimSizeOptions` it is possible to lose the
+   * option that was selected and cause this visual glitch. The only way it occurs is when
+   * the number of records dips below the selected page size, at which point the -1 "Show
+   * All" option is applicable. Of course, if there is no "Show All" then you'll have an
+   * empty select... developer's choice.
+   */
+  @computed('trimSizeOptions', 'intPageSize', 'records.[]')
+  protected get selectedPageSize() {
+    if (!this.trimSizeOptions) {
+      return this.intPageSize;
+    }
+
+    return this.intPageSize >= this.records.length ? -1 : this.intPageSize;
   }
 
   /**
