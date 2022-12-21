@@ -3,9 +3,14 @@
   "version": "1.8.1",
   "description": "The starting point for Ember Application UI libraries at NSF.",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "user interface",
+    "nsf components",
+    "nsf design",
+    "theme"
   ],
-  "repository": "https://github.com/nsf-open/ember-ui-foundation",
+  "repository": "https://github.com/nsf-open/ember-ui-foundation/",
+  "homepage": "https://nsf-open.github.io/ember-ui-foundation/",
   "license": "MIT",
   "author": "",
   "directories": {
