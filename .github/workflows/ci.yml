@@ -16,6 +16,10 @@ on:
 
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   current-dependencies:
     timeout-minutes: 10
@@ -24,6 +28,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: volta-cli/action@v3
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - run: "sed -i'.bak' -e 's/\"noEmitOnError\": false/\"noEmitOnError\": true/' ./tsconfig.json"
       - run: npm ci --no-audit
       - run: npm run test:coverage
@@ -41,6 +51,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: volta-cli/action@v3
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - run: npm install --no-audit --package-lock=false
       - run: npm test
 
@@ -67,6 +83,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: volta-cli/action@v3
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: install dependencies
         run: npm ci --no-audit
       - name: test
