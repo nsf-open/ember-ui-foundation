@@ -1,4 +1,4 @@
-name: Publishes a new version using release-it
+name: Version & Publish
 
 on:
   workflow_dispatch:
@@ -12,7 +12,9 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm ci
-      - run: npm run release -- --ci
+      - run: |
+          export GITHUB_TOKEN = ${{ secrets.GITHUB_TOKEN }}
+          npm ci --no-audit
+          npm run release -- --ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
