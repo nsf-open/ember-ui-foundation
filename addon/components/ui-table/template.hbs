@@ -69,7 +69,7 @@ input of the next tier down.
 
           <thead>
             {{#if (has-block "thead")}}
-              {{yield (hash Th=(component "ui-table/th" SortCriterion=Sorter.Criterion)) to="thead"}}
+              {{yield (hash Th=(component "ui-table/th" sortCriterion=Sorter.Criterion)) to="thead"}}
             {{else if this.columns}}
               <tr>
                 {{#each this.columns as |column|}}
