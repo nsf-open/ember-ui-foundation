@@ -12,9 +12,8 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: |
-          export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-          npm ci --no-audit
-          npm run release -- --ci
+      - run: npm ci --no-audit
+      - run: npm run release -- --ci
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
