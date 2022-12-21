@@ -9,6 +9,8 @@ on:
       - './storybook'
       - './storybook/utilities'
       - './blueprints/**'
+      - './README.md'
+      - './CONTRIBUTING.md'
 
   pull_request:
     branches-ignore:
