@@ -17,22 +17,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
-    timeout-minutes: 10
-    name: Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: volta-cli/action@v3
-      - name: Run Tests
-        run: |
-          npm ci --no-audit
-          npm run test:coverage
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
   floating-dependencies:
     timeout-minutes: 10
     name: Floating Dependencies
@@ -40,10 +24,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: volta-cli/action@v3
-      - name: Run Tests
-        run: |
-          npm install --no-audit --package-lock=false
-          npm run test
+      - run: "sed -i'.bak' -e 's/\"noEmitOnError\": false/\"noEmitOnError\": true/' ./tsconfig.json"
+      - run: npm install --no-audit --package-lock=false
+      - run: npm run test:coverage
+      - uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   try-scenarios:
     timeout-minutes: 10
