@@ -200,7 +200,9 @@ export default class UiPager extends Component {
    */
   @computed('recordCount', 'intPageSize')
   protected get pageCount() {
-    return Math.ceil(this.recordCount / this.intPageSize);
+    return Math.ceil(
+      this.recordCount / (this.intPageSize === -1 ? this.recordCount : this.intPageSize)
+    );
   }
 
   /**
