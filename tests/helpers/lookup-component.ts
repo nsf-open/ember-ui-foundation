@@ -1,5 +1,5 @@
 import type Component from '@ember/component';
-import type { TestContext } from 'ember-test-helpers';
+import type { TestContext } from '@ember/test-helpers';
 
 /**
  * Returns an active component instance with the provided id from

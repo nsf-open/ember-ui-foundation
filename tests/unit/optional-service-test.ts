@@ -19,10 +19,6 @@ module('Unit | Util | optionalService', function (hooks) {
     this.owner.register('service:test-service', TestService);
   });
 
-  hooks.afterEach(function () {
-    this.owner.unregister('service:test-service');
-  });
-
   test('it does not throw an exception when the service does not exist', function (assert) {
     const testService = this.owner.lookup('service:test-service') as TestService;
     const routerService = this.owner.lookup('service:router') as RouterService;

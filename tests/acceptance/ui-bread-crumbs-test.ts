@@ -8,7 +8,10 @@ import { visit } from '@ember/test-helpers';
 module('Acceptance | Component | ui-bread-crumbs', function (hooks) {
   setupApplicationTest(hooks);
 
-  function lookupController(owner: TestContext['owner'], fullName: string): IBreadCrumbController {
+  function lookupController(
+    owner: TestContext['owner'],
+    fullName: `${string}:${string}`
+  ): IBreadCrumbController {
     return owner.lookup(fullName) as IBreadCrumbController;
   }
 

@@ -9,5 +9,5 @@ interface IOwner {
  * A typed version of @ember/application `getOwner` for internal use.
  */
 export default function getTypedOwner(target: unknown): IOwner | null {
-  return getOwner(target) as IOwner | null;
+  return getOwner(target) as unknown as IOwner | null;
 }
