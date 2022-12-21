@@ -2,7 +2,7 @@ name: Test
 
 on:
   push:
-    branches: ['renovate/*']
+    branches: ['develop', 'renovate/*']
     paths-ignore:
       - '**/*.stories.ts'
       - '**/*.stories.mdx'
