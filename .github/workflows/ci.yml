@@ -2,15 +2,18 @@ name: Test
 
 on:
   push:
-    branches: [ 'main', 'v*', 'renovate/*' ]
+    branches: ['renovate/*']
     paths-ignore:
       - '**/*.stories.ts'
       - '**/*.stories.mdx'
       - './storybook'
       - './storybook/utilities'
       - './blueprints/**'
+
   pull_request:
-    branches: [ 'main' ]
+    branches-ignore:
+      - 'renovate/*'
+
   workflow_dispatch:
 
 jobs:

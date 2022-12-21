@@ -1,18 +1,20 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:base",
+    "schedule:weekends",
+    "npm:unpublishSafe"
   ],
   "packageRules": [
     {
-      "matchPackagePatterns": ["eslint"],
-      "groupName": "eslint",
+      "matchPackagePatterns": ["eslint", "lint"],
+      "groupName": "linting",
       "automerge": true,
       "automergeType": "branch"
     },
     {
-      "matchPackagePatterns": ["@types/ember__"],
-      "groupName": "ember-typings",
+      "matchPackagePatterns": ["@types/"],
+      "groupName": "definitely-typed",
       "automerge": true,
       "automergeType": "branch"
     },
