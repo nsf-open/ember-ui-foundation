@@ -111,7 +111,7 @@ const ComponentTree = [
   },
   {
     name: 'ui-tooltip',
-    requires: ['-internals/contextual-container'],
+    requires: ['-internals/contextual-container', 'ui-popper'],
   },
   {
     name: '-internals/contextual-container',
@@ -163,22 +163,20 @@ function buildInclusionMap(names) {
  * @param {ResultSet} resultSet
  */
 function buildFunnelConfig(resultSet) {
-  const componentRegex = new RegExp(
-    `components/(${[...resultSet.components.keys()].join('|')})/.*`
-  );
+  const componentRegex = new RegExp(`components/(${[...resultSet.components.keys()].join('|')}).*`);
 
   return {
     addon: {
       exclude(resource) {
         // Intentionally flipping the match.
-        return !componentRegex.test(resource);
+        return resource.startsWith('components/') && !componentRegex.test(resource);
       },
     },
 
     app: {
       exclude(resource) {
         // Intentionally flipping the match.
-        return !componentRegex.test(resource);
+        return resource.startsWith('components/') && !componentRegex.test(resource);
       },
     },
   };
@@ -200,9 +198,7 @@ function describeInclusionMap(requested, resultSet) {
   const rows = [
     introText,
     '',
-    chalk.green('Requested'),
-    chalk.yellow('Dependency'),
-    chalk.gray('Reason'),
+    `${chalk.green('Requested')} | ${chalk.yellow('Dependency')} | ${chalk.gray('Reason')}`,
     '',
   ];
 
