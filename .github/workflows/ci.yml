@@ -11,6 +11,8 @@ on:
       - './blueprints/**'
       - './README.md'
       - './CONTRIBUTING.md'
+      - './.github/workflows/gh-pages.yml'
+      - './.github/workflows/release.yml'
 
   pull_request:
     branches-ignore:
