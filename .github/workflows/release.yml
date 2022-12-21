@@ -2,9 +2,6 @@ name: Version & Publish
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 jobs:
   build:
@@ -18,11 +15,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - run: npm ci --no-audit
-      - run: npm run release -- --ci --no-npm
+      - run: npm run release -- --ci --no-npm.publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: |
-          git checkout develop
-          git merge main --ff-only
-          git push
