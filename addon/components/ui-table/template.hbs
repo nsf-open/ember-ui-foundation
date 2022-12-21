@@ -91,8 +91,8 @@ input of the next tier down.
 
           <tbody>
             {{#if (has-block "row")}}
-              {{#each (if this.pagingEnabled Pager.pageRecords Filter.filteredRecords) as |record|}}
-                {{yield record to="row"}}
+              {{#each (if this.pagingEnabled Pager.pageRecords Filter.filteredRecords) as |record index|}}
+                {{yield record index to="row"}}
               {{/each}}
             {{else if this.columns}}
               {{#each (if this.pagingEnabled Pager.pageRecords Filter.filteredRecords) as |record|}}
