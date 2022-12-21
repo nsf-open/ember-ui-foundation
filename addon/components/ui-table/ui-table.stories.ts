@@ -10,6 +10,7 @@ export default {
 
     columns: [
       { propertyName: 'name', sortOn: 'name' },
+      { propertyName: 'accountType', sortOn: 'accountType' },
       { propertyName: 'email', sortOn: 'email' },
       { propertyName: 'phone' },
     ],
@@ -39,9 +40,9 @@ export const Default = (context: unknown) => {
         for (let i = 0; i < 100; i += 1) {
           records.push({
             name: faker.name.findName(),
+            accountType: faker.helpers.arrayElement(['basic', 'admin']),
             email: faker.internet.email(),
-            phone: faker.phone.number(),
-            address: faker.address.streetAddress(true),
+            phone: faker.phone.number('555-###-####'),
           });
         }
 
