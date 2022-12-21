@@ -15,7 +15,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - run: npm ci --no-audit
-      - run: npm run release -- --ci --no-npm.publish
+      - run: npm run release -- --ci
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
