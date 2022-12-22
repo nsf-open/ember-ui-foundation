@@ -1,8 +1,21 @@
-
-
 ## [1.8.4](https://github.com/nsf-open/ember-ui-foundation/compare/1.8.3...1.8.4) (2022-12-22)
 
 ## 1.8.3 (2022-12-22)
+
+### Features
+
+* feat: add disabledTooltip option to UiButton (b3d04ad)
+* feat: add trimSizeOptions to UiPager component (ec502bb)
+* feat: additional attributes are splatted onto UiTable th component (3115b8a)
+* feat: yield current row index to named :row block in UiTable (36b9898)
+* feat: add optional caption to UiTable (3fcd543)
+
+### Bug Fixes
+
+* fix(deps): update dependency @popperjs/core to v2.11.6 (#45) (6bc38ea)
+* fix(deps): update dependency ember-cli-typescript to v5 (#33) (a8fdc5f)
+* fix: for UiPager, show that there is one page when showing all (678113d)
+* fix: the UiTable correctly references its aria-describedby (e9b05fe)
 
 ## 1.8.2 (2022-12-21)
 
