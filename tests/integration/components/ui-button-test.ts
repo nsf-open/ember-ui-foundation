@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, settled } from '@ember/test-helpers';
+import { render, click, settled, focus } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | ui-button', function (hooks) {
@@ -150,25 +150,25 @@ module('Integration | Component | ui-button', function (hooks) {
 
   test('it can be disabled', async function (assert) {
     // language=handlebars
-    await render(hbs`<UiButton @text="Hello World" disabled={{true}} />`);
+    await render(hbs`<UiButton @text="Hello World" @disabled={{true}} />`);
     assert.dom('button').isDisabled();
   });
 
   test('it has numerous other attribute bindings', async function (assert) {
     await render(hbs`
-			<UiButton @text="Hello World"
-				@title="Foo"
-				@type="submit"
-				@ariaExpanded="true"
-				@ariaLabel="Bar"
-				@ariaLabelledBy="123"
-				@ariaDescribedBy="456"
-				@ariaControls="789"
-				@ariaSelected="false"
-				@ariaHasPopup="000"
-				@tabIndex="-1"
-			/>
-		`);
+      <UiButton @text="Hello World"
+        @title="Foo"
+        @type="submit"
+        @ariaExpanded="true"
+        @ariaLabel="Bar"
+        @ariaLabelledBy="123"
+        @ariaDescribedBy="456"
+        @ariaControls="789"
+        @ariaSelected="false"
+        @ariaHasPopup="000"
+        @tabIndex="-1"
+      />
+    `);
 
     assert.dom('button').hasAttribute('title', 'Foo');
     assert.dom('button').hasAttribute('type', 'submit');
@@ -180,5 +180,52 @@ module('Integration | Component | ui-button', function (hooks) {
     assert.dom('button').hasAttribute('aria-selected', 'false');
     assert.dom('button').hasAttribute('aria-haspopup', '000');
     assert.dom('button').hasAttribute('tabindex', '-1');
+  });
+
+  test('it can display a tooltip while being "disabled"', async function (assert) {
+    this.set('disabled', false);
+
+    this.set('handleClick', () => {
+      throw new Error('onClick should be disabled');
+    });
+
+    // language=handlebars
+    await render(hbs`
+        <UiButton
+          @text="Hello World"
+          @disabledTooltip="Lorem Ipsum"
+          @disabled={{this.disabled}}
+          @onClick={{this.handleClick}}
+        />
+    `);
+
+    assert
+      .dom('button')
+      .isNotDisabled()
+      .hasText('Hello World')
+      .doesNotHaveAttribute('aria-disabled')
+      .doesNotHaveAttribute('tabindex')
+      .doesNotHaveClass('disabled');
+
+    assert.dom('button .fa').doesNotExist();
+
+    this.set('disabled', true);
+
+    assert
+      .dom('button')
+      .isNotDisabled()
+      .hasAttribute('aria-disabled', 'true')
+      .hasAttribute('tabindex', '-1')
+      .hasClass('disabled');
+
+    assert.dom('button .fa').doesNotExist();
+
+    assert.dom('.tooltip').exists().isNotVisible();
+
+    await focus('button');
+
+    assert.dom('.tooltip').isVisible();
+
+    await click('button');
   });
 });

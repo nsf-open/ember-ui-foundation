@@ -9,7 +9,10 @@
   @doesParentHaveBlockContent={{if (has-block) true false}}
 >
   {{#if (has-block)}}{{yield}}{{else}}{{this.text}}{{/if}}
-  {{#if this.tooltip}}
-    <UiTooltipAttachment @enabled={{this.enabled}}>{{this.tooltip}}</UiTooltipAttachment>
-  {{/if}}
 </UiInlineTextIconLayout>
+
+{{#if this.tooltipText}}
+  <UiTooltipAttachment @enabled={{or this.enabled this.isFauxDisabled}}>
+    {{~this.tooltipText~}}
+  </UiTooltipAttachment>
+{{/if}}

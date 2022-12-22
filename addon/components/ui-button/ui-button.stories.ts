@@ -45,6 +45,8 @@ const Template = (context: unknown) => ({
         @testId={{this.testId}}
         @title={{this.title}}
         @type={{this.type}}
+        @tooltip={{this.tooltip}}
+        @disabledTooltip={{this.disabledTooltip}}
         @onClick={{action this.onClick}}
       />
     </div>

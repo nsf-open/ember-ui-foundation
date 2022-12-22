@@ -1,7 +1,7 @@
 import type { DirectionsX } from '@nsf-open/ember-ui-foundation/constants';
 import AsyncAwareComponent from '@nsf-open/ember-ui-foundation/components/-internals/async-aware-component';
 import { computed, set } from '@ember/object';
-import { not, or, reads } from '@ember/object/computed';
+import { reads } from '@ember/object/computed';
 import { attribute, className, layout, tagName } from '@ember-decorators/component';
 import { ButtonVariants, Directions, SizeVariants } from '@nsf-open/ember-ui-foundation/constants';
 import template from './template';
@@ -95,6 +95,25 @@ export default class UiButton extends AsyncAwareComponent {
   public iconPlacement: DirectionsX = Directions.Left;
 
   /**
+   * Tooltip text content.
+   */
+  public tooltip?: string;
+
+  /**
+   * Tooltip text content that will be displayed when the button is disabled.
+   * As disabled buttons cannot be interacted with, in order to accomplish this,
+   * the button does not have the `disabled` attribute applied. Instead, the
+   * `aria-disabled` attribute is used along with `tabindex` to remove it from
+   * the page flow. Calls to `onClick` are suppressed as well.
+   *
+   * Note: this should only be considered a bit of visual goodness for monitor &
+   * pointer device using individuals, rather than an integral part of an
+   * interface's design, as it is likely that assistive technologies will not
+   * see it.
+   */
+  public disabledTooltip?: string;
+
+  /**
    * A boolean that toggles the element's "active" class.
    */
   @className('active')
@@ -174,7 +193,6 @@ export default class UiButton extends AsyncAwareComponent {
   /**
    * The value of the element's `tabindex` attribute.
    */
-  @attribute('tabindex')
   public tabIndex?: string;
 
   /**
@@ -187,13 +205,35 @@ export default class UiButton extends AsyncAwareComponent {
   @className
   protected btnClassName = 'btn';
 
-  @not('disableButton')
-  declare readonly enabled: boolean;
+  @computed('isRealDisabled', 'isFauxDisabled')
+  get enabled() {
+    return !(this.isRealDisabled || this.isFauxDisabled);
+  }
 
   @className('disabled')
   @attribute('disabled')
-  @or('disabled', 'isPending')
-  declare readonly disableButton: boolean;
+  @computed('disabled', 'disabledTooltip', 'isPending')
+  get isRealDisabled() {
+    return (this.disabled && !this.disabledTooltip) || this.isPending;
+  }
+
+  @className('disabled')
+  @attribute('aria-disabled')
+  @computed('disabled', 'disabledTooltip')
+  get isFauxDisabled() {
+    return this.disabled && this.disabledTooltip ? 'true' : undefined;
+  }
+
+  @attribute('tabindex')
+  @computed('tabIndex', 'isFauxDisabled')
+  get realTabIndex() {
+    return this.isFauxDisabled ? '-1' : this.tabIndex;
+  }
+
+  @computed('disabled', 'disabledTooltip', 'tooltip')
+  get tooltipText() {
+    return this.disabled ? this.disabledTooltip : this.tooltip;
+  }
 
   @className
   @computed('size')
@@ -208,7 +248,7 @@ export default class UiButton extends AsyncAwareComponent {
   }
 
   click(event: Event) {
-    if (!this.disableButton) {
+    if (this.enabled) {
       this._libraryOnClick?.();
       set(this, 'promise', this.onClick?.(event) ?? undefined);
     }
