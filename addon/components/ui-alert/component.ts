@@ -29,9 +29,9 @@ import template from './template';
  * the alert's "title" yourself.
  *
  * ```handlebars
- * {{#ui-alert "success" as |alert|}}
- *   <p>{{alert.title}} Great job team!</p>
- * {{/ui-alert}}
+ * <UiAlert @variant="success" as |Alert|>
+ *   <p><Alert.title /> Great job team!</p>
+ * </UiAlert>
  *
  * {{#ui-alert "success" as |alert|}}
  *   {{alert.title plural=true}}
@@ -43,10 +43,7 @@ import template from './template';
  * {{/ui-alert}}
  * ```
  *
- * @class UiAlert
- *
- * @yield {object}        alert
- * @yield {UiAlertTitle}  alert.title  The title content for the alert.
+ * @yield ({ title: UiAlertTitle }) Alert
  * */
 @classNames('alert')
 @layout(template)

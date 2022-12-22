@@ -23,22 +23,22 @@ import template from './template';
  * </UiPager>
  * ```
  *
- * @yields {string} start          - The ones index of the first record of the current
+ * @yields (string) start          - The ones index of the first record of the current
  *                                  slice within the full recordset.
- * @yields {string} end            - The ones index of the last record of the current
+ * @yields (string) end            - The ones index of the last record of the current
  *                                   slice within the full recordset.
- * @yields {string} total          - The number of records within the full recordset.
- * @yields {number} pageSize       - The maximum number of records that will appear on
+ * @yields (string) total          - The number of records within the full recordset.
+ * @yields (number) pageSize       - The maximum number of records that will appear on
  *                                   a single page.
- * @yields {number} currentPage    - The ones index of the current page that is being
+ * @yields (number) currentPage    - The ones index of the current page that is being
  *                                   provided by the component.
- * @yields {boolean} isPaged       - Whether paging is currently happening. This might
+ * @yields (boolean) isPaged       - Whether paging is currently happening. This might
  *                                   be false, for example, if there are zero records in
  *                                   the full recordset, or if there is only one page
  *                                   worth or records.
- * @yields {unknown[]} pageRecords - The slice of the full recordset that constitutes the
+ * @yields (unknown[]) pageRecords - The slice of the full recordset that constitutes the
  *                                   current page.
- * @yields {string} description    - The generated description of the pager state, by
+ * @yields (string) description    - The generated description of the pager state, by
  *                                   default it will read _"{start index} - {end index}
  *                                   of {total record count}"_.
  */
