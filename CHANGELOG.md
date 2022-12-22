@@ -1,5 +1,7 @@
 
 
+## [1.8.4](https://github.com/nsf-open/ember-ui-foundation/compare/1.8.3...1.8.4) (2022-12-22)
+
 ## 1.8.3 (2022-12-22)
 
 ## 1.8.2 (2022-12-21)
