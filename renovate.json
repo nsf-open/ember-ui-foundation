@@ -22,7 +22,8 @@
       "matchPackagePatterns": ["@storybook/"],
       "groupName": "storybook",
       "automerge": true,
-      "automergeType": "branch"
+      "automergeType": "branch",
+      "enabled": false
     }
   ]
 }
