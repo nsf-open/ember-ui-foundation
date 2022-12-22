@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/@nsf-open%2Fember-ui-foundation.svg)](https://badge.fury.io/js/@nsf-open%2Fember-ui-foundation)
+[![CI](https://github.com/nsf-open/ember-ui-foundation/actions/workflows/ci.yml/badge.svg)](https://github.com/nsf-open/ember-ui-foundation/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/nsf-open/ember-ui-foundation/badge.svg?branch=main)](https://coveralls.io/github/nsf-open/ember-ui-foundation?branch=main)
 
 @nsf-open/ember-ui-foundation
