@@ -9,6 +9,16 @@ module.exports = function (defaults) {
       out: null,
       json: './dist/docs/index.json',
     },
+
+    'ember-cli-storybook': {
+      enableAddonDocsIntegration: false,
+    },
+
+    addons: {
+      blacklist: [
+        process.env.STORYBOOK === 'true' ? undefined : '@storybook/ember-cli-storybook',
+      ].filter(Boolean),
+    },
   });
 
   app.import('node_modules/bootstrap3/dist/css/bootstrap.css');
