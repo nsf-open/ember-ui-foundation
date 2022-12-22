@@ -1,7 +1,6 @@
 import type { ProjectReflection } from 'typedoc/dist/lib/serialization/schema';
-import { getModuleExport } from './typedoc/traversal';
-import { getFullCommentText } from './typedoc/stringify';
-import { buildClassLikeArgumentsTable, buildComponentArgumentsTable } from './controls/ember';
+import { getModuleExport, getFullCommentText } from './typedoc';
+import { buildClassLikeArgumentsTable, buildComponentArgumentsTable } from './frameworks/ember';
 
 /**
  * Finds a module export in one or more ProjectReflection definitions.
@@ -33,7 +32,8 @@ export function extractItemDescription(
 }
 
 /**
- *
+ * Returns a hash containing ArgsTable objects that describe the publicly
+ * accessible properties of the named item.
  */
 export function extractItemArgTypes(
   lookup: ProjectReflection | ProjectReflection[],

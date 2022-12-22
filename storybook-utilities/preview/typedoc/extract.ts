@@ -1,20 +1,82 @@
-import type {
+import type { CommentTag } from 'typedoc/dist/lib/serialization/schema';
+import {
   DeclarationReflection,
   ParameterReflection,
   ProjectReflection,
   SignatureReflection,
   UnionType,
 } from 'typedoc/dist/lib/serialization/schema';
-import type { ArgsEntry } from './types';
+import { findMatchingBracket, isKindOf, prettifyName, stripEscapedOuterQuotes } from './utils';
+import { ArgsEntry, ReflectionKind } from './constants';
+import { getFullCommentText, toDeclarationString, toTypeString } from './stringify';
+import { findChildByName, findDescendantById } from './traverse';
 
-import { findChildByName, findDescendantById } from '../typedoc/traversal';
-import {
-  getFullCommentText,
-  stripEscapedOuterQuotes,
-  toDeclarationString,
-  toTypeString,
-} from '../typedoc/stringify';
-import { isKindOf, ReflectionKind } from '../typedoc/types';
+/**
+ * Given a block tag, e.g. @yields foobar, with _almost_ JSDoc-like comment
+ * structure, this will parse out the type, name, and description.
+ *
+ * In JSDoc, when describing something like a @param, the _type_ comes first
+ * inside curly brackets, e.g. {string}. TypeDoc will strip out this syntax
+ * so use parenthesis instead.
+ *
+ * ```
+ * @yield (string) name - the name of the user
+ *
+ * @yield ({ id: string, name: string }) user basic user information
+ *
+ * @yield
+ * ```
+ */
+export function argsEntryFromBlockTag(commentTag: CommentTag) {
+  // Join comment parts, and squash multiple concurrent whitespaces
+  // into a single one.
+  let text = commentTag.content
+    .map((item) => item.text)
+    .join('')
+    .trim()
+    .replace(/\s{2,}/g, ' ');
+
+  let type = 'unknown';
+  let name = '';
+  let desc = '';
+
+  const typeSubstring = findMatchingBracket(['(', ')'], text);
+
+  if (typeSubstring) {
+    const [left, right] = typeSubstring;
+
+    type = text.substring(left + 1, right);
+    text = text.substring(right + 1).trim();
+  }
+
+  // There is either a name, or name + description remaining. Find the
+  // next whitespace - that'll be the end of the name, or go to the
+  // end of the string.
+  const nextSpace = text.indexOf(' ');
+
+  if (nextSpace > -1) {
+    name = text.substring(0, nextSpace);
+    desc = text.substring(nextSpace + 1).trim();
+
+    // Take care of common formatting trends.
+    if (desc.charAt(0) === '-' || desc.charAt(0) === ':') {
+      desc = desc.substring(1).trim();
+    }
+  } else {
+    name = text;
+  }
+
+  return {
+    name,
+    description: desc,
+    control: false,
+    type: { name: type, required: false },
+    table: {
+      category: prettifyName(commentTag.name ?? commentTag.tag, true),
+      type: { summary: type },
+    },
+  } as ArgsEntry;
+}
 
 /**
  * Given an array of ParameterReflections, this will return an array of ArgEntry objects
@@ -22,7 +84,7 @@ import { isKindOf, ReflectionKind } from '../typedoc/types';
  */
 export function buildArgumentEntriesObject(
   project: ProjectReflection,
-  properties: (ParameterReflection | SignatureReflection)[],
+  properties: (ParameterReflection | SignatureReflection | DeclarationReflection)[],
   inferControls = true,
   category?: string
 ) {
@@ -56,7 +118,7 @@ export function buildArgumentEntry(
   const typeString = isMethod
     ? toDeclarationString(property.signatures?.[0], project)
     : isAccessor
-    ? toTypeString(property.getSignature?.[0]?.type, project)
+    ? toTypeString(property.getSignature?.type, project)
     : toTypeString(property.type, project);
 
   return {
@@ -147,8 +209,11 @@ function buildControlFromEnumeration(
 
   enumeration.children?.forEach((child) => {
     const defaultValue = stripEscapedOuterQuotes(child.defaultValue);
-    labels[defaultValue] = child.name;
-    options.push(defaultValue);
+
+    if (defaultValue) {
+      labels[defaultValue] = child.name;
+      options.push(defaultValue);
+    }
   });
 
   if (property.flags.isOptional) {
@@ -206,8 +271,11 @@ function buildControlFromUnionType(
 
         if (isKindOf(ref, ReflectionKind.EnumMember)) {
           const value = stripEscapedOuterQuotes(ref.defaultValue);
-          labels[value] = ref.name;
-          options.push(value);
+
+          if (typeof value === 'string' || typeof value === 'number') {
+            labels[value] = ref.name;
+            options.push(value);
+          }
 
           // This can definitely be reimagined. There isn't much info available with
           // defaultValues to easily tie them back to something like an enumeration
@@ -217,6 +285,7 @@ function buildControlFromUnionType(
           const parent = findDescendantById(project, ref.id, true);
 
           if (parent && `${parent.name}.${ref.name}` === defaultValue) {
+            // @ts-expect-error - _typings_, am I right?
             defaultValue = stripEscapedOuterQuotes(ref.defaultValue);
           }
 

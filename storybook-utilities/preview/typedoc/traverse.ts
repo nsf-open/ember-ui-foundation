@@ -3,21 +3,8 @@ import type {
   ProjectReflection,
   Reflection,
 } from 'typedoc/dist/lib/serialization/schema';
-
-import { KindOf, ReflectionKind } from './types';
-
-/**
- * Checks that the children of the provided container are ordered in an ascending sort of
- * their numeric ids.
- */
-export function ensureSortedChildren(reflection: ContainerReflection) {
-  // @ts-expect-error - usage of __sorted__
-  if (Array.isArray(reflection.children) && !reflection.children.__sorted__) {
-    reflection.children.sort((a, b) => a.id - b.id);
-    // @ts-expect-error - usage of __sorted__
-    reflection.children.__sorted__ = true;
-  }
-}
+import { ensureSortedChildren } from './utils';
+import { GroupTitles, KindOf, ReflectionKind } from './constants';
 
 /**
  * Given a container, return the reflection with the given id. IDs are unique to
@@ -84,13 +71,11 @@ export function findChildrenByKind<K extends ReflectionKind>(
   parent: ContainerReflection,
   kind: K
 ): KindOf<K>[] {
-  const group = parent.groups?.find((group) => group.kind === kind);
+  const group = parent.groups?.find((group) => GroupTitles[group.title] === kind);
 
   if (group && group.children) {
     return group.children
-      .map(function (id) {
-        return findDescendantById<KindOf<K>>(parent, id);
-      })
+      .map((id) => findDescendantById<KindOf<K>>(parent, id))
       .filter(Boolean) as KindOf<K>[];
   }
 

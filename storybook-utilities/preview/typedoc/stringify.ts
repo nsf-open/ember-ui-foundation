@@ -6,15 +6,8 @@ import type {
   SomeType,
   Type,
 } from 'typedoc/dist/lib/serialization/schema';
-import { isKindOf, ReflectionKind } from './types';
-
-/**
- * Given a string like "\"Hello World\"" this will remove the escaped quotations
- * at the beginning and end.
- */
-export function stripEscapedOuterQuotes(value: any) {
-  return typeof value === 'string' ? value.replace(/^"|^'|"$|'$/g, '') : value;
-}
+import { ReflectionKind } from './constants';
+import { isKindOf } from './utils';
 
 /**
  * Returns the full description of a reflection, concatenating the short and full comment
@@ -31,7 +24,7 @@ export function getFullCommentText(reflection: Reflection): string {
   }
 
   if (isKindOf(reflection, ReflectionKind.Accessor)) {
-    const firstSignature = reflection.getSignature?.[0];
+    const firstSignature = reflection.getSignature;
 
     if (firstSignature) {
       return getFullCommentText(firstSignature);
@@ -48,12 +41,11 @@ export function getFullCommentText(reflection: Reflection): string {
     }
   }
 
-  const { shortText, text } = reflection.comment ?? { shortText: null, text: null };
+  if (Array.isArray(reflection.comment?.summary)) {
+    return reflection.comment?.summary.map((item) => item.text).join('') ?? '';
+  }
 
-  return [shortText, text]
-    .map((text) => (typeof text === 'string' ? text.trim() : text))
-    .filter(Boolean)
-    .join('\n\n');
+  return '';
 }
 
 /**
