@@ -84,6 +84,13 @@ export default class UiContextualContainer extends Component {
   public visible = false;
 
   /**
+   * When triggerEvents = CLICK, this controls whether interacting with elements
+   * outside the positioned or triggering elements will cause the positioned
+   * element to be hidden.
+   */
+  public closeOnOutsideClick = true;
+
+  /**
    * The amount of time, in milliseconds, between the trigger event occurring
    * and the positioned element being shown or hidden. This value is applied
    * equally to both show and hide events. See `delayShow` and `delayHide` to
@@ -580,11 +587,13 @@ export default class UiContextualContainer extends Component {
           outsideClickTargets.push(this.triggerElement);
         }
 
-        this.handleOutsideClick = createOutsideClickListener(
-          this,
-          outsideClickTargets,
-          this.handleToggle
-        );
+        if (this.closeOnOutsideClick) {
+          this.handleOutsideClick = createOutsideClickListener(
+            this,
+            outsideClickTargets,
+            this.handleToggle
+          );
+        }
       }
     }
 
