@@ -12,6 +12,7 @@
   @testId={{this.testId}}
 >
 	{{#if this.showArrow}}<div class="{{this.arrowClassName}}" data-popper-arrow></div>{{/if}}
+  {{#if this.titleText}}<div class="{{this.titleTextClassName}}">{{this.titleText}}</div>{{/if}}
 	<div class="{{this.innerClassName}}" style={{this.innerElementStyles}}>
 		{{yield}}
 	</div>

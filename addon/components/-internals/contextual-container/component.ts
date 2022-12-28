@@ -250,6 +250,12 @@ export default class UiContextualContainer extends Component {
    */
   public textContent?: string;
 
+  /**
+   * Text that will put in the header of the rendered `overlayComponent`. This is a pretty
+   * simple convenience that allows UiContextContainer to be quickly used inline.
+   */
+  public title?: string;
+
   /* **************** *
    * Private API
    * **************** */

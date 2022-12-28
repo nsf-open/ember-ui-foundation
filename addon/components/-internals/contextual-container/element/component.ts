@@ -45,6 +45,12 @@ export default class UiContextualElement extends Component {
    */
   public isHidden = false;
 
+  /**
+   * Optional text that will be shown in a separate block above the primary content. Some
+   * controls, such as popovers, have an optional title block.
+   */
+  public titleText?: string;
+
   public fade = true;
 
   public showContent = false;
@@ -126,6 +132,11 @@ export default class UiContextualElement extends Component {
    * CSS class name for the inner block content of this element.
    */
   public innerClassName = 'tooltip-inner';
+
+  /**
+   * CSS class name for the title text content block.
+   */
+  public titleTextClassName?: string;
 
   /**
    * The real placement of the element. If `autoPlacement` is enabled then
