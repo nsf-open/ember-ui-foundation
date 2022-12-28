@@ -114,6 +114,11 @@ export default class UiPopper extends Component {
   public testId?: string;
 
   /**
+   * The HTML tag that will be rendered as the root element of the popper instance.
+   */
+  public htmlTagName = 'div';
+
+  /**
    * @private
    */
   @not('enabled')

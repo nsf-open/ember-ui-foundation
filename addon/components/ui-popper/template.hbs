@@ -4,21 +4,11 @@
       ember-popper behind less-nested elements. Due to the way z-indexing works, we cannot simply
       add a higher z-index value to our ember-popper. To avoid this issue, we render the element
       on the document body, giving it the highest default z-index value. --}}
-{{#if this.renderInPlace}}
-	{{!-- Add a wrapper around the yielded block so we have something for the Popper to target --}}
-	<div
-    id={{this.id}}
-    class={{this.class}}
-    role={{this.ariaRole}}
-    hidden={{this.disabled}}
-    style={{this.style}}
-    data-test-id={{this.testId}}
-  >
-		{{yield}}
-	</div>
-{{else}}
-	{{#in-element this.realPopperContainer insertBefore=null}}
-		<div
+
+{{#let (element this.htmlTagName) as |Tag|}}
+  {{#if this.renderInPlace}}
+    {{!-- Add a wrapper around the yielded block so we have something for the Popper to target --}}
+    <Tag
       id={{this.id}}
       class={{this.class}}
       role={{this.ariaRole}}
@@ -26,7 +16,20 @@
       style={{this.style}}
       data-test-id={{this.testId}}
     >
-			{{yield}}
-		</div>
-	{{/in-element}}
-{{/if}}
+      {{yield}}
+    </Tag>
+  {{else}}
+    {{#in-element this.realPopperContainer insertBefore=null}}
+      <Tag
+        id={{this.id}}
+        class={{this.class}}
+        role={{this.ariaRole}}
+        hidden={{this.disabled}}
+        style={{this.style}}
+        data-test-id={{this.testId}}
+      >
+        {{yield}}
+      </Tag>
+    {{/in-element}}
+  {{/if}}
+{{/let}}
