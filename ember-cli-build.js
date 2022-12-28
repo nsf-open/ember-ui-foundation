@@ -15,7 +15,7 @@ module.exports = function (defaults) {
     },
 
     addons: {
-      blacklist: [
+      exclude: [
         process.env.STORYBOOK === 'true' ? undefined : '@storybook/ember-cli-storybook',
       ].filter(Boolean),
     },
