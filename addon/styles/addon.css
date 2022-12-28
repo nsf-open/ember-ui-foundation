@@ -21,3 +21,14 @@ nice with other libraries/tools. */
   border-bottom-left-radius: 0;
   border-left: 0;
 }
+
+.popover {
+  display: block;
+}
+
+.popover.top .arrow,
+.popover.bottom .arrow,
+.popover.left .arrow,
+.popover.right .arrow {
+  margin: 0;
+}
