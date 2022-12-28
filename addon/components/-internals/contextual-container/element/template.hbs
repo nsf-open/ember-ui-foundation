@@ -10,9 +10,10 @@
 	@enabled={{not this.isHidden}}
 	@onUpdate={{action this.updatePlacement}}
   @testId={{this.testId}}
+  @htmlTagName={{if this.titleText "section" "div"}}
 >
 	{{#if this.showArrow}}<div class="{{this.arrowClassName}}" data-popper-arrow></div>{{/if}}
-  {{#if this.titleText}}<div class="{{this.titleTextClassName}}">{{this.titleText}}</div>{{/if}}
+  {{#if this.titleText}}<header class="{{this.titleTextClassName}}">{{this.titleText}}</header>{{/if}}
 	<div class="{{this.innerClassName}}" style={{this.innerElementStyles}}>
 		{{yield}}
 	</div>
