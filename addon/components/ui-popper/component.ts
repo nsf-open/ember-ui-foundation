@@ -4,7 +4,7 @@ import { computed, set } from '@ember/object';
 import { not } from '@ember/object/computed';
 import { assert } from '@ember/debug';
 import { guidFor } from '@ember/object/internals';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { debounce } from '@ember/runloop';
 import { layout, tagName } from '@ember-decorators/component';
 import { createPopper } from '@popperjs/core/lib/popper-lite';

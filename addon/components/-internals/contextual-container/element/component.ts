@@ -3,7 +3,7 @@ import Component from '@ember/component';
 import { layout, tagName } from '@ember-decorators/component';
 import { reads } from '@ember/object/computed';
 import { computed, set } from '@ember/object';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import hide from '@popperjs/core/lib/modifiers/hide';
 import flip from '@popperjs/core/lib/modifiers/flip';
 import arrow from '@popperjs/core/lib/modifiers/arrow';
