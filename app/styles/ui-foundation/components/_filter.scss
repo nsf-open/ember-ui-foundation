@@ -1,0 +1,52 @@
+@use "../functions/logic";
+
+$-input-border-radius: 4px;
+$-input-background-color: #fff;
+$-input-danger-color: #d9534f;
+
+/**
+ * Configuration for the UiFilter module.
+ */
+@mixin configure(
+  $input-border-radius: null,
+  $input-background-color: null,
+  $input-danger-color: null,
+) {
+  $-input-border-radius:    logic.truthy($input-border-radius,    $-input-border-radius) !global;
+  $-input-background-color: logic.truthy($input-background-color, $-input-background-color) !global;
+  $-input-danger-color:     logic.truthy($input-danger-color,     $-input-danger-color) !global;
+}
+
+/**
+ * UiFilter Styling.
+ */
+@mixin style() {
+  .ui-filter {
+    &.ui-filter-input {
+      position: relative;
+
+      input {
+        border-top-right-radius: $-input-border-radius !important;
+        border-bottom-right-radius: $-input-border-radius !important;
+      }
+
+      input + button {
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        bottom: 1px;
+        z-index: 2;
+        border: none;
+        background: $-input-background-color;
+
+        &:hover, &:focus, &:active {
+          background: $-input-background-color;
+        }
+
+        &.btn-danger {
+          color: $-input-danger-color;
+        }
+      }
+    }
+  }
+}

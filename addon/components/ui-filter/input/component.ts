@@ -1,4 +1,4 @@
-import { className, layout } from '@ember-decorators/component';
+import { className, classNames, layout } from '@ember-decorators/component';
 import { action } from '@ember/object';
 import { empty, or } from '@ember/object/computed';
 import Component from '@ember/component';
@@ -7,6 +7,7 @@ import template from './template';
 /**
  * The UiFilterInput component
  */
+@classNames('ui-filter ui-filter-input')
 @layout(template)
 export default class UiFilterInput extends Component {
   /**
@@ -28,6 +29,11 @@ export default class UiFilterInput extends Component {
    * Whether to display a clear button to the right of the text input.
    */
   public showClearButton = false;
+
+  /**
+   * The name of the icon to use with the close button.
+   */
+  public clearButtonIcon = 'times';
 
   /**
    * An array that will be used to populate a menu of options that can

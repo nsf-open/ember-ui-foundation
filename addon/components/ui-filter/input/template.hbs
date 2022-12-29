@@ -25,17 +25,16 @@
   oninput={{this.handleInputChange}}
 >
 
-{{#if this.showClearButton}}
-  <span class="input-group-btn">
-    <UiButton
-      @variant="{{if this.showErrorMessage "danger" "default"}}"
-      @ariaLabel="{{concat "Reset " this.label}}"
-      @title="{{concat "Reset " this.label}}"
-      @disabled={{or this.disabled this.noValue}}
-      @onClick={{this.handleInputReset}}
-      @icon="times"
-    />
-  </span>
+{{#if (and this.showClearButton this.value)}}
+  <UiButton
+    @variant="{{if this.showErrorMessage "danger" "default"}}"
+    @ariaLabel="{{concat "Reset " this.label}}"
+    @title="{{concat "Reset " this.label}}"
+    @disabled={{or this.disabled this.noValue}}
+    @onClick={{this.handleInputReset}}
+    @icon="{{this.clearButtonIcon}}"
+    class="ui-filter-reset"
+  />
 {{/if}}
 
 <UiTooltipAttachment

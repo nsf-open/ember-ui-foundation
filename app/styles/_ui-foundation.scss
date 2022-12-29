@@ -7,6 +7,7 @@
 @forward "ui-foundation/components/button-column"    as button-column-*;
 @forward "ui-foundation/components/progress-chevron" as progress-chevron-*;
 @forward "ui-foundation/components/table"            as table-*;
+@forward "ui-foundation/components/filter"           as filter-*;
 @forward "ui-foundation/utilities/responsive"        as responsive-utilities-*;
 @forward "ui-foundation/utilities/spacing"           as spacing-utilities-*;
 
@@ -21,11 +22,13 @@
 @use "ui-foundation/components/button-column";
 @use "ui-foundation/components/progress-chevron";
 @use "ui-foundation/components/table";
+@use "ui-foundation/components/filter";
 
 @mixin style() {
   @include button-column.style();
   @include progress-chevron.style();
   @include table.style();
+  @include filter.style();
 
   @include responsive.style();
   @include spacing.style();

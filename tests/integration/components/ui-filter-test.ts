@@ -313,11 +313,9 @@ module('Integration | Component | ui-filter', function (hooks) {
 
     assert.dom('table tbody tr').exists({ count: 11 });
 
-    assert
-      .dom('.input-group .input-group-btn:last-child button')
-      .hasAria('label', 'Reset Filter Input Field');
+    assert.dom('.input-group button.ui-filter-reset').hasAria('label', 'Reset Filter Input Field');
 
-    await click('.input-group .input-group-btn:last-child button');
+    await click('.input-group button.ui-filter-reset');
 
     assert.dom('input[type="text"]').hasNoValue();
   });
