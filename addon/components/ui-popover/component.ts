@@ -5,7 +5,36 @@ import UiContextualContainer, {
 import { manageFlowThroughFocus } from '@nsf-open/ember-ui-foundation/utils';
 
 /**
+ * The UiPopover component attaches itself to its parent element - typically a
+ * button - and will display some text context in a styled flyout when the parent
+ * is clicked.
  *
+ * The major difference between this an UiTooltip is that the interaction is click
+ * driven, and highly preferable if interactive content is to be rendered within
+ * a flyout.
+ *
+ * ```handlebars
+ * <UiButton @variant="primary">
+ *   Log In
+ *   <UiPopover @title="Please Log In to Your Account to Continue">
+ *     <div class="form-group">
+ *       <label for="username">Username</label>
+ *       <input type="text" id="username" class="form-control" />
+ *     </div>
+ *
+ *     <div class="form-group">
+ *       <label for="password">Password</label>
+ *       <input type="password" id="password" class="form-control" />
+ *     </div>
+ *
+ *     <div class="text-right">
+ *       <button type="button" class="btn btn-primary" onclick={{this.login}}>
+ *         Login
+ *       </button>
+ *     </div>
+ *   </UiPopover>
+ * </UiButton>
+ * ```
  */
 export default class UiPopoverContextContainer extends UiContextualContainer {
   /**
