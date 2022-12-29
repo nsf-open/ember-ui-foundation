@@ -11,3 +11,4 @@ export { waitForTransitionEnd } from './transition-end';
 export { addAriaAttribute, removeAriaAttribute, getAriaAttributeValues } from './aria';
 export { createOutsideClickListener, removeOutsideClickListener } from './outside-click';
 export { listenTo } from './computed-macros';
+export { manageCaptureFocus, manageFlowThroughFocus } from './focus-management';
