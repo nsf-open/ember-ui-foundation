@@ -74,15 +74,6 @@ export enum SizeVariants {
   Large = 'lg',
 }
 
-export enum KeyNames {
-  Enter = 'Enter',
-  Escape = 'Escape',
-  ArrowUp = 'ArrowUp',
-  ArrowDown = 'ArrowDown',
-  Tab = 'Tab',
-  Shift = 'Shift',
-}
-
 export enum HeadingLevels {
   H1 = 'h1',
   H2 = 'h2',
@@ -179,6 +170,8 @@ export enum KeyCodes {
   End = 'End',
   Space = 'Space',
   Escape = 'Escape',
+  Shift = 'Shift',
+  Tab = 'Tab',
 }
 
 export enum SortOrder {

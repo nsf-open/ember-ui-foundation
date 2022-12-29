@@ -1,17 +1,9 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { layout, classNames, className, attribute } from '@ember-decorators/component';
-import { KeyNames, SizeVariants } from '../../../constants';
+import { manageCaptureFocus } from '@nsf-open/ember-ui-foundation/utils';
+import { SizeVariants } from '../../../constants';
 import template from './template';
-
-const FOCUSABLE = [
-  'button:not([disabled])',
-  'input:not([disabled])',
-  'select:not([disabled])',
-  'textarea:not([disabled])',
-  '[tabindex]:not([tabindex="-1"])',
-  '[href]',
-].join(', ');
 
 @classNames('modal', 'fade')
 @layout(template)
@@ -52,9 +44,7 @@ export default class UiModalDialog extends Component {
     return `${this.elementId}-title`;
   }
 
-  get focusableChildren(): NodeListOf<HTMLElement> {
-    return (this.element as HTMLElement).querySelectorAll(FOCUSABLE);
-  }
+  private removeFocus?: (returnFocus: boolean) => void;
 
   updateStyles() {
     const element = this.element as HTMLElement;
@@ -65,46 +55,23 @@ export default class UiModalDialog extends Component {
   // eslint-disable-next-line ember/no-component-lifecycle-hooks
   didInsertElement() {
     super.didInsertElement();
+
     (this.element as HTMLElement).style.display = 'block';
-
-    const focusChildren = this.focusableChildren;
-
-    if (focusChildren.length) {
-      focusChildren[0].focus();
-    }
-
+    this.removeFocus = manageCaptureFocus(this.element);
     this.updateStyles();
+  }
+
+  // eslint-disable-next-line ember/no-component-lifecycle-hooks
+  willDestroyElement() {
+    super.willDestroyElement();
+
+    this.removeFocus?.(false);
+    this.removeFocus = undefined;
   }
 
   // eslint-disable-next-line ember/no-component-lifecycle-hooks
   didUpdateAttrs() {
     super.didUpdateAttrs();
     this.updateStyles();
-  }
-
-  keyDown(event: KeyboardEvent) {
-    const evt = event;
-
-    if (evt.key === KeyNames.Tab) {
-      const children = this.focusableChildren;
-      const current = document.activeElement;
-
-      // The user is backwards-tabbing. Check that the currently focused item is not the first
-      // in the list and if so, loop focus to the last element.
-      if (evt.shiftKey) {
-        if (children[0] === current) {
-          children[children.length - 1].focus();
-          evt.preventDefault();
-        }
-      }
-      // The user is forwards-tabbing. Check that the currently focused item is not the last
-      // in the list and if so, loop focus to the first element.
-      else {
-        if (children[children.length - 1] === current) {
-          children[0].focus();
-          evt.preventDefault();
-        }
-      }
-    }
   }
 }

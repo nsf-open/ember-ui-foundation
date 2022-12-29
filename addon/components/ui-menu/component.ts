@@ -3,7 +3,7 @@ import { layout, tagName } from '@ember-decorators/component';
 import { guidFor } from '@ember/object/internals';
 import { set } from '@ember/object';
 import { bind } from '@ember/runloop';
-import { ButtonVariants, KeyNames } from '../../constants';
+import { ButtonVariants, KeyCodes } from '../../constants';
 import template from './template';
 
 enum ListNav {
@@ -198,10 +198,10 @@ export default class UiMenu extends Component {
   protected handleTriggerKeyEvents(event: KeyboardEvent) {
     const key = event.key;
 
-    if (this.visible && (KeyNames.Escape === key || KeyNames.ArrowUp === key)) {
+    if (this.visible && (KeyCodes.Escape === key || KeyCodes.ArrowUp === key)) {
       this.setVisibility(false);
       event.preventDefault();
-    } else if (KeyNames.ArrowDown === key) {
+    } else if (KeyCodes.ArrowDown === key) {
       this.setVisibility(true);
       event.preventDefault();
     }
@@ -217,18 +217,18 @@ export default class UiMenu extends Component {
    */
   protected handleOverlayKeyEvents(event: KeyboardEvent) {
     switch (event.key) {
-      case KeyNames.Escape:
+      case KeyCodes.Escape:
         this.setVisibility(false);
         this.focusOnTrigger();
         event.preventDefault();
         break;
 
-      case KeyNames.ArrowDown:
+      case KeyCodes.ArrowDown:
         this.focusOnMenuItem(ListNav.NEXT);
         event.preventDefault();
         break;
 
-      case KeyNames.ArrowUp:
+      case KeyCodes.ArrowUp:
         this.focusOnMenuItem(ListNav.PREV);
         event.preventDefault();
         break;
