@@ -238,6 +238,28 @@ module('Integration | Component | ui-pager', function (hooks) {
     });
   });
 
+  test('the navbar can be hidden when no pages are available', async function (assert) {
+    this.set('records', generateRecordSet());
+    this.set('hideWhenEmpty', true);
+
+    // language=handlebars
+    await render(hbs`
+      <UiPager @records={{this.records}} @disabled={{this.disabled}} as |Pager|>
+        <Pager.Navbar @hideWhenEmpty={{this.hideWhenEmpty}} />
+      </UiPager>
+    `);
+
+    assert.dom('nav').isVisible();
+
+    this.set('records', []);
+
+    assert.dom('nav').doesNotExist();
+
+    this.set('records', generateRecordSet(1));
+
+    assert.dom('nav').isVisible();
+  });
+
   test('it generates descriptive text', async function (assert) {
     this.set('records', generateRecordSet());
 

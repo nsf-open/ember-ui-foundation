@@ -41,6 +41,12 @@ export default class UiPagerNavbar extends Component {
    */
   public ariaLabel?: string;
 
+  /**
+   * When true, the entire navigation bar will be removed when there are zero pages
+   * to navigate.
+   */
+  public hideWhenEmpty = false;
+
   protected disabled = false;
 
   protected currentPage = 1;
