@@ -8,61 +8,58 @@ module('Integration | Component | ui-popover', function (hooks) {
 
   test('it attaches event listeners to its parent element', async function (assert) {
     await render(hbs`
-      <button>
-        Foo <UiPopover @testId="tip">Hello World</UiPopover>
+      <button id="toggle">
+        Foo <UiPopover>Hello World</UiPopover>
       </button>
     `);
 
-    const overlay = find('.popover[data-test-id="tip"]') as Element;
+    const overlay = find('.popover') as Element;
 
     assert
-      .dom('button')
+      .dom('#toggle')
       .hasAttribute('aria-controls', overlay.id)
       .hasAttribute('aria-expanded', 'false');
-    assert.dom('.popover[data-test-id="tip"]').isNotVisible();
+    assert.dom('.popover').isNotVisible();
 
-    await click('button');
+    await click('#toggle');
 
-    assert.dom('button').hasAttribute('aria-expanded', 'true');
-    assert.dom('.popover[data-test-id="tip"]').isVisible().hasText('Hello World');
+    assert.dom('#toggle').hasAttribute('aria-expanded', 'true');
+    assert.dom('.popover .popover-content').isVisible().hasText('Hello World');
 
-    await click('button');
+    await click('#toggle');
 
-    assert.dom('.popover[data-test-id="tip"]').isNotVisible();
+    assert.dom('.popover').isNotVisible();
   });
 
   test('it is not closed by outside interactions', async function (assert) {
     await render(hbs`
       <button id="toggle">
-        Foo <UiPopover @testId="tip">Hello World</UiPopover>
+        Foo <UiPopover>Hello World</UiPopover>
       </button>
 
       <button id="other-button">Click Me</button>
     `);
 
-    assert.dom('.popover[data-test-id="tip"]').isNotVisible();
+    assert.dom('.popover').isNotVisible();
 
     await click('#toggle');
 
-    assert.dom('.popover[data-test-id="tip"]').isVisible();
+    assert.dom('.popover').isVisible();
 
     await click('#other-button');
 
-    assert.dom('.popover[data-test-id="tip"]').isVisible();
+    assert.dom('.popover').isVisible();
   });
 
   test('it accepts a heading', async function (assert) {
     await render(hbs`
       <button>
-        Foo <UiPopover @testId="tip" @title="Popover Title">Hello World</UiPopover>
+        Foo <UiPopover @title="Popover Title">Hello World</UiPopover>
       </button>
     `);
 
-    assert.dom('.popover[data-test-id="tip"]').hasTagName('section');
-    assert
-      .dom('.popover[data-test-id="tip"] .popover-title')
-      .hasTagName('header')
-      .hasText('Popover Title');
+    assert.dom('.popover').hasTagName('section');
+    assert.dom('.popover .popover-title').hasTagName('header').hasText('Popover Title');
   });
 
   test('it manages focus as though it were inline with its trigger', async function (assert) {
@@ -102,7 +99,7 @@ module('Integration | Component | ui-popover', function (hooks) {
 
     await triggerKeyEvent('#trigger', 'keydown', 'Tab');
 
-    assert.dom('.popover #username').isFocused();
+    assert.dom('.popover button[aria-label="Close"]').isFocused();
 
     await focus('.popover #submitLogin');
     await triggerKeyEvent('.popover', 'keydown', 'Tab');
@@ -113,9 +110,28 @@ module('Integration | Component | ui-popover', function (hooks) {
 
     assert.dom('.popover #submitLogin').isFocused();
 
-    await focus('.popover #username');
+    await focus('.popover button[aria-label="Close"]');
     await triggerKeyEvent('.popover', 'keydown', 'Tab', { shiftKey: true });
 
     assert.dom('#trigger').isFocused();
+  });
+
+  test('it can be closed with its own close button', async function (assert) {
+    await render(hbs`
+      <button id="toggle">
+        Foo <UiPopover>Hello World</UiPopover>
+      </button>
+    `);
+
+    assert.dom('.popover').isNotVisible();
+
+    await click('#toggle');
+
+    assert.dom('.popover').isVisible();
+
+    await click('.popover button[aria-label="Close"]');
+
+    assert.dom('.popover').isNotVisible();
+    assert.dom('#toggle').isFocused();
   });
 });

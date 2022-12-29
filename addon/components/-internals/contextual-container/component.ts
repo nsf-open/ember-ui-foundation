@@ -1,6 +1,6 @@
 import type { EmberRunTimer } from '@ember/runloop/types';
 import Component from '@ember/component';
-import EmberObject, { computed, set } from '@ember/object';
+import EmberObject, { action, computed, set } from '@ember/object';
 import { reads, gt } from '@ember/object/computed';
 import { addObserver } from '@ember/object/observers';
 import { guidFor } from '@ember/object/internals';
@@ -780,6 +780,7 @@ export default class UiContextualContainer extends Component {
   /**
    * Yielded action to programmatically close from within the tooltip/flyout/whatever.
    */
+  @action
   protected close() {
     this.hide();
   }

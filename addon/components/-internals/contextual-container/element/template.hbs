@@ -13,6 +13,14 @@
   @htmlTagName={{if this.titleText "section" "div"}}
 >
 	{{#if this.showArrow}}<div class="{{this.arrowClassName}}" data-popper-arrow></div>{{/if}}
+  {{#if this.showCloseButton}}
+    <button type="button"
+      aria-label="Close"
+      class="close"
+      onclick={{this.close}}
+    ><span aria-hidden="true">×</span>
+    </button>
+  {{/if}}
   {{#if this.titleText}}<header class="{{this.titleTextClassName}}">{{this.titleText}}</header>{{/if}}
 	<div class="{{this.innerClassName}}" style={{this.innerElementStyles}}>
 		{{yield}}

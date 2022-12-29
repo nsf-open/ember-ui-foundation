@@ -22,12 +22,13 @@
   popperTarget       = this.triggerElement
   id                 = this.overlayElementId
   titleText          = this.title
+  close              = this.close
   testId             = this.testId
   showContent        = this._showOverlay
   isHidden           = this._isHidden
 }}
   {{#if (has-block)~}}
-    {{yield (hash close=(action this.close))}}
+    {{yield (hash close=this.close)}}
   {{~else~}}
     {{this.textContent}}
   {{~/if}}

@@ -10,6 +10,8 @@ export default class UiPopoverContextElement extends UiContextualElement {
 
   ariaRole = 'region';
 
+  showCloseButton = true;
+
   @computed('fade', 'actualPlacement', 'showContent')
   public get popperClassNames() {
     const classNames = ['popover', this.actualPlacement];

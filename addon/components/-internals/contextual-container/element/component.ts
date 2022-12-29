@@ -101,6 +101,17 @@ export default class UiContextualElement extends Component {
   public testId?: string;
 
   /**
+   * A method provided by the parent container to dismiss the positioned element.
+   */
+  public declare readonly close: () => void;
+
+  /**
+   * If true, a floating close button will be rendered at the top of the positioned
+   * element. This can be handy when using the "click" trigger.
+   */
+  public showCloseButton = false;
+
+  /**
    * CSS class names for the element.
    */
   public get popperClassNames(): undefined | string | string[] {
