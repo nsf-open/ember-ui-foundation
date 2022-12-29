@@ -49,8 +49,8 @@ module('Integration | Component | ui-tooltip', function (hooks) {
       </UiTooltip>
     `);
 
-    await triggerEvent('[data-test-id="tip"]', 'mouseenter');
-    await triggerEvent('[data-test-id="tip"]', 'mouseleave');
+    await triggerEvent('span[data-test-id="tip"]', 'mouseenter');
+    await triggerEvent('span[data-test-id="tip"]', 'mouseleave');
 
     assert.verifySteps(['onShow', 'onShown', 'onHide', 'onHidden']);
   });

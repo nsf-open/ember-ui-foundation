@@ -8,7 +8,7 @@ const RootID = 'ui-positioning-root';
  * inserted by the addon and sits near the top of the DOM tree.
  */
 export default function getRootElement(context: unknown) {
-  let root: HTMLElement | null = document.getElementById(RootID) || document.body;
+  let root = document.getElementById(RootID);
 
   runInDebug(() => {
     const config = getOwner(context)?.resolveRegistration<{ environment: string } | undefined>(
@@ -30,18 +30,27 @@ export default function getRootElement(context: unknown) {
         }
       }
 
-      root =
-        (id
-          ? document.getElementById(id)
-          : document.querySelector('#ember-testing > .ember-view')) ?? root;
+      const testContainer = id
+        ? document.getElementById(id)
+        : document.querySelector('#ember-testing > .ember-view');
+
+      if (testContainer) {
+        if (!root) {
+          root = document.createElement('div');
+          root.id = RootID;
+        }
+
+        testContainer.prepend(root);
+      }
 
       return;
     }
 
-    warn(`No destination element was found.`, !!root, {
+    /* istanbul ignore next */
+    warn(`No destination element was found, falling back to document.body.`, !!root, {
       id: '@nsf-open/ember-ui-foundation.no-destination-element',
     });
   });
 
-  return root;
+  return root ?? document.body;
 }
