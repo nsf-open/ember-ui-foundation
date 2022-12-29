@@ -19,17 +19,7 @@ module.exports = {
 
   prunedComponentFunnel: undefined,
 
-  runningForTopLevelApp: false,
-
   fontDirectory: undefined,
-
-  init(parent, project) {
-    this._super.init && this._super.init.apply(this, arguments);
-
-    if (parent === project) {
-      this.runningForTopLevelApp = true;
-    }
-  },
 
   included() {
     this._super.included.apply(this, arguments);
@@ -40,24 +30,22 @@ module.exports = {
     /** @type AddonConfig */
     const addonConfig = options['ember-ui-foundation'] || {};
 
-    if (this.runningForTopLevelApp) {
-      if (addonConfig.fontAwesome !== false) {
-        const destDir = (this.fontDirectory = addonConfig.fontDirectory || 'fonts');
+    if (addonConfig.fontAwesome !== false) {
+      const destDir = (this.fontDirectory = addonConfig.fontDirectory || 'fonts');
 
-        this.import('node_modules/font-awesome/css/font-awesome.css');
-        this.import('node_modules/font-awesome/fonts/fontawesome-webfont.eot', { destDir });
-        this.import('node_modules/font-awesome/fonts/fontawesome-webfont.svg', { destDir });
-        this.import('node_modules/font-awesome/fonts/fontawesome-webfont.ttf', { destDir });
-        this.import('node_modules/font-awesome/fonts/fontawesome-webfont.woff', { destDir });
-        this.import('node_modules/font-awesome/fonts/fontawesome-webfont.woff2', { destDir });
-      }
+      this.import('node_modules/font-awesome/css/font-awesome.css');
+      this.import('node_modules/font-awesome/fonts/fontawesome-webfont.eot', { destDir });
+      this.import('node_modules/font-awesome/fonts/fontawesome-webfont.svg', { destDir });
+      this.import('node_modules/font-awesome/fonts/fontawesome-webfont.ttf', { destDir });
+      this.import('node_modules/font-awesome/fonts/fontawesome-webfont.woff', { destDir });
+      this.import('node_modules/font-awesome/fonts/fontawesome-webfont.woff2', { destDir });
+    }
 
-      if (Array.isArray(addonConfig.include) && addonConfig.include.length) {
-        const inclusionMap = buildInclusionMap(addonConfig.include);
-        this.prunedComponentFunnel = buildFunnelConfig(inclusionMap);
+    if (Array.isArray(addonConfig.include) && addonConfig.include.length) {
+      const inclusionMap = buildInclusionMap(addonConfig.include);
+      this.prunedComponentFunnel = buildFunnelConfig(inclusionMap);
 
-        console.log(describeInclusionMap(addonConfig.include, inclusionMap));
-      }
+      console.log(describeInclusionMap(addonConfig.include, inclusionMap));
     }
   },
 
