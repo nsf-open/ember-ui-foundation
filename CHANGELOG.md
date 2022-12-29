@@ -1,3 +1,18 @@
+
+
+# [1.9.0](https://github.com/nsf-open/ember-ui-foundation/compare/1.8.4...1.9.0) (2022-12-29)
+
+
+### Features
+
+* ability to control whether outside clicks will close a click-triggered contextual container ([8cb00d5](https://github.com/nsf-open/ember-ui-foundation/commit/8cb00d5ebe56b21a96244de39ebbc172085654b5))
+* ability to provide a separate "title" block of content to a contextual-container ([7ad4f24](https://github.com/nsf-open/ember-ui-foundation/commit/7ad4f24b9144216e1559a015d04a77218af29360))
+* contextual-container changes uses section/header tags when a title is provided ([b287187](https://github.com/nsf-open/ember-ui-foundation/commit/b287187ccf93c66c5d6f598f10fce692ed7c036c))
+* introduce UiPopover component ([a5d7fcf](https://github.com/nsf-open/ember-ui-foundation/commit/a5d7fcfd9550edcfe358bb2712c33b2f9682ad7c))
+* UiPopover focusable content can be tabbed through ([a117aa9](https://github.com/nsf-open/ember-ui-foundation/commit/a117aa962e345118eec8ffa80eb2eea748f8fd3c))
+* UiPopover receives a close button in its flyout by default ([cdfbb71](https://github.com/nsf-open/ember-ui-foundation/commit/cdfbb7114e23ab7e06d335969196afa33247fc5b))
+* UiPopper can have its root HTML tag customized ([8771603](https://github.com/nsf-open/ember-ui-foundation/commit/877160353971335ceadd487dabfb4f2cfa96a3ed))
+
 ## [1.8.4](https://github.com/nsf-open/ember-ui-foundation/compare/1.8.3...1.8.4) (2022-12-22)
 
 ## 1.8.3 (2022-12-22)
