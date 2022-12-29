@@ -65,7 +65,7 @@ export default class UiContextualContainer extends Component {
    * Placement of the positioned element, relative to its reference element.
    * One of ['top', 'right', 'bottom', 'left'].
    */
-  public placement = 'top';
+  public placement: 'top' | 'right' | 'bottom' | 'left' = 'top';
 
   /**
    * If true, the positioned element will change its position automatically based
@@ -80,6 +80,8 @@ export default class UiContextualContainer extends Component {
 
   /**
    * Whether the positioned element is in view.
+   *
+   * @hidden
    */
   public visible = false;
 
@@ -102,6 +104,8 @@ export default class UiContextualContainer extends Component {
    * The amount of time, in milliseconds, between the trigger event occurring
    * and the positioned element being shown. If not explicitly set, this
    * will be equal to the value of `delay`.
+   *
+   * @hidden
    */
   @reads('delay')
   public delayShow!: number;
@@ -110,6 +114,8 @@ export default class UiContextualContainer extends Component {
    * The amount of time, in milliseconds, between the trigger event occurring
    * and the positioned element being hidden. If not explicitly set, this
    * will be equal to the value of `delay`.
+   *
+   * @hidden
    */
   @reads('delay')
   public delayHide!: number;
@@ -117,21 +123,28 @@ export default class UiContextualContainer extends Component {
   /**
    * A query selector for the container describing the area that the positioned
    * element will be checked for overflow relative to.
-   * https://popper.js.org/docs/v2/modifiers/prevent-overflow/#boundary
+   *
+   * @see https://popper.js.org/docs/v2/modifiers/prevent-overflow/#boundary
+   *
+   * @hidden
    */
   public viewportSelector = 'body';
 
   /**
    * Virtual "padding" for the PopperJS preventOverflow modifier.
-   * https://popper.js.org/docs/v2/modifiers/prevent-overflow/#padding
    *
-   * @type {number|{ top?: number, left?: number, right?: number, bottom?: number }}
+   * @see https://popper.js.org/docs/v2/modifiers/prevent-overflow/#padding
+   *
+   * @hidden
    */
-  public viewportPadding = 0;
+  public viewportPadding:
+    | number
+    | { top?: number; left?: number; right?: number; bottom?: number } = 0;
 
   /**
    * An offset, in pixels, for the PopperJS offset modifier.
-   * https://popper.js.org/docs/v2/modifiers/offset/#distance
+   *
+   * @see https://popper.js.org/docs/v2/modifiers/offset/#distance
    */
   public distance = 0;
 
@@ -161,6 +174,8 @@ export default class UiContextualContainer extends Component {
    * - "self":       The root element created by this component if a tagName is given.
    * - "parent":     The DOM element that this component is created inside.
    * - "parentView": The Ember Component instance that this component is created inside.
+   *
+   * @hidden
    */
   public triggerSelector = SelectorStrategies.PARENT;
 
@@ -177,6 +192,8 @@ export default class UiContextualContainer extends Component {
    * - "trigger":    The DOM "trigger" element.
    *
    * Set as null/undefined if no such support is desired.
+   *
+   * @hidden
    */
   public ariaSelector?: string = 'trigger';
 
