@@ -5,11 +5,13 @@ export default {
   component: 'components/ui-popover/component',
 
   parameters: {
-    layout: 'centered',
+    docs: {
+      iframeHeight: 300,
+    },
   },
 
   args: {
-    textContent: 'Hello World',
+    title: 'Please Login to Your Account to Continue',
   },
 };
 
@@ -20,12 +22,41 @@ const Template = (context: unknown) => {
     // language=handlebars
     template: hbs`
       <div class="text-center">
+        <a href="#">Other focus target A</a>
+
         <UiButton @variant="primary">
             Log In
-            <UiPopover @title="Hello World">
-                Username and password go here
+            <UiPopover
+              @title={{this.title}}
+              @ariaAttachAs={{this.ariaAttachAs}}
+              @autoPlacement={{this.autoPlacement}}
+              @delay={{this.delay}}
+              @distance={{this.distance}}
+              @enabled={{this.enabled}}
+              @fade={{this.fade}}
+              @maxWidth={{this.maxWidth}}
+              @overlayId={{this.overlayId}}
+              @placement={{this.placement}}
+              @renderInPlace={{this.renderInPlace}}
+              @testId={{this.testId}}
+            >
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" class="form-control" />
+              </div>
+
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" />
+              </div>
+
+              <div class="text-right">
+                <button type="button" class="btn btn-primary">Login</button>
+              </div>
             </UiPopover>
         </UiButton>
+
+        <a href="#">Other focus target B</a>
       </div>
     `,
   };

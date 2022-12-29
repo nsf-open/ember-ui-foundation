@@ -24,6 +24,7 @@ nice with other libraries/tools. */
 
 .popover {
   display: block;
+  margin: 0 !important;
 }
 
 .popover.top .arrow,

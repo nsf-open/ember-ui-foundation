@@ -2,6 +2,7 @@ import UiContextualContainer, {
   SelectorStrategies,
   TriggerEvents,
 } from '../-internals/contextual-container/component';
+import { manageFlowThroughFocus } from '@nsf-open/ember-ui-foundation/utils';
 
 /**
  *
@@ -30,6 +31,8 @@ export default class UiPopoverContextContainer extends UiContextualContainer {
   /** @hidden */
   readonly overlayComponent = 'ui-popover/element';
 
+  private removeFocus?: () => void;
+
   public didInsertElement() {
     super.didInsertElement();
     this.getAriaElement()?.setAttribute('aria-expanded', 'false');
@@ -37,11 +40,24 @@ export default class UiPopoverContextContainer extends UiContextualContainer {
 
   /** @hidden */
   onShow = () => {
-    this.getAriaElement()?.setAttribute('aria-expanded', 'true');
+    const trigger = this.getAriaElement();
+
+    trigger?.setAttribute('aria-expanded', 'true');
+
+    // Focus management only needs to occur if the popover is not being
+    // rendered inline.
+    if (!this.actuallyRenderInPlace) {
+      this.removeFocus = manageFlowThroughFocus(
+        this.getOverlayElement() ?? undefined,
+        trigger ?? undefined
+      );
+    }
   };
 
   /** @hidden */
   onHide = () => {
-    this.getAriaElement()?.setAttribute('aria-expanded', 'false');
+    this.getAriaElement()?.setAttribute('aria-expanded', 'true');
+    this.removeFocus?.();
+    this.removeFocus = undefined;
   };
 }
