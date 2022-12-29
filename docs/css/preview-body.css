@@ -1,0 +1,63 @@
+pre.sbdocs > div {
+  margin: 0 !important;
+}
+
+pre.sbdocs + .sbdocs-h2,
+pre.sbdocs + .sbdocs-h3 {
+  margin-top: 20px !important;
+}
+
+pre.prismjs {
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+pre .token.tag,
+pre .token.operator,
+pre .token.punctuation {
+  color: #fff !important;
+}
+
+pre .token.class-name,
+pre .token.maybe-class-name {
+  color: #2B91AF !important;
+}
+
+pre .token.decorator {
+  color: #bbb529 !important;
+}
+
+pre .token.function,
+pre .token.tag.punctuation,
+pre .token.tag.class-name {
+  color: #eed975 !important;
+}
+
+pre .token.keyword,
+pre .token.mustache.tag,
+pre .token.mustache.punctuation {
+  color: #f38b27 !important;
+}
+
+pre .token.string,
+pre .token.mustache.string {
+  color: #b0c975 !important;
+}
+
+pre .token.number,
+pre .token.mustache.number {
+  color: #8799B0 !important;
+}
+
+pre .token.boolean,
+pre .token.mustache.boolean {
+  color: #eed975 !important;
+}
+
+pre .token.regex {
+  color: #9b71c6 !important;
+}
+
+pre .token.comment {
+  color: #797979 !important;
+}
