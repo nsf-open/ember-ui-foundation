@@ -27,7 +27,7 @@ export default class UiTableTh extends Component {
 
   public recordSet?: unknown[];
 
-  public showColumnFilter = true;
+  public showColumnFilter = false;
 
   protected declare sortCriterion: UiSorterCriterion;
 

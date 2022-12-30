@@ -83,6 +83,7 @@ input of the next tier down.
                     @description={{column.description}}
                     @recordSet={{Filter.filteredRecords}}
                     @sortCriterion={{Sorter.Criterion}}
+                    class={{column.thClassName}}
                   />
                 {{/each}}
               </tr>
@@ -91,14 +92,23 @@ input of the next tier down.
 
           <tbody>
             {{#if (has-block "row")}}
-              {{#each (if this.pagingEnabled Pager.pageRecords Filter.filteredRecords) as |record index|}}
-                {{yield record index to="row"}}
+              {{#each (if this.pagingEnabled Pager.pageRecords Filter.filteredRecords) as |record rowIndex|}}
+                {{yield record rowIndex to="row"}}
               {{/each}}
             {{else if this.columns}}
-              {{#each (if this.pagingEnabled Pager.pageRecords Filter.filteredRecords) as |record|}}
+              {{#each (if this.pagingEnabled Pager.pageRecords Filter.filteredRecords) as |record rowIndex|}}
                 <tr>
-                  {{#each this.columns as |column|}}
-                    <td>{{get record column.propertyName}}</td>
+                  {{#each this.columns as |column columnIndex|}}
+                    {{#if column.tdComponent}}
+                      {{component column.tdComponent
+                        column=column
+                        record=record
+                        rowIndex=rowIndex
+                        columnIndex=columnIndex
+                      }}
+                    {{else}}
+                      <td class={{column.tdClassName}}>{{get record column.propertyName}}</td>
+                    {{/if}}
                   {{/each}}
                 </tr>
               {{/each}}

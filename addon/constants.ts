@@ -1,4 +1,6 @@
 import type Controller from '@ember/controller';
+import type EmberComponent from '@ember/component';
+import type GlimmerComponent from '@glimmer/component';
 
 export type DirectionsX = Directions.Left | Directions.Right;
 
@@ -33,6 +35,9 @@ export interface ITableColumn {
   filterStartsWith?: boolean;
   filterCaseSensitive?: boolean;
   filterBooleanMap?: [string, string];
+  thClassName?: string;
+  tdClassName?: string;
+  tdComponent?: string | typeof EmberComponent | typeof GlimmerComponent;
 }
 
 export enum Directions {
