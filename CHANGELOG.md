@@ -1,5 +1,20 @@
 
 
+# [1.10.0](https://github.com/nsf-open/ember-ui-foundation/compare/1.9.0...1.10.0) (2023-01-04)
+
+
+### Bug Fixes
+
+* export htmlSafe from @ember/template ([4c7d27f](https://github.com/nsf-open/ember-ui-foundation/commit/4c7d27fe72a7c4f2413f1f212932b02c3fdf5062))
+* remove "topLevelApp" check when building ([53d69bc](https://github.com/nsf-open/ember-ui-foundation/commit/53d69bcd23c44e8f7602c4f109606668a124040f))
+
+
+### Features
+
+* ability to set th and td class names in a UiTable column definition ([75606ac](https://github.com/nsf-open/ember-ui-foundation/commit/75606ac974b3c74777688a595d715c1303237de2))
+* add "hideWhenEmpty" option to UiPager navbar ([563de37](https://github.com/nsf-open/ember-ui-foundation/commit/563de3755b51a22c79054107cd201652a6b2fad5))
+* UiFilter reset button only shows when there is something to reset ([cb406f9](https://github.com/nsf-open/ember-ui-foundation/commit/cb406f993ea94bfc75bf0e22edbc6c3c57bf939b))
+
 # [1.9.0](https://github.com/nsf-open/ember-ui-foundation/compare/1.8.4...1.9.0) (2022-12-29)
 
 
