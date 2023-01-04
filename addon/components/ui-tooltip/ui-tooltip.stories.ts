@@ -16,7 +16,6 @@ const Template = (context: unknown) => {
     // language=handlebars
     template: hbs`
       <UiTooltip
-        @ariaAttachAs={{this.ariaAttachAs}}
         @ariaHidden={{this.ariaHidden}}
         @ariaLabel={{this.ariaLabel}}
         @ariaSelector={{this.ariaSelector}}

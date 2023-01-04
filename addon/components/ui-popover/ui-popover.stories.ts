@@ -28,7 +28,6 @@ const Template = (context: unknown) => {
             Log In
             <UiPopover
               @title={{this.title}}
-              @ariaAttachAs={{this.ariaAttachAs}}
               @autoPlacement={{this.autoPlacement}}
               @delay={{this.delay}}
               @distance={{this.distance}}

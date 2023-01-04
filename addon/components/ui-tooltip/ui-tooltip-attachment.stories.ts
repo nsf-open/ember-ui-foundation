@@ -18,7 +18,6 @@ const Template = (context: unknown) => {
       <button class="btn btn-default">
         Click Here <UiIcon @name="question-circle" />
         <UiTooltipAttachment
-          @ariaAttachAs={{this.ariaAttachAs}}
           @ariaHidden={{this.ariaHidden}}
           @ariaLabel={{this.ariaLabel}}
           @ariaSelector={{this.ariaSelector}}
