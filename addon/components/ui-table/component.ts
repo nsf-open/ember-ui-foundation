@@ -45,6 +45,11 @@ export default class UiTable extends Component {
   public filterPlaceholder?: string;
 
   /**
+   * The filter text input's title text.
+   */
+  public filterTitle?: string;
+
+  /**
    * Whether filtering of the table's contents is enabled. By default, this
    * includes adding some UI to the top control bar such a text input to
    * provide the filter term.
@@ -56,6 +61,16 @@ export default class UiTable extends Component {
    * will also enable some UI elements like the page selector.
    */
   public pagingEnabled = true;
+
+  /**
+   * Text to display when there are no records.
+   */
+  public noRecordsText?: string = 'No records exist';
+
+  /**
+   * Text to display when there are no records found while filtering.
+   */
+  public noFilterResultsText?: string = 'Nothing found to display';
 
   protected get tableGuid() {
     return `${guidFor(this)}-table`;

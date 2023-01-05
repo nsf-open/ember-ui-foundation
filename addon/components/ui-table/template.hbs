@@ -27,6 +27,7 @@ input of the next tier down.
             filters         = this.filters
             showClearButton = this.showFilterClearButton
             placeholder     = this.filterPlaceholder
+            title           = this.filterTitle
           )
         as |PagerSizeOptions PagerNavbar FilterInput|}}
           {{#if (has-block "topControlBar")}}
@@ -113,6 +114,17 @@ input of the next tier down.
                 </tr>
               {{/each}}
             {{/if}}
+            {{#if (or (eq Filter.filteredRecords.length 0) (eq this.records.length 0))}}
+              <tr>
+                <td class='text-center' colspan='{{this.columns.length}}'>
+                  {{#if (eq this.records.length 0)}}
+                    {{this.noRecordsText}}
+                  {{else}}
+                    {{this.noFilterResultsText}}
+                  {{/if}}
+                </td>
+              </tr>
+            {{/if}}
           </tbody>
         </table>
 
@@ -135,6 +147,7 @@ input of the next tier down.
             filters         = this.filters
             showClearButton = this.showFilterClearButton
             placeholder     = this.filterPlaceholder
+            title           = this.filterTitle
           )
         as |PagerSizeOptions PagerNavbar FilterInput|}}
           {{#if (has-block "bottomControlBar")}}
