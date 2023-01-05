@@ -16,6 +16,11 @@ export default class UiFilterInput extends Component {
   public label?: string = 'Filter Input Field';
 
   /**
+   * The text input's title text.
+   */
+  public title?: string;
+
+  /**
    * The text input's placeholder text.
    */
   public placeholder?: string;

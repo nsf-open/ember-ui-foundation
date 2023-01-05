@@ -59,8 +59,11 @@ export const Default = (context: unknown) => {
         @filterRules={{this.filterRules}}
         @showFilterClearButton={{this.showFilterClearButton}}
         @filterPlaceholder={{this.filterPlaceholder}}
+        @filterTitle={{this.filterTitle}}
         @pagingEnabled={{this.pagingEnabled}}
         @filterEnabled={{this.filterEnabled}}
+        @noRecordsText={{this.noRecordsText}}
+        @noFilterResultsText={{this.noFilterResultsText}}
       />
     `,
   };
